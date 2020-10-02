@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@mipmap/ic_login_bg"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/guideline11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:background="@drawable/login_lay_shadow"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
+        <EditText
+            android:id="@+id/et_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:ems="10"
+            android:hint="账号:"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textColor="#A4000000"
+            android:layout_centerInParent="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#4d4d4d4d"/>
+
+        <EditText
+            android:id="@+id/et_pswd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:ems="10"
+            android:hint="密码:"
+            android:inputType="textPassword"
+            android:textColor="#A4000000"
+            android:layout_above="@id/et_account"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/ckb_remeber_pswd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="记住密码"
+        android:layout_below="@id/btn_login"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"/>
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="立即登入"
+        android:layout_below="@id/input_layout"
+        android:layout_marginTop="20dp"
+        android:textColor="#fff"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/selector_login_btn"/>
+
+    <TextView
+        android:id="@+id/tv_tishi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="没有账号?"
+        android:layout_below="@id/btn_login"
+        android:textColor="#4d4d4d4d"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@id/btn_reg"
+        android:layout_marginRight="13dp"/>
+
+    <TextView
+        android:id="@+id/btn_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="去注册>>"
+        android:textColor="#7E9DF0"
+        android:layout_below="@id/btn_login"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"/>
+
+</RelativeLayout>
