@@ -2,7 +2,13 @@ package beans;
 
 import java.util.List;
 
-public class ZipBeans {
+/**
+ * 作者：zzx on 2020/10/2 10:27
+ * <p>
+ * 作用： xxxx
+ */
+public class Text {
+
     /**
      * wordRank : 1162
      * headWord : resolve
@@ -12,7 +18,7 @@ public class ZipBeans {
 
     private int wordRank;
     private String headWord;
-    private Text.ContentBeanX content;
+    private ContentBeanX content;
     private String bookId;
 
     public int getWordRank() {
@@ -31,11 +37,11 @@ public class ZipBeans {
         this.headWord = headWord;
     }
 
-    public Text.ContentBeanX getContent() {
+    public ContentBeanX getContent() {
         return content;
     }
 
-    public void setContent(Text.ContentBeanX content) {
+    public void setContent(ContentBeanX content) {
         this.content = content;
     }
 
@@ -52,13 +58,13 @@ public class ZipBeans {
          * word : {"wordHead":"resolve","wordId":"CET4luan_1_1162","content":{"sentence":{"sentences":[{"sContent":"Barnet was desperate for money to resolve his financial problems.","sCn":"巴尼特急需钱来解决他的经济问题。"},{"sContent":"Mary resolved that she would stop smoking.","sCn":"玛丽决定戒烟。"}],"desc":"例句"},"realExamSentence":{"sentences":[{"sContent":"...whereas women may approach the same dispute from the perspective of what's the easiest and quickest way to resolve the problem-even if that means doing the boring work themselves...","sourceInfo":{"level":"CET4","year":"2017.12","type":"阅读理解"}},{"sContent":"...But chances are it won\u2019t have much impact on the human tendency to resolve to get to the gym more and avoid chocolate cake when the clock strikes midnight on December 31...","sourceInfo":{"paper":"第三套","level":"CET4","year":"2012.12","type":"阅读理解"}}],"desc":"真题例句"},"usphone":"rɪ'zɑlv","ukspeech":"resolve&type=1","star":0,"usspeech":"resolve&type=2","picture":"http://ydschool-online.nos.netease.com/CET4luan_1_1162_resolve_1523505573585001163_resolve_MT.png","syno":{"synos":[{"pos":"vt","tran":"决定；溶解；使\u2026分解；决心要做\u2026","hwds":[{"w":"solve"},{"w":"condition"},{"w":"conclude"}]},{"pos":"vi","tran":"解决；决心；分解","hwds":[{"w":"settle"},{"w":"work out"},{"w":"figure out"}]},{"pos":"n","tran":"坚决；决定要做的事","hwds":[{"w":"determinateness"}]}],"desc":"同近"},"ukphone":"rɪ'zɒlv","phrase":{"phrases":[{"pContent":"resolve into","pCn":"使分解为\u2026；归结为"},{"pContent":"fail to resolve","pCn":"解决未果"}],"desc":"短语"},"phone":"ri'zɔlv","speech":"resolve","remMethod":{"val":"re ＋ solve(解决) → 解决","desc":"记忆"},"relWord":{"desc":"同根","rels":[{"pos":"adj","words":[{"hwd":"resolved","tran":"下定决心的；已解决的；断然的"},{"hwd":"resolvable","tran":"可分解的；可解决的；可溶解的"},{"hwd":"resolvent","tran":"分解的；有溶解力的；消散的"}]},{"pos":"adv","words":[{"hwd":"resolutely","tran":"坚决地；毅然地"}]},{"pos":"n","words":[{"hwd":"resolution","tran":"[物] 分辨率；决议；解决；决心"},{"hwd":"resolving","tran":"分解；解析"},{"hwd":"resolvent","tran":"溶剂；分解物；消肿药"}]},{"pos":"v","words":[{"hwd":"resolved","tran":"解决；决定；分解；转变（resolve的过去分词）"},{"hwd":"resolving","tran":"分辨（resolve的ing形式）；分解；决定；解决矛盾"}]}]},"trans":[{"tranCn":"解决；下决心","descOther":"英释","pos":"v","descCn":"中释","tranOther":"to find a satisfactory way of dealing with a problem or difficulty"}]}}
          */
 
-        private Text.ContentBeanX.WordBean word;
+        private WordBean word;
 
-        public Text.ContentBeanX.WordBean getWord() {
+        public WordBean getWord() {
             return word;
         }
 
-        public void setWord(Text.ContentBeanX.WordBean word) {
+        public void setWord(WordBean word) {
             this.word = word;
         }
 
@@ -71,7 +77,7 @@ public class ZipBeans {
 
             private String wordHead;
             private String wordId;
-            private Text.ContentBeanX.WordBean.ContentBean content;
+            private ContentBean content;
 
             public String getWordHead() {
                 return wordHead;
@@ -89,11 +95,11 @@ public class ZipBeans {
                 this.wordId = wordId;
             }
 
-            public Text.ContentBeanX.WordBean.ContentBean getContent() {
+            public ContentBean getContent() {
                 return content;
             }
 
-            public void setContent(Text.ContentBeanX.WordBean.ContentBean content) {
+            public void setContent(ContentBean content) {
                 this.content = content;
             }
 
@@ -116,35 +122,35 @@ public class ZipBeans {
                  * trans : [{"tranCn":"解决；下决心","descOther":"英释","pos":"v","descCn":"中释","tranOther":"to find a satisfactory way of dealing with a problem or difficulty"}]
                  */
 
-                private Text.ContentBeanX.WordBean.ContentBean.SentenceBean sentence;
-                private Text.ContentBeanX.WordBean.ContentBean.RealExamSentenceBean realExamSentence;
+                private SentenceBean sentence;
+                private RealExamSentenceBean realExamSentence;
                 private String usphone;
                 private String ukspeech;
                 private int star;
                 private String usspeech;
                 private String picture;
-                private Text.ContentBeanX.WordBean.ContentBean.SynoBean syno;
+                private SynoBean syno;
                 private String ukphone;
-                private Text.ContentBeanX.WordBean.ContentBean.PhraseBean phrase;
+                private PhraseBean phrase;
                 private String phone;
                 private String speech;
-                private Text.ContentBeanX.WordBean.ContentBean.RemMethodBean remMethod;
-                private Text.ContentBeanX.WordBean.ContentBean.RelWordBean relWord;
-                private List<Text.ContentBeanX.WordBean.ContentBean.TransBean> trans;
+                private RemMethodBean remMethod;
+                private RelWordBean relWord;
+                private List<TransBean> trans;
 
-                public Text.ContentBeanX.WordBean.ContentBean.SentenceBean getSentence() {
+                public SentenceBean getSentence() {
                     return sentence;
                 }
 
-                public void setSentence(Text.ContentBeanX.WordBean.ContentBean.SentenceBean sentence) {
+                public void setSentence(SentenceBean sentence) {
                     this.sentence = sentence;
                 }
 
-                public Text.ContentBeanX.WordBean.ContentBean.RealExamSentenceBean getRealExamSentence() {
+                public RealExamSentenceBean getRealExamSentence() {
                     return realExamSentence;
                 }
 
-                public void setRealExamSentence(Text.ContentBeanX.WordBean.ContentBean.RealExamSentenceBean realExamSentence) {
+                public void setRealExamSentence(RealExamSentenceBean realExamSentence) {
                     this.realExamSentence = realExamSentence;
                 }
 
@@ -188,11 +194,11 @@ public class ZipBeans {
                     this.picture = picture;
                 }
 
-                public Text.ContentBeanX.WordBean.ContentBean.SynoBean getSyno() {
+                public SynoBean getSyno() {
                     return syno;
                 }
 
-                public void setSyno(Text.ContentBeanX.WordBean.ContentBean.SynoBean syno) {
+                public void setSyno(SynoBean syno) {
                     this.syno = syno;
                 }
 
@@ -204,11 +210,11 @@ public class ZipBeans {
                     this.ukphone = ukphone;
                 }
 
-                public Text.ContentBeanX.WordBean.ContentBean.PhraseBean getPhrase() {
+                public PhraseBean getPhrase() {
                     return phrase;
                 }
 
-                public void setPhrase(Text.ContentBeanX.WordBean.ContentBean.PhraseBean phrase) {
+                public void setPhrase(PhraseBean phrase) {
                     this.phrase = phrase;
                 }
 
@@ -228,27 +234,27 @@ public class ZipBeans {
                     this.speech = speech;
                 }
 
-                public Text.ContentBeanX.WordBean.ContentBean.RemMethodBean getRemMethod() {
+                public RemMethodBean getRemMethod() {
                     return remMethod;
                 }
 
-                public void setRemMethod(Text.ContentBeanX.WordBean.ContentBean.RemMethodBean remMethod) {
+                public void setRemMethod(RemMethodBean remMethod) {
                     this.remMethod = remMethod;
                 }
 
-                public Text.ContentBeanX.WordBean.ContentBean.RelWordBean getRelWord() {
+                public RelWordBean getRelWord() {
                     return relWord;
                 }
 
-                public void setRelWord(Text.ContentBeanX.WordBean.ContentBean.RelWordBean relWord) {
+                public void setRelWord(RelWordBean relWord) {
                     this.relWord = relWord;
                 }
 
-                public List<Text.ContentBeanX.WordBean.ContentBean.TransBean> getTrans() {
+                public List<TransBean> getTrans() {
                     return trans;
                 }
 
-                public void setTrans(List<Text.ContentBeanX.WordBean.ContentBean.TransBean> trans) {
+                public void setTrans(List<TransBean> trans) {
                     this.trans = trans;
                 }
 
@@ -259,7 +265,7 @@ public class ZipBeans {
                      */
 
                     private String desc;
-                    private List<Text.ContentBeanX.WordBean.ContentBean.SentenceBean.SentencesBean> sentences;
+                    private List<SentencesBean> sentences;
 
                     public String getDesc() {
                         return desc;
@@ -269,11 +275,11 @@ public class ZipBeans {
                         this.desc = desc;
                     }
 
-                    public List<Text.ContentBeanX.WordBean.ContentBean.SentenceBean.SentencesBean> getSentences() {
+                    public List<SentencesBean> getSentences() {
                         return sentences;
                     }
 
-                    public void setSentences(List<Text.ContentBeanX.WordBean.ContentBean.SentenceBean.SentencesBean> sentences) {
+                    public void setSentences(List<SentencesBean> sentences) {
                         this.sentences = sentences;
                     }
 
@@ -311,7 +317,7 @@ public class ZipBeans {
                      */
 
                     private String desc;
-                    private List<Text.ContentBeanX.WordBean.ContentBean.RealExamSentenceBean.SentencesBeanX> sentences;
+                    private List<SentencesBeanX> sentences;
 
                     public String getDesc() {
                         return desc;
@@ -321,11 +327,11 @@ public class ZipBeans {
                         this.desc = desc;
                     }
 
-                    public List<Text.ContentBeanX.WordBean.ContentBean.RealExamSentenceBean.SentencesBeanX> getSentences() {
+                    public List<SentencesBeanX> getSentences() {
                         return sentences;
                     }
 
-                    public void setSentences(List<Text.ContentBeanX.WordBean.ContentBean.RealExamSentenceBean.SentencesBeanX> sentences) {
+                    public void setSentences(List<SentencesBeanX> sentences) {
                         this.sentences = sentences;
                     }
 
@@ -336,7 +342,7 @@ public class ZipBeans {
                          */
 
                         private String sContent;
-                        private Text.ContentBeanX.WordBean.ContentBean.RealExamSentenceBean.SentencesBeanX.SourceInfoBean sourceInfo;
+                        private SourceInfoBean sourceInfo;
 
                         public String getSContent() {
                             return sContent;
@@ -346,11 +352,11 @@ public class ZipBeans {
                             this.sContent = sContent;
                         }
 
-                        public Text.ContentBeanX.WordBean.ContentBean.RealExamSentenceBean.SentencesBeanX.SourceInfoBean getSourceInfo() {
+                        public SourceInfoBean getSourceInfo() {
                             return sourceInfo;
                         }
 
-                        public void setSourceInfo(Text.ContentBeanX.WordBean.ContentBean.RealExamSentenceBean.SentencesBeanX.SourceInfoBean sourceInfo) {
+                        public void setSourceInfo(SourceInfoBean sourceInfo) {
                             this.sourceInfo = sourceInfo;
                         }
 
@@ -399,7 +405,7 @@ public class ZipBeans {
                      */
 
                     private String desc;
-                    private List<Text.ContentBeanX.WordBean.ContentBean.SynoBean.SynosBean> synos;
+                    private List<SynosBean> synos;
 
                     public String getDesc() {
                         return desc;
@@ -409,11 +415,11 @@ public class ZipBeans {
                         this.desc = desc;
                     }
 
-                    public List<Text.ContentBeanX.WordBean.ContentBean.SynoBean.SynosBean> getSynos() {
+                    public List<SynosBean> getSynos() {
                         return synos;
                     }
 
-                    public void setSynos(List<Text.ContentBeanX.WordBean.ContentBean.SynoBean.SynosBean> synos) {
+                    public void setSynos(List<SynosBean> synos) {
                         this.synos = synos;
                     }
 
@@ -426,7 +432,7 @@ public class ZipBeans {
 
                         private String pos;
                         private String tran;
-                        private List<Text.ContentBeanX.WordBean.ContentBean.SynoBean.SynosBean.HwdsBean> hwds;
+                        private List<HwdsBean> hwds;
 
                         public String getPos() {
                             return pos;
@@ -444,11 +450,11 @@ public class ZipBeans {
                             this.tran = tran;
                         }
 
-                        public List<Text.ContentBeanX.WordBean.ContentBean.SynoBean.SynosBean.HwdsBean> getHwds() {
+                        public List<HwdsBean> getHwds() {
                             return hwds;
                         }
 
-                        public void setHwds(List<Text.ContentBeanX.WordBean.ContentBean.SynoBean.SynosBean.HwdsBean> hwds) {
+                        public void setHwds(List<HwdsBean> hwds) {
                             this.hwds = hwds;
                         }
 
@@ -477,7 +483,7 @@ public class ZipBeans {
                      */
 
                     private String desc;
-                    private List<Text.ContentBeanX.WordBean.ContentBean.PhraseBean.PhrasesBean> phrases;
+                    private List<PhrasesBean> phrases;
 
                     public String getDesc() {
                         return desc;
@@ -487,11 +493,11 @@ public class ZipBeans {
                         this.desc = desc;
                     }
 
-                    public List<Text.ContentBeanX.WordBean.ContentBean.PhraseBean.PhrasesBean> getPhrases() {
+                    public List<PhrasesBean> getPhrases() {
                         return phrases;
                     }
 
-                    public void setPhrases(List<Text.ContentBeanX.WordBean.ContentBean.PhraseBean.PhrasesBean> phrases) {
+                    public void setPhrases(List<PhrasesBean> phrases) {
                         this.phrases = phrases;
                     }
 
@@ -555,7 +561,7 @@ public class ZipBeans {
                      */
 
                     private String desc;
-                    private List<Text.ContentBeanX.WordBean.ContentBean.RelWordBean.RelsBean> rels;
+                    private List<RelsBean> rels;
 
                     public String getDesc() {
                         return desc;
@@ -565,11 +571,11 @@ public class ZipBeans {
                         this.desc = desc;
                     }
 
-                    public List<Text.ContentBeanX.WordBean.ContentBean.RelWordBean.RelsBean> getRels() {
+                    public List<RelsBean> getRels() {
                         return rels;
                     }
 
-                    public void setRels(List<Text.ContentBeanX.WordBean.ContentBean.RelWordBean.RelsBean> rels) {
+                    public void setRels(List<RelsBean> rels) {
                         this.rels = rels;
                     }
 
@@ -580,7 +586,7 @@ public class ZipBeans {
                          */
 
                         private String pos;
-                        private List<Text.ContentBeanX.WordBean.ContentBean.RelWordBean.RelsBean.WordsBean> words;
+                        private List<WordsBean> words;
 
                         public String getPos() {
                             return pos;
@@ -590,11 +596,11 @@ public class ZipBeans {
                             this.pos = pos;
                         }
 
-                        public List<Text.ContentBeanX.WordBean.ContentBean.RelWordBean.RelsBean.WordsBean> getWords() {
+                        public List<WordsBean> getWords() {
                             return words;
                         }
 
-                        public void setWords(List<Text.ContentBeanX.WordBean.ContentBean.RelWordBean.RelsBean.WordsBean> words) {
+                        public void setWords(List<WordsBean> words) {
                             this.words = words;
                         }
 

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements ILoginCallback {
     private SharedPreferences mSp;
     private SharedPreferences.Editor mEdit;
     private InputMethodManager mIm;
-   // private LoadingDialog mDialog;
+   // private CustomProgressDialog mDialog;
     private long mCurrentProgress;
 
 
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements ILoginCallback {
         mEtPswd = findViewById(R.id.et_pswd);
         mRememberPswd = findViewById(R.id.ckb_remeber_pswd);
 
-      //  mDialog = new LoadingDialog(LoginActivity.this);
+      //  mDialog = new CustomProgressDialog(LoginActivity.this);
     }
 
 

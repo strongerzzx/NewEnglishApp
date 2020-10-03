@@ -1,5 +1,6 @@
 package com.example.englishapp_bishe;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +27,7 @@ import adapters.SelectorBookAdapter;
 import beans.SelectBookBeans;
 import interfaces.ISelectBookCallback;
 import presenters.SelectorPresenter;
+import views.CustomProgressDialog;
 import views.UILoader;
 
 public class SelectorBookActivity extends AppCompatActivity implements ISelectBookCallback {
@@ -43,9 +44,9 @@ public class SelectorBookActivity extends AppCompatActivity implements ISelectBo
     private List<SelectBookBeans.CatesBean.BookListBean> allBookList=new ArrayList<>();
 
     private boolean isRefresh=true;
-    private ProgressBar mBar;
-    public static SelectorHandler mSelectorHandler;
 
+    public static SelectorHandler mSelectorHandler;
+    private CustomProgressDialog mDialog;
 
 
     public static class SelectorHandler extends Handler{
@@ -63,7 +64,10 @@ public class SelectorBookActivity extends AppCompatActivity implements ISelectBo
                     case TYPE_RELEASE_ZIP_PROGRESS:
                         break;
                     case TYPE_READ_JSON_PROGRESS:
-                            mSelectorAct.get().mBar.setVisibility(View.GONE);
+                            mSelectorAct.get().mDialog.dismiss();
+                        Intent intent=new Intent();
+                        intent.setClass(mSelectorAct.get(),HomeActivity.class);
+                        mSelectorAct.get().startActivity(intent);
                         break;
                 }
             }
@@ -102,16 +106,18 @@ public class SelectorBookActivity extends AppCompatActivity implements ISelectBo
         mSelectorAdapter.setOnSelectorItemClickListener(new SelectorBookAdapter.onSelectorItemClickListener() {
             @Override
             public void onSelectorItemClicker(int position) {
-                //TODO:弹出一个Dialog --> 数据结束
+                //把指定点击的词书位置 --> 给P层
                 mSelectorPresenter.requestPositionZip(position);
-                mBar.setVisibility(View.VISIBLE);
+
+                mDialog = new CustomProgressDialog(SelectorBookActivity.this);
+                mDialog.show();
+
             }
         });
     }
 
     private void initView() {
         mContentLayout = findViewById(R.id.select_book_content);
-        mBar = findViewById(R.id.text_pro);
 
         if (mUiLoader == null) {
             mUiLoader = new UILoader(this) {
@@ -181,7 +187,6 @@ public class SelectorBookActivity extends AppCompatActivity implements ISelectBo
 
     @Override
     public void downZipProgress(int currentPos, long finalPos) {
-        mBar.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -3,9 +3,20 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+        <item name="colorPrimary">@color/colorWhite</item>
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--bottomNav选中的时候-->
+    <style name="bottom_nav__select">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!--bottmNav未选-->
+    <style name="bottom_nav_no_select">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

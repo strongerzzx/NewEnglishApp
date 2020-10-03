@@ -1,7 +1,10 @@
 package presenters;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Environment;
 import android.os.Message;
+
+import androidx.room.Room;
 
 import com.example.englishapp_bishe.SelectorBookActivity;
 import com.google.gson.Gson;
@@ -30,6 +33,8 @@ import beans.ContentUrl;
 import beans.SelectBookBeans;
 import beans.ZipBeans;
 import commonparms.Commons;
+import dao.WordsDao;
+import entirys.Words;
 import interfaces.ISelectBookCallback;
 import interfaces.ISelectBookPresent;
 import okhttp3.ResponseBody;
@@ -38,6 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rooms.WordsDB;
 import utils.ListPageUtils;
 import utils.LogUtil;
 
@@ -49,36 +55,42 @@ import utils.LogUtil;
 public class SelectorPresenter implements ISelectBookPresent {
 
     private static final String TAG = "SelectBookPresent";
-    private List<ISelectBookCallback> mCallbackList =new ArrayList<>();
-    private List<SelectBookBeans.CatesBean.BookListBean> mAllBookList=new ArrayList<>();//全部的数据放在一起
-    private List<SelectBookBeans.CatesBean.BookListBean> mCurrentBookList=new ArrayList<>();//记录当前刷新加载的
-    private int mCurrentPage=1;//初始页
+    private List<ISelectBookCallback> mCallbackList = new ArrayList<>();
+    private List<SelectBookBeans.CatesBean.BookListBean> mAllBookList = new ArrayList<>();//全部的数据放在一起
+    private List<SelectBookBeans.CatesBean.BookListBean> mCurrentBookList = new ArrayList<>();//记录当前刷新加载的
+    private int mCurrentPage = 1;//初始页
     private ListPageUtils mPageUtils;
-    private int mCurrentPosition;
+    private int mCurrentPosition;//点击的哪个书本
     private String mDownloadZipName;
     private String mRequestParms;
     private File mDownFile;
-    private List<ZipBeans> mZipList=new ArrayList<>();
+    private List<ZipBeans> mZipList = new ArrayList<>();
     private String mCurrentJsonName;
 
     //单线程池 用来顺序执行 -->  用来处理IO
-    private ExecutorService singleExector=Executors.newSingleThreadExecutor();
+    private ExecutorService singleExector = Executors.newSingleThreadExecutor();
+    private final WordsDB mWordsDB;
+    private final WordsDao mWordsDao;
 
     private SelectorPresenter() {
+        //创建对象的时候 直接创建数据库
+        mWordsDB = Room.databaseBuilder(BaseAppciation.getContext(), WordsDB.class, ContentUrl.DB_NAME).build();
+        mWordsDao = mWordsDB.getWordsDao();
     }
 
-    private static  volatile SelectorPresenter instance=null;
+    private static volatile SelectorPresenter instance = null;
 
     public static SelectorPresenter getInstance() {
-        if (instance==null){
-            synchronized (SelectorPresenter.class){
-                if (instance==null){
-                    instance=new SelectorPresenter();
+        if (instance == null) {
+            synchronized (SelectorPresenter.class) {
+                if (instance == null) {
+                    instance = new SelectorPresenter();
                 }
             }
         }
         return instance;
     }
+
     @Override
     public void requestBook() {
 
@@ -91,8 +103,8 @@ public class SelectorPresenter implements ISelectBookPresent {
             @Override
             public void onResponse(Call<SelectBookBeans> call, Response<SelectBookBeans> response) {
                 int code = response.code();
-                LogUtil.d(TAG,"code --> "+code);
-                if (code == HttpURLConnection.HTTP_OK){
+                LogUtil.d(TAG, "code --> " + code);
+                if (code == HttpURLConnection.HTTP_OK) {
                     try {
                         List<SelectBookBeans.CatesBean> catesBeanList = response.body().getCates();
                         //把分段的数据全部放在这数据
@@ -100,7 +112,7 @@ public class SelectorPresenter implements ISelectBookPresent {
                             mAllBookList.addAll(catesBean.getBookList());
                         }
                         //把全部的数据分割成 每页只显示 --> 10条数据
-                        mPageUtils = new ListPageUtils(mAllBookList,10);
+                        mPageUtils = new ListPageUtils(mAllBookList, 10);
                         List defaultPageList = mPageUtils.getPagedList(mCurrentPage);
                         for (ISelectBookCallback iSelectBookCallback : mCallbackList) {
                             iSelectBookCallback.showBookList(defaultPageList);
@@ -110,12 +122,13 @@ public class SelectorPresenter implements ISelectBookPresent {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<SelectBookBeans> call, Throwable t) {
                 for (ISelectBookCallback iSelectBookCallback : mCallbackList) {
                     iSelectBookCallback.onNetworkError();
                 }
-                LogUtil.d(TAG,"error msg --> "+t.toString());
+                LogUtil.d(TAG, "error msg --> " + t.toString());
             }
         });
     }
@@ -133,9 +146,9 @@ public class SelectorPresenter implements ISelectBookPresent {
     }
 
     private void refreshMore(boolean loader) {
-        if (loader){
+        if (loader) {
             mCurrentBookList.clear();
-            LogUtil.d(TAG,"mCurrentPage --> "+mCurrentPage);
+            LogUtil.d(TAG, "mCurrentPage --> " + mCurrentPage);
             List pagedList = mPageUtils.getPagedList(mCurrentPage);
             mCurrentBookList.addAll(pagedList);
             for (ISelectBookCallback iSelectBookCallback : mCallbackList) {
@@ -165,11 +178,11 @@ public class SelectorPresenter implements ISelectBookPresent {
 
     @Override
     public void requestPositionZip(int pos) {
-        this.mCurrentPosition=pos;
+        this.mCurrentPosition = pos;
         String zipUrl = mAllBookList.get(pos).getOfflinedata();
 
-
-
+        HomePresent.getPresent().getBookNum(pos);
+        SearchPresent.getPresent().getBookNum(pos);
         //下载zip
         downloadZip(zipUrl);
 
@@ -181,47 +194,73 @@ public class SelectorPresenter implements ISelectBookPresent {
     }
 
 
-    Runnable jsonRunable=new Runnable() {
+    Runnable jsonRunable = new Runnable() {
         @Override
         public void run() {
-            FileInputStream fis=null;
+            FileInputStream fis = null;
             try {
                 //组装json文件
                 String replace = mDownloadZipName.replace(".zip", "");
-                String jsonName=replace+".json";
+                String jsonName = replace + ".json";
 
                 //读取json文件
-                File jsonFile=new File(BaseAppciation.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),jsonName);
-                fis=new FileInputStream(jsonFile);
-                List<ZipBeans> mZipList=new ArrayList<>();
-                String len="";
-                BufferedReader br=new BufferedReader(new InputStreamReader(fis));
+                File jsonFile = new File(BaseAppciation.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), jsonName);
+                fis = new FileInputStream(jsonFile);
+                List<ZipBeans> mZipList = new ArrayList<>();
+                String len = "";
+                BufferedReader br = new BufferedReader(new InputStreamReader(fis));
                 Gson gson = new Gson();
-                while ((len=br.readLine())!=null){
+                while ((len = br.readLine()) != null) {
                     ZipBeans beans = gson.fromJson(len, ZipBeans.class);
                     mZipList.add(beans);
                 }
+                LogUtil.d(TAG, "mZipList size --> " + mZipList.size());
 
-                //TODO:写入到数据库
-                for (ZipBeans beans : mZipList) {
-                    String headWord = beans.getHeadWord();
-                    LogUtil.d(TAG,"hearwords -->"+headWord);//英语
 
-                    String phone = beans.getContent().getWord().getContent().getPhone();//英标
+                //写入到数据库
+                int count = 0;
+                for (int i = 0; i < mZipList.size(); i++) {
+                    count++;
+
+                    String headWord = mZipList.get(i).getHeadWord();
+                    String ukphone = mZipList.get(i).getContent().getWord().getContent().getUkphone();
+                    String usphone = mZipList.get(i).getContent().getWord().getContent().getUsphone();
+                    String picture = mZipList.get(i).getContent().getWord().getContent().getPicture();
+                    //可能例句会为NULL --> 跳过
+                    if (mZipList.get(i).getContent().getWord().getContent().getSentence() == null) {
+                        continue;
+                    }
+                    String sContent = mZipList.get(i).getContent().getWord().getContent().getSentence().getSentences().get(0).getSContent();
+                    String sCn = mZipList.get(i).getContent().getWord().getContent().getSentence().getSentences().get(0).getSCn();
+
+                    //可能单词翻译会为NULL --> 跳过
+                    if (mZipList.get(i).getContent().getWord().getContent().getSyno() == null) {
+                        continue;
+                    }
+                    String tran = mZipList.get(i).getContent().getWord().getContent().getSyno().getSynos().get(0).getTran();
+                    String simpleTran = mZipList.get(i).getContent().getWord().getContent().getTrans().get(0).getTranCn();
+
+
+                    Words words = new Words(headWord, mCurrentPosition,ukphone, usphone, picture, sContent, sCn, tran, simpleTran,false);
+                    try {
+                        mWordsDao.insertWords(words);
+                    } catch (SQLiteConstraintException e) {
+                        e.printStackTrace();
+                        LogUtil.d(TAG,e.getMessage());
+
+                    }
 
                 }
-
-
-                Message msg=Message.obtain();
-                msg.what=SelectorBookActivity.TYPE_READ_JSON_PROGRESS;
+                List<Words> allWords = mWordsDao.getAllWords();
+                LogUtil.d(TAG, "allWors size --> " + allWords.size());
+                //发送消息 --> 加载结束
+                Message msg = Message.obtain();
+                msg.what = SelectorBookActivity.TYPE_READ_JSON_PROGRESS;
                 SelectorBookActivity.mSelectorHandler.sendMessage(msg);
-
-
-
 
             } catch (Exception e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 if (fis != null) {
                     try {
                         fis.close();
@@ -233,11 +272,11 @@ public class SelectorPresenter implements ISelectBookPresent {
         }
     };
 
-    Runnable releaseZipRunnable =new Runnable() {
+    Runnable releaseZipRunnable = new Runnable() {
         @Override
         public void run() {
             try {
-                upZipFile(mDownFile,BaseAppciation.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getPath());
+                upZipFile(mDownFile, BaseAppciation.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getPath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -246,24 +285,24 @@ public class SelectorPresenter implements ISelectBookPresent {
 
     private void releaseZip() {
         try {
-            upZipFile(mDownFile,BaseAppciation.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getPath());
+            upZipFile(mDownFile, BaseAppciation.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    public  void upZipFile(File zipFile, String folderPath) throws ZipException, IOException {
+    public void upZipFile(File zipFile, String folderPath) throws ZipException, IOException {
         File desDir = new File(folderPath);
         if (!desDir.exists()) {
             desDir.mkdirs();
         }
         ZipFile zf = new ZipFile(zipFile);
-        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements();) {
-            ZipEntry entry = ((ZipEntry)entries.nextElement());
+        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements(); ) {
+            ZipEntry entry = ((ZipEntry) entries.nextElement());
             InputStream in = zf.getInputStream(entry);
             String str = folderPath + File.separator + entry.getName();
-            this.mCurrentJsonName =entry.getName();
+            this.mCurrentJsonName = entry.getName();
             str = new String(str.getBytes("8859_1"), "GB2312");
             File desFile = new File(str);
             if (!desFile.exists()) {
@@ -275,16 +314,16 @@ public class SelectorPresenter implements ISelectBookPresent {
             }
             OutputStream out = new FileOutputStream(desFile);
             byte buffer[] = new byte[1024];
-            int len=0;
-            int totalLen=0;
+            int len = 0;
+            int totalLen = 0;
             int available = in.available();
-            while ((len= in.read(buffer)) !=-1) {
+            while ((len = in.read(buffer)) != -1) {
                 out.write(buffer, 0, len);
-                totalLen+=len;
-                Message msg=Message.obtain();
-                msg.arg1=totalLen;
-                msg.arg2=available;
-                msg.what= SelectorBookActivity.TYPE_RELEASE_ZIP_PROGRESS;
+                totalLen += len;
+                Message msg = Message.obtain();
+                msg.arg1 = totalLen;
+                msg.arg2 = available;
+                msg.what = SelectorBookActivity.TYPE_RELEASE_ZIP_PROGRESS;
                 SelectorBookActivity.mSelectorHandler.sendMessage(msg);
             }
             in.close();
@@ -300,7 +339,7 @@ public class SelectorPresenter implements ISelectBookPresent {
         mixRequestParms(zipUrl);
 
         File externFile = BaseAppciation.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-        mDownFile = new File(externFile,mRequestParms);
+        mDownFile = new File(externFile, mRequestParms);
         if (!mDownFile.exists()) {
             try {
                 mDownFile.createNewFile();
@@ -316,21 +355,21 @@ public class SelectorPresenter implements ISelectBookPresent {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 int code = response.code();
-                LogUtil.d(TAG,"zip code --> "+code);
-                if (code==HttpURLConnection.HTTP_OK){
-                    FileOutputStream fos=null;
-                    InputStream is=null;
+                LogUtil.d(TAG, "zip code --> " + code);
+                if (code == HttpURLConnection.HTTP_OK) {
+                    FileOutputStream fos = null;
+                    InputStream is = null;
                     try {
-                        fos =new FileOutputStream(mDownFile);
-                        int len=0;
-                        int downloadLen=0;//已下载的字节数
-                        int totalLen=0;//总下载长度
-                        byte[] bytes=new byte[1024];
+                        fos = new FileOutputStream(mDownFile);
+                        int len = 0;
+                        int downloadLen = 0;//已下载的字节数
+                        int totalLen = 0;//总下载长度
+                        byte[] bytes = new byte[1024];
                         is = response.body().byteStream();
                         totalLen = is.available();
-                        while ((len=is.read(bytes))!=-1){
-                            fos.write(bytes,0,len);
-                            downloadLen+=len;
+                        while ((len = is.read(bytes)) != -1) {
+                            fos.write(bytes, 0, len);
+                            downloadLen += len;
                             //int value=(downloadLen*100)/totalLen; 0-100
                             for (ISelectBookCallback iSelectBookCallback : mCallbackList) {
                                 iSelectBookCallback.downZipProgress(downloadLen, totalLen);
@@ -343,7 +382,7 @@ public class SelectorPresenter implements ISelectBookPresent {
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }finally {
+                    } finally {
                         if (fos != null) {
                             try {
                                 fos.close();
@@ -351,7 +390,7 @@ public class SelectorPresenter implements ISelectBookPresent {
                                 e.printStackTrace();
                             }
                         }
-                        if (is!=null){
+                        if (is != null) {
                             try {
                                 is.close();
                             } catch (IOException e) {
@@ -365,26 +404,25 @@ public class SelectorPresenter implements ISelectBookPresent {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                LogUtil.d(TAG,"error msg --> "+t.toString());
+                LogUtil.d(TAG, "error msg --> " + t.toString());
             }
         });
     }
 
 
-
     private void mixRequestParms(String zipUrl) {
-        StringBuffer sb=new StringBuffer();
+        StringBuffer sb = new StringBuffer();
         int i = zipUrl.lastIndexOf("/");
         mRequestParms = sb.append(zipUrl).replace(0, i + 1, "").toString();
-        LogUtil.d(TAG,"requesetParm -->"+ mRequestParms);
+        LogUtil.d(TAG, "requesetParm -->" + mRequestParms);
     }
 
     private void getDownZipName(String zipUrl) {
-        StringBuffer sb=new StringBuffer();
-        LogUtil.d(TAG,"zip url --> "+zipUrl);
+        StringBuffer sb = new StringBuffer();
+        LogUtil.d(TAG, "zip url --> " + zipUrl);
         CharSequence charSequence = zipUrl.subSequence(zipUrl.indexOf("_"), zipUrl.length());
         mDownloadZipName = sb.append(charSequence.toString()).substring(1);
-        LogUtil.d(TAG,"downloadZipName -->"+ mDownloadZipName);
+        LogUtil.d(TAG, "downloadZipName -->" + mDownloadZipName);
     }
 
 }

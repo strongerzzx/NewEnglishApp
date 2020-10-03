@@ -6,5 +6,7 @@ public class ContentUrl {
 
     //Login的base
     public static final String BASE_LOGIN="http://47.100.170.185:8081/";
+
+    public static final String DB_NAME="words_db";
 }
 

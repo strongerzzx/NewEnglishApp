@@ -1,34 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
 
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_dialog_progress"
+        android:padding="15dp">
 
-    <TextView
-        android:id="@+id/dialog_loading_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="请稍等"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
-    <ProgressBar
-        android:id="@+id/dialog_loading_pro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_loading_title"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="8dp"/>
-    <TextView
-        android:id="@+id/dialog_loading_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="数据正在请求中..."
-        android:layout_toRightOf="@id/dialog_loading_pro"
-        android:layout_below="@id/dialog_loading_title"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="10dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="30dip"
+                android:layout_height="30dip" />
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:text="加载中..."
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
 </RelativeLayout>
