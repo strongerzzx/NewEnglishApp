@@ -52,8 +52,6 @@
 
         </RelativeLayout>
 
-
-
         <TextView
             android:id="@+id/search_btn"
             android:layout_width="wrap_content"
@@ -76,12 +74,9 @@
         android:layout_below="@id/search_header"
         android:visibility="gone"/>
 
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/search_suggest_rv"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:overScrollMode="never"-->
-<!--        android:layout_below="@id/search_header"-->
-<!--        android:visibility="gone"/>-->
+    <!--如果没数据 就显示这个-->
+    <FrameLayout
+        android:id="@+id/search_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

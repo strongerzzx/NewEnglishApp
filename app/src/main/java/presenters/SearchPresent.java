@@ -1,12 +1,8 @@
 package presenters;
 
-import androidx.room.Room;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import bases.BaseAppciation;
-import beans.ContentUrl;
 import dao.WordsDao;
 import entirys.Words;
 import interfaces.ISearchCallback;
@@ -25,9 +21,10 @@ public class SearchPresent implements ISearchPresent {
     private List<ISearchCallback> mCallbackList=new ArrayList<>();
     private final WordsDao mWordsDao;
     private int mCurrentBook;
+    private List<Words> mSuggestWords =new ArrayList<>();
 
     private SearchPresent(){
-        WordsDB db = Room.databaseBuilder(BaseAppciation.getContext(), WordsDB.class, ContentUrl.DB_NAME).build();
+        WordsDB db = WordsDB.getWordsDB();
         mWordsDao = db.getWordsDao();
     }
 
@@ -54,19 +51,33 @@ public class SearchPresent implements ISearchPresent {
                     LogUtil.d(TAG,"resultSize -->"+searchResultWords.size());
                     for (ISearchCallback iSearchCallback : mCallbackList) {
                         iSearchCallback.showSearchResult(searchResultWords);
-                        System.out.println(searchResultWords.get(0).getHeadWord());
+                        iSearchCallback.onSuccessData();
+                    }
+                }
+                if (searchResultWords == null || searchResultWords.size()==0) {
+                    for (ISearchCallback iSearchCallback : mCallbackList) {
+                        iSearchCallback.onEmpty();
                     }
                 }
             }
         }).start();
-
-
-        LogUtil.d(TAG,"keyword -->"+keyword);
     }
 
     @Override
     public void doSuggestSearch(String suggest) {
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mSuggestWords.clear();
+                List<Words> suggestWordsList = mWordsDao.getSearchResultWords(mCurrentBook, suggest);
+                if (suggestWordsList!=null && suggestWordsList.size()>0){
+                    List<Words> subWords = suggestWordsList.subList(0, suggestWordsList.size() > 6 ? 6 : suggestWordsList.size());
+                    for (ISearchCallback iSearchCallback : mCallbackList) {
+                        iSearchCallback.showSearchSuggest(subWords);
+                    }
+                }
+            }
+        }).start();
     }
 
     @Override

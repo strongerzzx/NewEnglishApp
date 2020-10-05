@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff">
+
+    <TextView
+        android:id="@+id/search_suggest_english"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="so"
+        android:textStyle="bold"
+        android:textSize="10sp"
+        android:textColor="#000"
+        android:padding="5dp"/>
+    <TextView
+        android:id="@+id/search_suggest_fayin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/SOOED/"
+        android:layout_toRightOf="@id/search_suggest_english"
+        android:textColor="#7D8696"
+        android:textSize="10sp"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/search_suggest_chinese"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="如此,这么"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/search_suggest_english"
+        android:textColor="#7D8696"
+        android:textSize="10sp"
+        android:layout_marginLeft="5dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#3C4D4D4D"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/search_suggest_chinese"/>
+
+
+</RelativeLayout>

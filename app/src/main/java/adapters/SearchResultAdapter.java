@@ -23,6 +23,10 @@ import entirys.Words;
  */
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.InnerViewHolder> {
     private List<Words> mWords=new ArrayList<>();
+    private onItemSearchResultClickListener  mOnItemSearchResultClickListener;
+
+    private onItemSearchResultCollectionClick mOnItemSearchResultCollectionClick;
+
     @NonNull
     @Override
     public InnerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,7 +39,25 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         Words words = mWords.get(position);
         holder.cikuChinese.setText(position+"-"+words.getTran());
         holder.cikuEnglish.setText(words.getHeadWord());
-        holder.cikuCollection.setImageResource(R.mipmap.ic_collection_normal);
+        holder.cikuCollection.setImageResource(R.mipmap.ic_select_book_more);
+
+        if (mOnItemSearchResultClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemSearchResultClickListener.onSearchResultClickListner(position,mWords);
+                }
+            });
+        }
+
+        if (mOnItemSearchResultCollectionClick != null) {
+            holder.cikuCollection.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemSearchResultCollectionClick.onSearchResultCollectionClick(position);
+                }
+            });
+        }
     }
 
     @Override
@@ -61,5 +83,22 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             cikuEnglish=itemView.findViewById(R.id.ciku_item_english);
             cikuCollection=itemView.findViewById(R.id.ciku_item_collection_iv);
         }
+    }
+
+    public void setOnItemSearchResultClickListener(onItemSearchResultClickListener onItemSearchResultClickListener) {
+        mOnItemSearchResultClickListener = onItemSearchResultClickListener;
+    }
+
+
+    public void setOnItemSearchResultCollectionClick(onItemSearchResultCollectionClick onItemSearchResultCollectionClick) {
+        mOnItemSearchResultCollectionClick = onItemSearchResultCollectionClick;
+    }
+
+    public interface onItemSearchResultClickListener{
+        void onSearchResultClickListner(int position,List<Words> mWords);
+    }
+
+    public interface onItemSearchResultCollectionClick{
+        void onSearchResultCollectionClick(int position);
     }
 }

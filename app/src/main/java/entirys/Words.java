@@ -42,11 +42,25 @@ public class Words {
     @ColumnInfo(name = "simple_tran")
     private String simpleTran;//简单翻译
 
+    @ColumnInfo(name = "tran_other")
+    private String tranOther;//单词的英语长句近义词
+
+    @ColumnInfo(name = "syn_word_1")
+    private String synWord1;//单词的近义词1
+
+    @ColumnInfo(name = "p_content")
+    private String pcontent;//短语英文
+
+    @ColumnInfo(name = "p_cn")
+    private String pcn;//短语中文
+
     @ColumnInfo(name = "is_collection")
     private boolean iscollection;//简单翻译
 
 
-    public Words(String headWord,int bookpos, String ukphone, String usphone, String picture, String content, String cnContent, String tran, String simpleTran,boolean iscollection) {
+    public Words(String headWord,int bookpos, String ukphone, String usphone, String picture, String content
+            , String cnContent, String tran, String simpleTran,String tranOther,String synWord1,String pcontent,String pcn,boolean iscollection) {
+        this.synWord1=synWord1;
         this.bookpos=bookpos;
         this.headWord = headWord;
         this.ukphone = ukphone;
@@ -56,7 +70,43 @@ public class Words {
         this.cnContent = cnContent;
         this.tran = tran;
         this.simpleTran = simpleTran;
+        this.tranOther=tranOther;
+        this.pcontent=pcontent;
+        this.pcn=pcn;
         this.iscollection=iscollection;
+    }
+
+
+    public String getPcontent() {
+        return pcontent;
+    }
+
+    public void setPcontent(String pcontent) {
+        this.pcontent = pcontent;
+    }
+
+    public String getPcn() {
+        return pcn;
+    }
+
+    public void setPcn(String pcn) {
+        this.pcn = pcn;
+    }
+
+    public String getSynWord1() {
+        return synWord1;
+    }
+
+    public void setSynWord1(String synWord1) {
+        this.synWord1 = synWord1;
+    }
+
+    public String getTranOther() {
+        return tranOther;
+    }
+
+    public void setTranOther(String tranOther) {
+        this.tranOther = tranOther;
     }
 
     public boolean isIscollection() {

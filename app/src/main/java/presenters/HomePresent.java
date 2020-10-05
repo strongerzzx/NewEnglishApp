@@ -1,13 +1,9 @@
 package presenters;
 
-import androidx.room.Room;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import bases.BaseAppciation;
-import beans.ContentUrl;
 import dao.WordsDao;
 import entirys.Words;
 import interfaces.IHomeCallback;
@@ -30,7 +26,7 @@ public class HomePresent implements IHomePresent {
 
 
     private HomePresent() {
-        WordsDB db = Room.databaseBuilder(BaseAppciation.getContext(), WordsDB.class, ContentUrl.DB_NAME).build();
+        WordsDB db =WordsDB.getWordsDB();
         mWordsDao = db.getWordsDao();
     }
 

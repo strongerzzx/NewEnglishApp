@@ -11,4 +11,7 @@ public class Commons {
 
     //Login的base
     public static final String BASE_LOGIN="http://47.100.170.185:8081/";
+
+    //收藏dialog的数据库名
+    public static final String DB_TYPE_WORDSCLIPS="words_clips_db";
 }

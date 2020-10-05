@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,9 @@ import adapters.CikuAdapter;
 import entirys.Words;
 import interfaces.ICikuCallback;
 import presenters.CIkuPresent;
+import presenters.DetailPresent;
 import utils.LogUtil;
+import views.CollectionDialog;
 
 public class CikuActivity extends AppCompatActivity implements ICikuCallback {
 
@@ -58,9 +61,22 @@ public class CikuActivity extends AppCompatActivity implements ICikuCallback {
         //跳转到详情页
         mAdapter.setOnCiKuItemClickListener(new CikuAdapter.onCiKuItemClickListener() {
             @Override
-            public void onCiKuClickListener(int position) {
+            public void onCiKuClickListener(int position,List<Words> currentWords) {
                 Intent intent=new Intent(CikuActivity.this,CikuDetailActivity.class);
+
+                //详情页从这获取点击的单词
+                DetailPresent.getPresent().getCikuData(position,currentWords);
                 startActivity(intent);
+            }
+        });
+
+        //跳出一个收藏
+        mAdapter.setOnCikuCollectionMoreClickListener(new CikuAdapter.onCikuCollectionMoreClickListener() {
+            @Override
+            public void onCikuCollectionMoreClick() {
+                CollectionDialog dialog=new CollectionDialog(CikuActivity.this);
+                dialog.show();
+
             }
         });
     }
@@ -82,12 +98,26 @@ public class CikuActivity extends AppCompatActivity implements ICikuCallback {
 
     private void setHeadView(RecyclerView cikuRv) {
         View headerView = LayoutInflater.from(this).inflate(R.layout.ciku_rv_header, cikuRv, false);
+        ImageView ivFinish =headerView.findViewById(R.id.ciku_item_finish_iv);
+        ivFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         mAdapter.setHeaderView(headerView);
     }
 
     @Override
     public void showAllWords(List<Words> wordsList) {
-        mAdapter.setData(wordsList);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.setData(wordsList);
+            }
+        });
+
         LogUtil.d(TAG,"wordsListSize --> "+wordsList.size());
     }
 

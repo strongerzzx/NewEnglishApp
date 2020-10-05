@@ -4,8 +4,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.Environment;
 import android.os.Message;
 
-import androidx.room.Room;
-
 import com.example.englishapp_bishe.SelectorBookActivity;
 import com.google.gson.Gson;
 
@@ -74,7 +72,7 @@ public class SelectorPresenter implements ISelectBookPresent {
 
     private SelectorPresenter() {
         //创建对象的时候 直接创建数据库
-        mWordsDB = Room.databaseBuilder(BaseAppciation.getContext(), WordsDB.class, ContentUrl.DB_NAME).build();
+        mWordsDB = WordsDB.getWordsDB();
         mWordsDao = mWordsDB.getWordsDao();
     }
 
@@ -183,6 +181,7 @@ public class SelectorPresenter implements ISelectBookPresent {
 
         HomePresent.getPresent().getBookNum(pos);
         SearchPresent.getPresent().getBookNum(pos);
+        CollectionManagerPresenter.getPresenter().getBookNum(pos);
         //下载zip
         downloadZip(zipUrl);
 
@@ -240,14 +239,23 @@ public class SelectorPresenter implements ISelectBookPresent {
                     String tran = mZipList.get(i).getContent().getWord().getContent().getSyno().getSynos().get(0).getTran();
                     String simpleTran = mZipList.get(i).getContent().getWord().getContent().getTrans().get(0).getTranCn();
 
+                    String tranOther = mZipList.get(i).getContent().getWord().getContent().getTrans().get(0).getTranOther();
+                    String w1 = mZipList.get(i).getContent().getWord().getContent().getSyno().getSynos().get(0).getHwds().get(0).getW();
 
-                    Words words = new Words(headWord, mCurrentPosition,ukphone, usphone, picture, sContent, sCn, tran, simpleTran,false);
+                    if ( mZipList.get(i).getContent().getWord().getContent().getPhrase()==null){
+                        continue;
+                    }
+                    String pContent = mZipList.get(i).getContent().getWord().getContent().getPhrase().getPhrases().get(0).getPContent();
+                    String pCn = mZipList.get(i).getContent().getWord().getContent().getPhrase().getPhrases().get(0).getPCn();
+
+
+                    Words words = new Words(headWord, mCurrentPosition,ukphone, usphone, picture, sContent,
+                            sCn, tran, simpleTran,tranOther,w1,pContent,pCn,false);
                     try {
                         mWordsDao.insertWords(words);
                     } catch (SQLiteConstraintException e) {
                         e.printStackTrace();
                         LogUtil.d(TAG,e.getMessage());
-
                     }
 
                 }

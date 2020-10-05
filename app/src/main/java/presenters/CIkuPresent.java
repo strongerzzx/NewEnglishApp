@@ -1,12 +1,8 @@
 package presenters;
 
-import androidx.room.Room;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import bases.BaseAppciation;
-import beans.ContentUrl;
 import dao.WordsDao;
 import entirys.Words;
 import interfaces.ICikuCallback;
@@ -31,7 +27,7 @@ public class CIkuPresent implements ICikuPresent {
     private ListPageUtils<Words> mPageUtils;
 
     private CIkuPresent(){
-        WordsDB db = Room.databaseBuilder(BaseAppciation.getContext(), WordsDB.class, ContentUrl.DB_NAME).build();
+        WordsDB db = WordsDB.getWordsDB();
         mWordsDao = db.getWordsDao();
     }
 
@@ -103,6 +99,7 @@ public class CIkuPresent implements ICikuPresent {
     @Override
     public void getBookNum(int currentBookNum) {
         this.mCurrentBookPosition =currentBookNum;
+        CollectionDialogPresent.getPresent().getBookNum(currentBookNum);
         LogUtil.d(TAG,"mCurrentBookPosition --> "+mCurrentBookPosition);
     }
 }

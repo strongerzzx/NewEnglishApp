@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entirys.Words;
+import presenters.CollectionDialogPresent;
 
 /**
  * 作者：zzx on 2020/10/2 18:53
@@ -30,6 +31,8 @@ public class CikuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Words> mList=new ArrayList<>();
     private View mHeaderView;
     private onCiKuItemClickListener mOnCiKuItemClickListener;
+    private onCikuCollectionMoreClickListener mOnCikuCollectionMoreClickListener;
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,7 +53,7 @@ public class CikuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }else if (getItemViewType(position)==TYPE_CIKU_NORMAL){
             if (holder instanceof NormalView){
                 Words words = mList.get(position-1); //因为是带有Header的Rv 所以0被占用了
-                ((NormalView) holder).cikuCollection.setImageResource(R.mipmap.ic_collection_normal);
+                ((NormalView) holder).cikuCollection.setImageResource(R.mipmap.ic_select_book_more);
                 ((NormalView) holder).cikuChinese.setText(position+"-"+words.getTran());
                 ((NormalView) holder).cikuEnglish.setText(words.getHeadWord());
 
@@ -58,18 +61,20 @@ public class CikuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mOnCiKuItemClickListener.onCiKuClickListener(position);
+                            mOnCiKuItemClickListener.onCiKuClickListener(position,mList);
+                        }
+                    });
+                }
+                if (mOnCikuCollectionMoreClickListener != null) {
+                    ((NormalView) holder).cikuCollection.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mOnCikuCollectionMoreClickListener.onCikuCollectionMoreClick();
                         }
                     });
                 }
 
-                //收藏单词 --> 变色
-                ((NormalView) holder).cikuCollection.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((NormalView) holder).cikuCollection.setImageResource(R.mipmap.ic_collection_press);
-                    }
-                });
+                CollectionDialogPresent.getPresent().getPicText(mList,position);
             }
         }
     }
@@ -123,10 +128,16 @@ public class CikuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class HeaderView extends RecyclerView.ViewHolder{
         private TextView tvHeader;
+        private ImageView ivFinish;
         public HeaderView(@NonNull View itemView) {
             super(itemView);
+            ivFinish=itemView.findViewById(R.id.ciku_item_finish_iv);
             tvHeader=itemView.findViewById(R.id.ci_ku_title);
         }
+    }
+
+    public void setOnCikuCollectionMoreClickListener(onCikuCollectionMoreClickListener onCikuCollectionMoreClickListener) {
+        mOnCikuCollectionMoreClickListener = onCikuCollectionMoreClickListener;
     }
 
     public void setOnCiKuItemClickListener(onCiKuItemClickListener onCiKuItemClickListener) {
@@ -134,6 +145,11 @@ public class CikuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public interface onCiKuItemClickListener{
-        void onCiKuClickListener(int position);
+        void onCiKuClickListener(int position,List<Words> currentWords);
+    }
+
+
+    public  interface onCikuCollectionMoreClickListener{
+        void onCikuCollectionMoreClick();
     }
 }

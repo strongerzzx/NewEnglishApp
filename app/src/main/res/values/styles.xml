@@ -19,4 +19,15 @@
     <style name="bottom_nav_no_select">
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="CustomDialogAnim">
+        <item name="android:windowEnterAnimation">@anim/collection_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/collection_dialog_out</item>
+    </style>
+
+
+    <style name="NewCustomDialogAnim">
+        <item name="android:windowEnterAnimation">@anim/new_collection_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/new_collection_dialog_out</item>
+    </style>
 </resources>

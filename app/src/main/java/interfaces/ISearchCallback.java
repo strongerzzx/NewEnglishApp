@@ -15,4 +15,10 @@ public interface ISearchCallback {
 
     //显示联想词
     void showSearchSuggest(List<Words> suggestWords);
+
+    //找不到 --> 空数据
+    void onEmpty();
+
+    //有数据
+    void onSuccessData();
 }
