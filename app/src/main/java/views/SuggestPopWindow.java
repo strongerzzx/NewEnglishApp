@@ -52,7 +52,6 @@ public class SuggestPopWindow extends PopupWindow {
         mSuggestAdapter = new PopSuggestAdapter();
         popSuggestRv.setAdapter(mSuggestAdapter);
 
-        //TODO: -->到详情页
         mSuggestAdapter.setOnSuggestItemClickListener(new PopSuggestAdapter.onSuggestItemClickListener() {
             @Override
             public void onSuggestClickListener(int position,List<Words> mWords) {

@@ -108,6 +108,7 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
         mAdapter.setOnDialogCollectionItemClickListener(new DialogCollectionAdapter.onDialogCollectionItemClickListener() {
             @Override
             public void onDialogCollectionItemClick(int pos) {
+
                 LogUtil.d(TAG,"ipos-->"+pos);
 
             }
