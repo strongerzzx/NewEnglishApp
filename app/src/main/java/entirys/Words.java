@@ -54,12 +54,17 @@ public class Words {
     @ColumnInfo(name = "p_cn")
     private String pcn;//短语中文
 
+    @ColumnInfo(name = "collection_pos")
+    private int collectionpos;//收藏夹的ID
+
     @ColumnInfo(name = "is_collection")
-    private boolean iscollection;//简单翻译
+    private boolean iscollection;//是否收藏
 
 
     public Words(String headWord,int bookpos, String ukphone, String usphone, String picture, String content
-            , String cnContent, String tran, String simpleTran,String tranOther,String synWord1,String pcontent,String pcn,boolean iscollection) {
+            , String cnContent, String tran, String simpleTran,String tranOther,String synWord1
+            ,String pcontent,String pcn,int collectionpos,boolean iscollection) {
+        this.collectionpos=collectionpos;
         this.synWord1=synWord1;
         this.bookpos=bookpos;
         this.headWord = headWord;
@@ -76,6 +81,13 @@ public class Words {
         this.iscollection=iscollection;
     }
 
+    public int getCollectionpos() {
+        return collectionpos;
+    }
+
+    public void setCollectionpos(int collectionpos) {
+        this.collectionpos = collectionpos;
+    }
 
     public String getPcontent() {
         return pcontent;

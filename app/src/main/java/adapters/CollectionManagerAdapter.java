@@ -26,6 +26,7 @@ import utils.LogUtil;
 public class CollectionManagerAdapter extends RecyclerView.Adapter<CollectionManagerAdapter.InnerViewHolder> {
     private static final String TAG = "CollectionManagerAdapter";
     private List<WordClips> mClips=new ArrayList<>();
+    private onIvCollectionManagerClickListener mIvOnCollectionManagerClickListener;
     private onCollectionManagerClickListener mOnCollectionManagerClickListener;
     @NonNull
     @Override
@@ -38,16 +39,29 @@ public class CollectionManagerAdapter extends RecyclerView.Adapter<CollectionMan
     public void onBindViewHolder(@NonNull InnerViewHolder holder, int position) {
         WordClips clips = mClips.get(position);
         holder.managerTitle.setText(clips.getTitle());
-        holder.managerNum.setText(clips.getWordsNum()+"");
+        holder.managerNum.setText("单词量:"+clips.getWordsNum()+"");
 
         Glide.with(holder.itemView.getContext()).load(clips.getPic()).into(holder.managerIv);
 
-        if (mOnCollectionManagerClickListener != null) {
+        if (mIvOnCollectionManagerClickListener != null) {
             LogUtil.d(TAG,"pos --> "+position);
             holder.managerMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnCollectionManagerClickListener.onCollectionManagerClick(position);
+//                    CollectionManagerPopWindow pop=new CollectionManagerPopWindow(holder.itemView.getContext());
+//                    pop.showAtLocation(v, Gravity.BOTTOM,0,0);
+
+                    mIvOnCollectionManagerClickListener.onCollectionManagerClick(position,holder.itemView);
+                }
+            });
+        }
+
+        if (mOnCollectionManagerClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    mOnCollectionManagerClickListener.onCollectionManagerClick(mClips.get(position).getId());
                 }
             });
         }
@@ -81,11 +95,23 @@ public class CollectionManagerAdapter extends RecyclerView.Adapter<CollectionMan
             managerMore =itemView.findViewById(R.id.collection_manager_more);
         }
     }
+
+
     public void setOnCollectionManagerClickListener(onCollectionManagerClickListener onCollectionManagerClickListener) {
         mOnCollectionManagerClickListener = onCollectionManagerClickListener;
     }
 
+    public void setIvOnCollectionManagerClickListener(onIvCollectionManagerClickListener ivOnCollectionManagerClickListener) {
+        mIvOnCollectionManagerClickListener = ivOnCollectionManagerClickListener;
+    }
+
+    //点击弹出PopWinodw
+    public interface onIvCollectionManagerClickListener {
+        void onCollectionManagerClick(int pos,View view);
+    }
+
+    //点击获取收藏夹的ID
     public interface onCollectionManagerClickListener{
-        void onCollectionManagerClick(int pos);
+        void onCollectionManagerClick(int clipsID);
     }
 }

@@ -250,7 +250,7 @@ public class SelectorPresenter implements ISelectBookPresent {
 
 
                     Words words = new Words(headWord, mCurrentPosition,ukphone, usphone, picture, sContent,
-                            sCn, tran, simpleTran,tranOther,w1,pContent,pCn,false);
+                            sCn, tran, simpleTran,tranOther,w1,pContent,pCn,0,false);
                     try {
                         mWordsDao.insertWords(words);
                     } catch (SQLiteConstraintException e) {

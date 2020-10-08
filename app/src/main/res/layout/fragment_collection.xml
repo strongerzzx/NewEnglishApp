@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center"
             android:padding="10dp"
-            android:text="收藏夹(15)"
+            android:text="收藏夹(0)"
             android:textSize="19sp"
             android:textStyle="bold" />
 
@@ -36,17 +36,12 @@
     </LinearLayout>
 
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/collection_manager_rv"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_below="@id/collection_manager_header"-->
-<!--        android:overScrollMode="never"/>-->
-
-    <FrameLayout
-        android:id="@+id/collection_manager_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/collection_manager_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/collection_manager_header"/>
+        android:layout_below="@id/collection_manager_header"
+        android:overScrollMode="never"/>
+
 
 </RelativeLayout>

@@ -13,4 +13,8 @@ public interface ICollectionDialogCallback {
 
     //返回查询的数据 ——-> 显示
     void showAllClips(List<WordClips> clipsList);
+
+
+    //获取每个单词夹的名字
+    void getAllClipsTitle(String title);
 }

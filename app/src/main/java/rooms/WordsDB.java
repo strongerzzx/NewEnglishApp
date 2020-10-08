@@ -20,7 +20,7 @@ import entirys.Words;
  * 作用： xxxx
  */
 
-@Database(entities = {Words.class, WordClips.class},version = 6,exportSchema = false)
+@Database(entities = {Words.class, WordClips.class},version = 8,exportSchema = false)
 public abstract class WordsDB extends RoomDatabase {
     public abstract WordsDao getWordsDao();
     public abstract WordClipDao getWordClipDao();
@@ -33,7 +33,7 @@ public abstract class WordsDB extends RoomDatabase {
                 if (sWordsDB==null){
                     sWordsDB= Room.databaseBuilder(BaseAppciation.getContext(), WordsDB.class, ContentUrl.DB_NAME)
                             .fallbackToDestructiveMigration()
-                            //.addMigrations(MIGRATION_5_6)
+                            //.addMigrations(MIGRATION_7_8)
                             .build();
                 }
             }
@@ -41,10 +41,10 @@ public abstract class WordsDB extends RoomDatabase {
         return sWordsDB;
     }
 
-    public static final Migration MIGRATION_5_6=new Migration(5,6) {
+    public static final Migration MIGRATION_7_8=new Migration(7,8) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE WordClips ADD COLUMN words_collection TEXT");
+            database.execSQL("ALTER TABLE Words ADD COLUMN collection_pos int");
         }
     };
 }

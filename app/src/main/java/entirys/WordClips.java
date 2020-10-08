@@ -26,7 +26,7 @@ public class WordClips {
     private String pic;//图片
 
     @ColumnInfo(name = "words_num")
-    private int wordsNum;//夹中的单词数量
+    private String wordsNum;//夹中的单词数量
 
     @ColumnInfo(name = "words_collection")
     private String wordsCollection;//收藏的单词
@@ -34,7 +34,7 @@ public class WordClips {
     @ColumnInfo(name = "collection")
     private boolean collection;//是否收藏这个列表
 
-    public WordClips(int wordsPos, String title, String pic, int wordsNum,String wordsCollection, boolean collection) {
+    public WordClips(int wordsPos, String title, String pic, String wordsNum,String wordsCollection, boolean collection) {
         this.wordsPos = wordsPos;
         this.title = title;
         this.pic = pic;
@@ -83,11 +83,11 @@ public class WordClips {
         this.pic = pic;
     }
 
-    public int getWordsNum() {
+    public String getWordsNum() {
         return wordsNum;
     }
 
-    public void setWordsNum(int wordsNum) {
+    public void setWordsNum(String wordsNum) {
         this.wordsNum = wordsNum;
     }
 

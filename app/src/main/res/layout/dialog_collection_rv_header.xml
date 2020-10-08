@@ -21,7 +21,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/dialog_collection_header_iv"
-        android:text="新建歌单"
+        android:text="新建收藏夹"
         android:textSize="18sp" />
 
 </RelativeLayout>

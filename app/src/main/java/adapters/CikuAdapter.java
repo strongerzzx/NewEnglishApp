@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entirys.Words;
-import presenters.CollectionDialogPresent;
 
 /**
  * 作者：zzx on 2020/10/2 18:53
@@ -69,12 +68,12 @@ public class CikuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     ((NormalView) holder).cikuCollection.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mOnCikuCollectionMoreClickListener.onCikuCollectionMoreClick();
+                            mOnCikuCollectionMoreClickListener.onCikuCollectionMoreClick(position,mList);
                         }
                     });
                 }
 
-                CollectionDialogPresent.getPresent().getPicText(mList,position);
+               // CollectionDialogPresent.getPresent().getPicText(mList,position);
             }
         }
     }
@@ -150,6 +149,6 @@ public class CikuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     public  interface onCikuCollectionMoreClickListener{
-        void onCikuCollectionMoreClick();
+        void onCikuCollectionMoreClick(int pos,List<Words> currentWords);
     }
 }

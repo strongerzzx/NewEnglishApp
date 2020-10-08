@@ -49,15 +49,19 @@ public class CollectionManagerPresenter implements ICollectionManagerPresent {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (ICollectionManagerCallback callback : mCallbacks) {
-                    callback.onLoading();
-                }
 
-                List<WordClips> wordClips = mClipDao.getSameNumWords(mCurrentBookPos);
-                LogUtil.d(TAG,"size -->"+wordClips.size());
+                List<WordClips> sameNumWords = mClipDao.getSameNumWords(mCurrentBookPos, true);
+                LogUtil.d(TAG,sameNumWords.size()+"大小");
+
+                //获取本书中的所有收藏列表
+//                List<WordClips> wordClips = mClipDao.getSameNumWords(mCurrentBookPos);
+//                LogUtil.d(TAG,"size -->"+wordClips.size());
+//                for (WordClips wordClip : wordClips) {
+//                    LogUtil.d(TAG,"headerword -->"+wordClip.getTitle());
+//                }
                 for (ICollectionManagerCallback callback : mCallbacks) {
-                    callback.showCollectionInfo(wordClips);
-                    callback.showCollectionSum(wordClips.size());
+                    callback.showCollectionInfo(sameNumWords);
+                    //callback.showCollectionSum(wordClips.size());
                     callback.onFinish();
                 }
             }

@@ -1,39 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_pop_bg">
 
     <TextView
-        android:id="@+id/conllection_pop_dele"
-        android:layout_width="match_parent"
+        android:id="@+id/collection_pop_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="删除"
-        android:padding="10dp"/>
+        android:text="歌单:无人之岛"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"/>
+    <View
+        android:id="@+id/collection_pop_title_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4d4d4d4d"
+        android:layout_below="@id/collection_pop_title"
+        android:layout_marginTop="8dp"/>
     <ImageView
-        android:id="@+id/colection_pop_dele_iv"
+        android:id="@+id/collection_pop_dele_iv"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@mipmap/ic_pop_dele"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_below="@id/collection_pop_title_line"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"/>
 
     <TextView
-        android:id="@+id/collection_pop_download"
+        android:id="@+id/collection_pop_dele_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/conllection_pop_dele"
-        android:padding="10dp"
-        android:text="下载"/>
+        android:layout_below="@id/collection_pop_title_line"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@id/collection_pop_dele_iv"
+        android:text="删除"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/collection_pop_dele_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4d4d4d4d"
+        android:layout_below="@id/collection_pop_dele_iv"
+        android:layout_marginTop="13dp"/>
 
     <ImageView
-        android:id="@+id/ic_collection_pop_download_iv"
+        android:id="@+id/collection_pop_download_iv"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@mipmap/ic_pop_download"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/colection_pop_dele_iv"
-        android:layout_marginRight="10dp"
+        android:layout_below="@id/collection_pop_dele_line"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"/>
 
+    <TextView
+        android:id="@+id/collection_pop_download_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collection_pop_dele_line"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="30dp"
+        android:layout_toRightOf="@id/collection_pop_dele_iv"
+        android:background="?attr/selectableItemBackground"
+        android:text="下载"
+        android:textSize="14sp" />
 </RelativeLayout>

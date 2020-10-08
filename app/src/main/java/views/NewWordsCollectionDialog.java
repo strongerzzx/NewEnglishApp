@@ -39,6 +39,7 @@ public class NewWordsCollectionDialog extends Dialog{
     private TextView mSubmit;
     private EditText mInput;
     private InputMethodManager mIm;
+    private CollectionDialogPresent mPresent;
 
 
     public NewWordsCollectionDialog(@NonNull Context context) {
@@ -97,12 +98,14 @@ public class NewWordsCollectionDialog extends Dialog{
             @Override
             public void onClick(View v) {
                 mIm.hideSoftInputFromWindow(mInput.getWindowToken(),InputMethodManager.HIDE_IMPLICIT_ONLY);
-                String socure = mInput.getText().toString();
-                CollectionDialogPresent present = CollectionDialogPresent.getPresent();
+                String title = mInput.getText().toString();
+
+                mPresent = CollectionDialogPresent.getPresent();
                 //获取标题
-                present.getViewData(socure);
-                present.submitData();
-                Toast.makeText(getContext(), "添加"+socure+"成功", Toast.LENGTH_SHORT).show();
+                mPresent.getViewData(title);
+                mPresent.submitData();
+
+                Toast.makeText(getContext(), "添加"+title+"成功", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

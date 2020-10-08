@@ -30,7 +30,15 @@ public interface WordClipDao {
     @Query("SELECT * FROM WordClips WHERE words_pos =:bookNum")
     List<WordClips> getSameNumWords(int bookNum);
 
-
     @Query("SELECT * FROM WordClips ORDER BY words_pos DESC")
     List<WordClips> getAllWords();
+
+
+    //获取所有为true并且是本书的收藏夹
+    @Query("SELECT * FROM WORDCLIPS WHERE words_pos =:bookNum AND collection =:iscollection")
+    List<WordClips> getSameNumWords(int bookNum,boolean iscollection);
+
+    //收藏ID对应的收藏夹
+
+
 }

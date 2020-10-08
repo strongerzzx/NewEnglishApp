@@ -27,7 +27,6 @@ import adapters.DialogCollectionAdapter;
 import entirys.WordClips;
 import interfaces.ICollectionDialogCallback;
 import presenters.CollectionDialogPresent;
-import utils.LogUtil;
 
 /**
  * 作者：zzx on 2020/10/4 18:51
@@ -82,7 +81,8 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
 
         mDialogPresent = CollectionDialogPresent.getPresent();
         mDialogPresent.regesiterView(this);
-        mDialogPresent.queryAllClips();
+        mDialogPresent.queryAllClips();//查询所有收藏夹
+        //mDialogPresent.doQueryTrueWord();//查询所有为true的单词
 
         initChildView();
 
@@ -94,22 +94,23 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
         mAdapter.setOnDialogCollectionHeaderViewClickListener(new DialogCollectionAdapter.OnDialogCollectionHeaderClickListener() {
             @Override
             public void onDialogCollectionHeaderClickListener(int position) {
-                LogUtil.d(TAG,"hpos --> "+position);
                 dismiss();
 
-                //在自定义一个dialog
                 NewWordsCollectionDialog dialog=new NewWordsCollectionDialog(getContext());
                 dialog.show();
 
             }
         });
 
-        //TODO:点击item ——>把单词收藏到点击的单词夹
         mAdapter.setOnDialogCollectionItemClickListener(new DialogCollectionAdapter.onDialogCollectionItemClickListener() {
             @Override
-            public void onDialogCollectionItemClick(int pos) {
+            public void onDialogCollectionItemClick(int collectionID) {
 
-                LogUtil.d(TAG,"ipos-->"+pos);
+                //获取收藏夹的ID
+                mDialogPresent.getCollectionPos(collectionID);
+                mDialogPresent.doCollection2ExistFavorites();
+
+                dismiss();
 
             }
         });
@@ -148,11 +149,16 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                System.out.println(Thread.currentThread().getName());
                 mAdapter.setData(clipsList);
             }
         });
     }
+
+    @Override
+    public void getAllClipsTitle(String title) {
+
+    }
+
 
     @Override
     public void onDetachedFromWindow() {

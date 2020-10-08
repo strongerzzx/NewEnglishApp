@@ -38,4 +38,8 @@ public interface WordsDao {
 
     @Query("SELECT * FROM WORDS WHERE head_word LIKE '%' || :keyword || '%' AND bookpos=:booknum")
     List<Words> getSearchResultWords(int booknum,String keyword);
+
+    @Query("SELECT count(*) FROM WORDS WHERE is_collection =:isCollection AND collection_pos =:collPos")
+    int getTrueWords(boolean isCollection,int collPos);
+
 }

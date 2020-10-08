@@ -26,8 +26,16 @@
     </style>
 
 
+    <!--Dilaog动画-->
     <style name="NewCustomDialogAnim">
         <item name="android:windowEnterAnimation">@anim/new_collection_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/new_collection_dialog_out</item>
+    </style>
+
+
+    <!--Popwindow动画-->
+    <style name="CustonCollectionPop">
+        <item name="android:windowEnterAnimation">@anim/collection_pop_in</item>
+        <item name="android:windowExitAnimation">@anim/collection_pop_out</item>
     </style>
 </resources>

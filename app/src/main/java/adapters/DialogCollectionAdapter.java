@@ -65,11 +65,9 @@ public class DialogCollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
         }else{
             if (holder instanceof NormalViewHolder){
                 //收藏到 --> 点击的收藏夹
-               // String s = mList.get(position-1);
                 WordClips clips = mClipsList.get(position - 1);
-
                 ((NormalViewHolder) holder).normalTitle.setText(clips.getTitle());
-
+                ((NormalViewHolder) holder).normalSongNum.setText(clips.getWordsNum()+"");
                 if (clips.getPic()==null){
                     Glide.with(holder.itemView.getContext()).load(R.mipmap.ic_glide_error).into(((NormalViewHolder) holder).normalIv);
                 }else{
@@ -80,7 +78,8 @@ public class DialogCollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mOnDialogCollectionItemClickListener.onDialogCollectionItemClick(position);
+
+                            mOnDialogCollectionItemClickListener.onDialogCollectionItemClick(mClipsList.get(position-1).getId());
                         }
                     });
                 }
@@ -112,6 +111,7 @@ public class DialogCollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
             notifyDataSetChanged();
         }
     }
+
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder{
         private ImageView ivHeader;

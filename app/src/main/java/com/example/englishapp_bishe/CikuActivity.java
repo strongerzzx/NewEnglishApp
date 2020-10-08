@@ -20,6 +20,7 @@ import adapters.CikuAdapter;
 import entirys.Words;
 import interfaces.ICikuCallback;
 import presenters.CIkuPresent;
+import presenters.CollectionDialogPresent;
 import presenters.DetailPresent;
 import utils.LogUtil;
 import views.CollectionDialog;
@@ -31,6 +32,7 @@ public class CikuActivity extends AppCompatActivity implements ICikuCallback {
     private TwinklingRefreshLayout mRefreshLayout;
     private CikuAdapter mAdapter;
     private CIkuPresent mCIkuPresent;
+    private CollectionDialog mCollectionDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +75,14 @@ public class CikuActivity extends AppCompatActivity implements ICikuCallback {
         //跳出一个收藏
         mAdapter.setOnCikuCollectionMoreClickListener(new CikuAdapter.onCikuCollectionMoreClickListener() {
             @Override
-            public void onCikuCollectionMoreClick() {
-                CollectionDialog dialog=new CollectionDialog(CikuActivity.this);
-                dialog.show();
+            public void onCikuCollectionMoreClick(int pos,List<Words> wordsList) {
+                mCollectionDialog = new CollectionDialog(CikuActivity.this);
 
+                //把点击的单词 --> 传给Dialog
+                CollectionDialogPresent.getPresent().getPicText(wordsList,pos);
+
+//                CollectionDialogPresent.getPresent().doCollection2ExistFavorites();
+                mCollectionDialog.show();
             }
         });
     }
@@ -136,6 +142,9 @@ public class CikuActivity extends AppCompatActivity implements ICikuCallback {
         super.onDestroy();
         if (mCIkuPresent != null) {
             mCIkuPresent.unRegesiterView(this);
+        }
+        if (mCollectionDialog != null) {
+            mCollectionDialog.dismiss();
         }
     }
 }
