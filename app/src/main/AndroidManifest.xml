@@ -14,10 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CollectionManagerDetailActivity"></activity>
+        <activity android:name=".ReciteWordActivity"></activity>
+        <activity android:name=".MakePlaneActivity" />
+        <activity android:name=".CollectionManagerDetailActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".CikuDetailActivity" />
-        <activity android:name=".CikuActivity"></activity>
+        <activity android:name=".CikuActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".SelectorBookActivity" />
         <activity android:name=".RegActivity" />

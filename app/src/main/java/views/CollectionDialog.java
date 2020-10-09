@@ -90,7 +90,7 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
     }
 
     private void initEvent() {
-        //
+        //新建收藏
         mAdapter.setOnDialogCollectionHeaderViewClickListener(new DialogCollectionAdapter.OnDialogCollectionHeaderClickListener() {
             @Override
             public void onDialogCollectionHeaderClickListener(int position) {
@@ -102,6 +102,7 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
             }
         });
 
+        //点击已有收藏夹 --> 收藏
         mAdapter.setOnDialogCollectionItemClickListener(new DialogCollectionAdapter.onDialogCollectionItemClickListener() {
             @Override
             public void onDialogCollectionItemClick(int collectionID) {

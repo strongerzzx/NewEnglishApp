@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReciteWordActivity">
+
+    <TextView
+        android:id="@+id/recite_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0/33"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="@drawable/shape_make_plane_bg"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:id="@+id/recite_english"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="capacity"
+        android:textColor="#2A77FA"
+        android:textSize="24sp"
+        android:layout_above="@id/recite_fayin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/recite_fayin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="[k'qdd]"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/recite_english_other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The room had seeting capacity for about 80"
+        android:textColor="#000"
+        android:layout_below="@id/recite_fayin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:padding="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_make_plane_bg"/>
+
+
+    <LinearLayout
+        android:id="@+id/recite_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+
+        <TextView
+            android:id="@+id/tv_recite_know"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="认识"
+            android:textColor="#000"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="@drawable/selector_recite_btn"/>
+
+        <TextView
+            android:id="@+id/tv_recitye_mohu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="模糊"
+            android:textColor="#000"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="@drawable/selector_recite_btn"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/tv_recitye_unkonow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="不认识"
+            android:textColor="#000"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="@drawable/selector_recite_btn"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

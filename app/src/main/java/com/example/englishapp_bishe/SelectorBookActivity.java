@@ -26,6 +26,7 @@ import java.util.List;
 import adapters.SelectorBookAdapter;
 import beans.SelectBookBeans;
 import interfaces.ISelectBookCallback;
+import presenters.HomePresent;
 import presenters.SelectorPresenter;
 import views.CustomProgressDialog;
 import views.UILoader;
@@ -103,12 +104,15 @@ public class SelectorBookActivity extends AppCompatActivity implements ISelectBo
             }
         });
 
+
         mSelectorAdapter.setOnSelectorItemClickListener(new SelectorBookAdapter.onSelectorItemClickListener() {
             @Override
-            public void onSelectorItemClicker(int position) {
+            public void onSelectorItemClicker(int position,String title,int size) {
                 //把指定点击的词书位置 --> 给P层
                 mSelectorPresenter.requestPositionZip(position);
 
+                HomePresent.getPresent().getBookName(title);
+                HomePresent.getPresent().getBookSize(size);
                 mDialog = new CustomProgressDialog(SelectorBookActivity.this);
                 mDialog.show();
 
@@ -133,6 +137,7 @@ public class SelectorBookActivity extends AppCompatActivity implements ISelectBo
         }
 
         mContentLayout.addView(mUiLoader);
+
 
     }
 
@@ -161,6 +166,7 @@ public class SelectorBookActivity extends AppCompatActivity implements ISelectBo
         if (bookListBeans != null && isRefresh) {
             mUiLoader.updateStatus(UILoader.UIStatus.SUCCESS);
             mSelectorAdapter.setData(bookListBeans);
+
         }
     }
 

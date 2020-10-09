@@ -32,6 +32,7 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_ciku_detail);
 
+        mTts = new TextToSpeech(this,this);
         mDetailPresent = DetailPresent.getPresent();
         mDetailPresent.regesiterView(this);
 
@@ -45,7 +46,6 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
     @Override
     protected void onStart() {
         super.onStart();
-        mTts = new TextToSpeech(this,this);
         LogUtil.d(TAG,"onStart");
     }
 
@@ -67,12 +67,12 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
         });
 
         //TODO:收藏 --> 默认
-        mBinding.detailCollectionIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        mBinding.detailCollectionIv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         //语音播报  -->单词
         mBinding.detailFaYinLound.setOnClickListener(new View.OnClickListener() {

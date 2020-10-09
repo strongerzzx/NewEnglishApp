@@ -38,6 +38,7 @@ public class DetailPresent implements IDeatilPresent {
     @Override
     public void getCikuData(int clickPosition, List<Words> currentWords) {
         //词库中是有HeadView的Recy
+
         this.mCurrentPos=clickPosition-1;
         this.mCurrentWords =currentWords;
     }

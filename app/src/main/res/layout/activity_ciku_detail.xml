@@ -51,16 +51,16 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp" />
 
-        <ImageView
-            android:id="@+id/detail_collection_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_collection"
-            android:layout_alignParentRight="true"
-            android:padding="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/detail_title_head" />
+<!--        <ImageView-->
+<!--            android:id="@+id/detail_collection_iv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@mipmap/ic_collection"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:padding="5dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_below="@id/detail_title_head" />-->
 
         <TextView
             android:id="@+id/detail_fa_yin_uk"

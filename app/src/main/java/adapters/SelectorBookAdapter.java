@@ -56,10 +56,12 @@ public class SelectorBookAdapter extends RecyclerView.Adapter<SelectorBookAdapte
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnSelectorItemClickListener.onSelectorItemClicker(position);
+                    mOnSelectorItemClickListener.onSelectorItemClicker(position,title,size);
                 }
             });
         }
+
+
     }
 
     @Override
@@ -94,6 +96,6 @@ public class SelectorBookAdapter extends RecyclerView.Adapter<SelectorBookAdapte
     }
 
     public interface onSelectorItemClickListener{
-        void  onSelectorItemClicker(int position);
+        void  onSelectorItemClicker(int position,String title,int size);
     }
 }

@@ -136,6 +136,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
             public void run() {
                 //修改成true
                 Words words = mCurrentWords.get(mCurrentPos);
+                LogUtil.d(TAG,"mCurrentPos --> "+mCurrentPos);
               //  Words words = mCiKuWords.get(mCurrentPos);
                 words.setIscollection(true);
                 words.setCollectionpos(mCollectionID);//插入收藏的位置

@@ -23,6 +23,8 @@ public class HomePresent implements IHomePresent {
     private int currentBookNum;
     private final WordsDao mWordsDao;
     private boolean isRandom=true;
+    private String mCurrentBookTitle;
+    private int mCurrentBookSize;
 
 
     private HomePresent() {
@@ -74,6 +76,7 @@ public class HomePresent implements IHomePresent {
         this.currentBookNum=position;
         //把书号传递给词库的P层
         CIkuPresent.getPresent().getBookNum(currentBookNum);
+        ManagerDetailPresent.getPresent().getBookNum(currentBookNum);
         LogUtil.d(TAG,"bookNum --> "+currentBookNum);
     }
 
@@ -89,5 +92,28 @@ public class HomePresent implements IHomePresent {
         if (mCallbackList != null) {
             mCallbackList.remove(callback);
         }
+    }
+
+    @Override
+    public void getBookName(String title) {
+        this.mCurrentBookTitle= title;
+        LogUtil.d(TAG,"title -->"+title);
+        for (IHomeCallback iHomeCallback : mCallbackList) {
+            iHomeCallback.showBookName(title);
+        }
+
+    }
+
+    @Override
+    public void getBookSize(int size) {
+        this.mCurrentBookSize=size;
+    }
+
+    public String getCurrentBookTitle() {
+        return mCurrentBookTitle;
+    }
+
+    public int getCurrentBookSize() {
+        return mCurrentBookSize;
     }
 }

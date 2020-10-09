@@ -17,13 +17,23 @@ import adapters.HomePagerAdapter;
 import fragments.CollectionFragment;
 import fragments.HomeFragment;
 import fragments.OtherFragment;
+import interfaces.IHomeCallback;
+import presenters.HomePresent;
+import utils.LogUtil;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements IHomeCallback {
+    private static final String TAG = "HomeActivity";
     private ViewPager mHomePager;
     private BottomNavigationView mBottomNav;
 
     List<Fragment> mFragmentList=new ArrayList<>();
     private HomePagerAdapter mAdapter;
+    private HomeFragment mHomeFragment;
+    private CollectionFragment mCollectionFragment;
+    private OtherFragment mOtherFragment;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +42,8 @@ public class HomeActivity extends AppCompatActivity {
         initData();
 
         initView();
+
+
 
         initEvent();
     }
@@ -74,12 +86,19 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        HomePresent.getPresent().regesiterHomeView(this);
+
     }
 
     private void initData() {
-        mFragmentList.add(new HomeFragment());
-        mFragmentList.add(new CollectionFragment());
-        mFragmentList.add(new OtherFragment());
+        mHomeFragment = new HomeFragment();
+        mCollectionFragment = new CollectionFragment();
+        mOtherFragment = new OtherFragment();
+        mFragmentList.add(mHomeFragment);
+        mFragmentList.add(mCollectionFragment);
+        mFragmentList.add(mOtherFragment);
     }
 
     private void initView() {
@@ -89,5 +108,15 @@ public class HomeActivity extends AppCompatActivity {
         mAdapter.setList(mFragmentList);
         mHomePager.setAdapter(mAdapter);
 
+    }
+
+    @Override
+    public void showSingle(String english, String chinese) {
+
+    }
+
+    @Override
+    public void showBookName(String bookName) {
+        LogUtil.d(TAG,"bookname -->"+bookName);
     }
 }

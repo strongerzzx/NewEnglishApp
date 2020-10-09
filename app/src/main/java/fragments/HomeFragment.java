@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.englishapp_bishe.CikuActivity;
+import com.example.englishapp_bishe.MakePlaneActivity;
 import com.example.englishapp_bishe.R;
 import com.example.englishapp_bishe.SearchActivity;
 
@@ -37,6 +38,7 @@ public class HomeFragment extends Fragment implements IHomeCallback {
     private HomePresent mHomePresent;
     private String currentEnglish;
     private String currentChinese;
+    private TextView mBookName;
 
     public HomeFragment() {
     }
@@ -47,17 +49,22 @@ public class HomeFragment extends Fragment implements IHomeCallback {
                              Bundle savedInstanceState) {
         View inflate = LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_home, container, false);
 
+
         mHomePresent = HomePresent.getPresent();
         mHomePresent.regesiterHomeView(this);
 
         initView(inflate);
 
-        initEvent();
+
 
         return inflate;
     }
 
     private void initEvent() {
+        //显示进入的书名
+        //mBookName.setText();
+
+
         //单个单词出现
         mSingleIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,15 +93,28 @@ public class HomeFragment extends Fragment implements IHomeCallback {
             }
         });
 
+        //开始背单词 --> 先制定背的数目 --> 在开始背
+        mBtnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), MakePlaneActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        String currentBookTitle = mHomePresent.getCurrentBookTitle();
+        mBookName.setText(currentBookTitle);
+        LogUtil.d(TAG,"currentBookTitle --> "+currentBookTitle);
+        initEvent();
     }
 
     private void initView(View inflate) {
+        mBookName = inflate.findViewById(R.id.home_book_name);
         mSingleIv = inflate.findViewById(R.id.home_refresh_iv);
         mBtnSearch = inflate.findViewById(R.id.home_btn_search);
         mBtnCiku = inflate.findViewById(R.id.home_btn_ciku);
@@ -111,10 +131,19 @@ public class HomeFragment extends Fragment implements IHomeCallback {
     }
 
     @Override
+    public void showBookName(String bookName) {
+//        LogUtil.d(TAG,"bookName -->"+bookName);
+//        if (bookName != null) {
+//            mBookName.setText(bookName);
+//        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mHomePresent != null) {
             mHomePresent.unRegesiterHomeView(this);
         }
     }
+
 }

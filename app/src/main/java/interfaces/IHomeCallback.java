@@ -8,4 +8,7 @@ package interfaces;
 public interface IHomeCallback {
     //显示单个单词
     void showSingle(String english,String chinese);
+
+    //显示书名
+    void showBookName(String bookName);
 }

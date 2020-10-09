@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/collectionFragment"
         android:name="fragments.CollectionFragment"

@@ -28,6 +28,7 @@ import adapters.CollectionManagerAdapter;
 import entirys.WordClips;
 import interfaces.ICollectionDialogCallback;
 import presenters.CollectionDialogPresent;
+import presenters.ManagerDetailPresent;
 import utils.LogUtil;
 import views.CollectionManagerPopWindow;
 import views.NewWordsCollectionDialog;
@@ -138,14 +139,16 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
             }
         });
 
-        //TODO:点击收藏夹 --> 显示所有单词 -->根据对应的收藏夹ID 查找
+        //点击收藏夹 --> 显示所有单词 -->根据对应的收藏夹ID 查找
         mManagerAdapter.setOnCollectionManagerClickListener(new CollectionManagerAdapter.onCollectionManagerClickListener() {
             @Override
             public void onCollectionManagerClick(int clipsID) {
 
                 Intent intent=new Intent(getActivity(), CollectionManagerDetailActivity.class);
-                startActivity(intent);
+                //把收藏夹的ID --> 给单词夹详情的P
+                ManagerDetailPresent.getPresent().getCollectionID(clipsID);
 
+                startActivity(intent);
                 LogUtil.d(TAG,"收藏管理者的收藏夹ID -->"+clipsID);
             }
         });

@@ -15,4 +15,10 @@ public interface IHomePresent {
     void regesiterHomeView(IHomeCallback callback);
 
     void unRegesiterHomeView(IHomeCallback callback);
+
+    //获取书名
+    void getBookName(String title);
+
+    //获取size
+    void getBookSize(int size);
 }

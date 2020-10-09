@@ -42,4 +42,9 @@ public interface WordsDao {
     @Query("SELECT count(*) FROM WORDS WHERE is_collection =:isCollection AND collection_pos =:collPos")
     int getTrueWords(boolean isCollection,int collPos);
 
+    @Query("SELECT * FROM WORDS WHERE collection_pos =:collID AND bookpos=:bookPosition")
+    List<Words> getWordsByCollectionID(int bookPosition,int collID);
+
+    @Query("SELECT * FROM WORDS WHERE collection_pos =:collID AND bookpos=:bookPosition AND id=:wordsID")
+    Words getDelteWords(int bookPosition,int collID,int wordsID);
 }
