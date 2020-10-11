@@ -6,17 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".ReciteWordActivity">
 
-    <TextView
-        android:id="@+id/recite_progress"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0/33"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:padding="10dp"
+        android:orientation="horizontal"
         android:background="@drawable/shape_make_plane_bg"
+        android:padding="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp">
+        <TextView
+            android:id="@+id/tv_recite_current_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0/"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="right"/>
+        <TextView
+            android:id="@+id/tv_recite_finaly_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="123"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/recite_english"
@@ -37,19 +53,25 @@
         android:text="[k'qdd]"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/recite_english_other"
+
+    <LinearLayout
+        android:id="@+id/ver_scroll_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="The room had seeting capacity for about 80"
-        android:textColor="#000"
+        android:background="@drawable/shape_make_plane_bg"
         android:layout_below="@id/recite_fayin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:padding="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/shape_make_plane_bg"/>
+        android:padding="20dp"
+        android:visibility="gone">
+    <views.VerticalScrollTextView
+        android:id="@+id/ver_scroll_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 
 
     <LinearLayout

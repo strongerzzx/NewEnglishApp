@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import presenters.HomePresent;
+import presenters.ReciteWordPresent;
 
 public class MakePlaneActivity extends AppCompatActivity {
 
@@ -59,8 +62,18 @@ public class MakePlaneActivity extends AppCompatActivity {
         mStartIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MakePlaneActivity.this,ReciteWordActivity.class);
-                startActivity(intent);
+                String range = mInputRange.getText().toString();
+                if (TextUtils.isEmpty(range)){
+                    Toast.makeText(MakePlaneActivity.this, "范围不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }else{
+                    Intent intent=new Intent(MakePlaneActivity.this,ReciteWordActivity.class);
+
+                    intent.putExtra("range",range);
+
+                    ReciteWordPresent.getPresent().getWordRange(range);
+                    startActivity(intent);
+                }
             }
         });
     }

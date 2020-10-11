@@ -182,6 +182,7 @@ public class SelectorPresenter implements ISelectBookPresent {
         HomePresent.getPresent().getBookNum(pos);
         SearchPresent.getPresent().getBookNum(pos);
         CollectionManagerPresenter.getPresenter().getBookNum(pos);
+        ReciteWordPresent.getPresent().getBookNum(pos);
         //下载zip
         downloadZip(zipUrl);
 
