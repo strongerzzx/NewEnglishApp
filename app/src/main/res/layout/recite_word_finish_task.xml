@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#004D4D4D"
+    android:clickable="true">
+
+    <FrameLayout
+        android:id="@+id/recite_word_finish_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/ic_yanhua"/>
+
+    <TextView
+        android:id="@+id/recite_finish_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已完成今日计划"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:padding="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/recite_finish_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_finish_gou"
+        android:layout_below="@id/recite_finish_title"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:id="@+id/recite_finish_words"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="今日已完成"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:layout_below="@id/recite_finish_title"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/recite_finish_iv"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/recite_finish_words_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recite_finish_title"
+        android:layout_toRightOf="@id/recite_finish_words"
+        android:textSize="18sp"
+        android:text="10"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="3dp"
+        android:textStyle="bold"
+        android:textColor="#3285F7"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个单词"
+        android:layout_below="@id/recite_finish_title"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/recite_finish_words_num"
+        android:textStyle="bold"
+        android:textColor="#000"/>
+
+
+    <TextView
+        android:id="@+id/recite_finish_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2019/236/0"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:layout_below="@id/recite_finish_words_num"
+        android:layout_toRightOf="@id/recite_finish_iv"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"/>
+
+    <EditText
+        android:id="@+id/recite_finish_input_ganyan"
+        android:layout_below="@id/recite_word_finish_bg"
+        android:layout_marginTop="3dp"
+        android:layout_above="@id/recite_btn_return"
+        android:layout_marginBottom="3dp"
+        android:background="#F6F9F7"
+        android:hint="输入今天的感想吧..."
+        android:gravity="left|top"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/recite_btn_return"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="返回"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"
+        android:padding="22dp"
+        android:background="@drawable/selector_recite_return_btn"/>
+
+</RelativeLayout>

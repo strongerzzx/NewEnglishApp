@@ -58,7 +58,7 @@ public class MakePlaneActivity extends AppCompatActivity {
         //显示选择词书的单词范围
         mRangeNum.setText("0 ~ "+HomePresent.getPresent().getCurrentBookSize());
 
-        //TODO:开始背单词
+        //开始背单词
         mStartIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +73,7 @@ public class MakePlaneActivity extends AppCompatActivity {
 
                     ReciteWordPresent.getPresent().getWordRange(range);
                     startActivity(intent);
+                    finish();
                 }
             }
         });

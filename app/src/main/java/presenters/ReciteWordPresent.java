@@ -21,7 +21,6 @@ public class ReciteWordPresent implements IReciteWordPresent {
     private List<IReciteWordCallback> mCallbackList=new ArrayList<>();
     private int mCurrentBookNum;
     private final WordsDao mWordsDao;
-    private boolean isClick=false;
 
     private ReciteWordPresent(){
         WordsDB db = WordsDB.getWordsDB();

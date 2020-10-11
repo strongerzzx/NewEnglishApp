@@ -33,9 +33,21 @@
     </style>
 
 
-    <!--Popwindow动画-->
+    <!--CollectionPopwindow动画-->
     <style name="CustonCollectionPop">
         <item name="android:windowEnterAnimation">@anim/collection_pop_in</item>
         <item name="android:windowExitAnimation">@anim/collection_pop_out</item>
+    </style>
+
+    <!--UnkonwPopwindow 上到下动画-->
+    <style name="CustonUnknowPop">
+        <item name="android:windowEnterAnimation">@anim/unknow_pop_in</item>
+        <item name="android:windowExitAnimation">@anim/unknow_pop_out</item>
+    </style>
+
+    <!--UnkonwPopwindow 左右动画-->
+    <style name="CustonUnknowPopLeft">
+        <item name="android:windowEnterAnimation">@anim/unkonw_left_right_in</item>
+        <item name="android:windowExitAnimation">@anim/unkonw_left_right_out</item>
     </style>
 </resources>

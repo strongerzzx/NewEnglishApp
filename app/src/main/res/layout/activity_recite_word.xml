@@ -8,6 +8,7 @@
 
 
     <LinearLayout
+        android:id="@+id/recite_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -118,7 +119,13 @@
             android:padding="10dp"
             android:background="@drawable/selector_recite_btn"
             android:layout_marginLeft="10dp"/>
-
     </LinearLayout>
+
+    <!--挖坑存放任务完成的Fragment界面-->
+    <FrameLayout
+        android:id="@+id/recite_word_finish_task"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#004D4D4D"/>
 
 </RelativeLayout>
