@@ -15,4 +15,9 @@ public interface IReciteWordPresent extends BaseInterface<IReciteWordCallback> {
     void getWordList();
 
 
+    //完成任务 --> 写入数据库
+    void doFinishTask();
+
+    //获取完成的内容
+    void getFinishInfo(String range, String compltetTime, String input);
 }

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 /**
  * 作者：zzx on 2020/10/11 20:22
  * <p>
- * 作用： xxxx
+ * 作用： 背单词数据库
  */
 @Entity
 public class ReciteWords {
@@ -16,7 +16,6 @@ public class ReciteWords {
 
     @ColumnInfo(name = "book_pos")
     private int bookPos;//选择的哪本书
-
 
     @ColumnInfo(name = "finish_num")
     private int finishNum;//完成的数量

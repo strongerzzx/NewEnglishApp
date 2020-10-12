@@ -76,6 +76,8 @@ public class UnKnowPopwindow extends PopupWindow implements TextToSpeech.OnInitL
 
     }
 
+
+
     private void initView() {
         mEnglish = mInflate.findViewById(R.id.unknow_head_word);
         mFayinUk = mInflate.findViewById(R.id.unknow_fa_yin_uk);

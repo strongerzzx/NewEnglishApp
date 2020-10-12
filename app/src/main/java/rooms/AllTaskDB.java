@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase;
 
 import bases.BaseAppciation;
 import beans.ContentUrl;
+import dao.AllTaskDao;
 import dao.ReciteWordsDao;
 import entirys.LearnTasks;
 import entirys.ReciteWords;
@@ -15,10 +16,11 @@ import entirys.ReciteWords;
  * <p>
  * 作用： xxxx
  */
-@Database(entities = {ReciteWords.class, LearnTasks.class},version = 1,exportSchema = false)
+@Database(entities = {ReciteWords.class, LearnTasks.class},version = 2,exportSchema = false)
 public abstract class AllTaskDB extends RoomDatabase {
 
     public abstract ReciteWordsDao getReciteWordsDao();
+    public abstract AllTaskDao getLearnTaskDao();
 
     private static AllTaskDB sAllTaskDB;
 
@@ -27,6 +29,7 @@ public abstract class AllTaskDB extends RoomDatabase {
             synchronized (AllTaskDB.class){
                 if (sAllTaskDB==null){
                     sAllTaskDB= Room.databaseBuilder(BaseAppciation.getContext(),AllTaskDB.class, ContentUrl.DB_NAME_TASK)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

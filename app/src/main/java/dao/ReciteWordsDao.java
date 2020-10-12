@@ -18,7 +18,7 @@ import entirys.ReciteWords;
 @Dao
 public interface ReciteWordsDao {
     @Insert
-    void InsertRecite(ReciteWords ...reciteWords);
+    void insertRecite(ReciteWords ...reciteWords);
 
     @Update
     void updateRecite(ReciteWords... reciteWords);
@@ -28,4 +28,9 @@ public interface ReciteWordsDao {
 
     @Query("SELECT * FROM RECITEWORDS WHERE book_pos =:bookNum")
     List<ReciteWords> getAllRecite(int bookNum);
+
+    @Query("select last_insert_rowid() from RECITEWORDS " )
+    int getNewID();
+
+
 }

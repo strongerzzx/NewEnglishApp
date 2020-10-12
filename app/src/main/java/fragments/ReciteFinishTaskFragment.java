@@ -18,6 +18,7 @@ import com.example.englishapp_bishe.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import presenters.ReciteWordPresent;
 import utils.LogUtil;
 
 /**
@@ -33,6 +34,7 @@ public class ReciteFinishTaskFragment extends Fragment {
     private TextView mFinishDate;
     private TextView mFinishBtn;
     private EditText mEtInput;
+    private ReciteWordPresent mReciteP;
 
     public ReciteFinishTaskFragment() {
     }
@@ -43,6 +45,8 @@ public class ReciteFinishTaskFragment extends Fragment {
         mInflate = LayoutInflater.from(container.getContext()).inflate(R.layout.recite_word_finish_task, null);
 
         initView();
+
+        mReciteP = ReciteWordPresent.getPresent();
 
         return mInflate;
     }
@@ -56,8 +60,6 @@ public class ReciteFinishTaskFragment extends Fragment {
         String range = bundle.getString("range");
         mFinishNum.setText(range);
 
-
-        //TODO:显示完成日期 -->写入到数据库
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date=new Date(System.currentTimeMillis());
         String compltetTime = format.format(date);
@@ -76,6 +78,12 @@ public class ReciteFinishTaskFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        //传递任务完成的信息
+        mReciteP.getFinishInfo(range,compltetTime,input);
+
+        //TODO:完成任务
+        mReciteP.doFinishTask();
     }
 
     private void initView() {
