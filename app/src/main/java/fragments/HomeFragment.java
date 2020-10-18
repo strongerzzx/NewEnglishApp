@@ -2,6 +2,8 @@ package fragments;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.example.englishapp_bishe.MakePlaneActivity;
 import com.example.englishapp_bishe.R;
 import com.example.englishapp_bishe.SearchActivity;
 
+import interfaces.ICanClickRecite;
 import interfaces.IHomeCallback;
 import presenters.HomePresent;
 import utils.LogUtil;
@@ -26,7 +29,6 @@ import utils.LogUtil;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment implements IHomeCallback {
-
 
     private static final String TAG = "HomeFragment";
     private ImageView mSingleIv;
@@ -43,7 +45,6 @@ public class HomeFragment extends Fragment implements IHomeCallback {
     public HomeFragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,8 +54,8 @@ public class HomeFragment extends Fragment implements IHomeCallback {
         mHomePresent = HomePresent.getPresent();
         mHomePresent.regesiterHomeView(this);
 
-        initView(inflate);
 
+        initView(inflate);
 
 
         return inflate;
@@ -93,12 +94,36 @@ public class HomeFragment extends Fragment implements IHomeCallback {
             }
         });
 
-        //开始背单词 --> 先制定背的数目 --> 在开始背
-        mBtnStart.setOnClickListener(new View.OnClickListener() {
+
+        //每天完成任务后 --> 在点击背单词 没效果
+
+        mHomePresent.canClickRecite(new ICanClickRecite() {
             @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), MakePlaneActivity.class);
-                startActivity(intent);
+            public void isClickRecite(boolean isCan) {
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println(Thread.currentThread().getName());
+                        if (isCan){
+                            mBtnStart.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), MakePlaneActivity.class);
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                }
+                            });
+                        }else{
+                            mBtnStart.setTextColor(Color.BLACK);
+                            mBtnStart.setText("已完成今日任务");
+                            Drawable finishDrawable = getResources().getDrawable(R.drawable.shape_home_start_bei__finish_normal);
+                            finishDrawable.setBounds(0,0,finishDrawable.getMinimumWidth(),finishDrawable.getMinimumHeight());
+                            mBtnStart.setBackgroundDrawable(finishDrawable);
+                        }
+                    }
+                });
+
             }
         });
     }
@@ -145,5 +170,4 @@ public class HomeFragment extends Fragment implements IHomeCallback {
             mHomePresent.unRegesiterHomeView(this);
         }
     }
-
 }

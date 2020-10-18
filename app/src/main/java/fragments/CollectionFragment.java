@@ -66,6 +66,7 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
         mCollectionPresent = CollectionDialogPresent.getPresent();
         mCollectionPresent.regesiterView(this);
         mCollectionPresent.queryAllClips();
+        mCollectionPresent.queryAllCollectionClipsNum();//获取收藏夹数量
 
         mPop = new CollectionManagerPopWindow(getContext());
         initView();
@@ -103,6 +104,7 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
 
 
     private void initEvent() {
+
         //添加收藏夹
         mCollectionAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,5 +200,16 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
     @Override
     public void getAllClipsTitle(String title) {
 
+    }
+
+    @Override
+    public void showClipsNum(int size) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mCollectionSum.setText("收藏夹("+size+")");
+                LogUtil.d(TAG,"coll size --> "+size);
+            }
+        });
     }
 }

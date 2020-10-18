@@ -11,8 +11,10 @@
 
 
         <ScrollView
+            android:id="@+id/un_konw_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -77,7 +79,7 @@
                     android:id="@+id/unknow_fa_yin_lound"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@mipmap/ic_laba"
+                    android:src="@mipmap/ic_sounds_press"
                     android:layout_toRightOf="@id/unknow_fa_yin_us"
                     android:layout_below="@id/unknow_head_word"
                     android:layout_marginLeft="10dp"
@@ -157,7 +159,7 @@
                     android:id="@+id/unknow_li_ju_lound"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@mipmap/ic_laba"
+                    android:src="@mipmap/ic_sounds_press"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/unknow_head_word_line"
                     android:layout_marginRight="10dp"
@@ -297,7 +299,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_below="@id/unknow_jinyici_word_1"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
 

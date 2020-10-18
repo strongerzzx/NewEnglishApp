@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CutDownView">
+        <!--外面圆的颜色-->
+        <attr name="outColor" format="color"/>
+
+        <!--外圆的宽-->
+        <attr name="outCircleWidth" format="dimension"/>
+
+        <!--内圆的颜色-->
+        <attr name="innerColor" format="color"/>
+
+        <!--内圆的宽-->
+        <attr name="innerCircleWidth" format="dimension"/>
+
+        <!--text颜色-->
+        <attr name="textColor" format="color"/>
+
+        <!--大小-->
+        <attr name="textWidth" format="dimension"/>
+    </declare-styleable>
+</resources>

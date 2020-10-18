@@ -22,4 +22,9 @@ public interface AllTaskDao {
     @Query("SELECT * FROM LearnTasks WHERE book_pos =:bookNum")
     List<LearnTasks> getAllRecite(int bookNum);
 
+    @Query("SELECT MAX(recite_id) FROM LearnTasks WHERE book_pos=:booNum")
+    int getReMaxID(int booNum);//获取最大的ID --> 即为最新的
+
+    @Query("SELECT recite_id FROM LearnTasks WHERE book_pos=:booNum")
+    List<Integer> getReAllID(int booNum);//获取最大的ID --> 即为最新的
 }

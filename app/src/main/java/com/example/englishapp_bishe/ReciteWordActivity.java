@@ -41,20 +41,20 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
     private String mRange;
     private TextView mTvFinalProgress;
     private TextView mTvCurrentProgress;
-    private int mCurrentProgress=0;
+    private int mCurrentProgress = 0;
     private MyHandler mMyHandler;
     private VerticalScrollTextView mVerScroll;
     private LinearLayout mScrollLayout;
-    private List<String> mList=new ArrayList<>();
+    private List<String> mList = new ArrayList<>();
     private UnKnowPopwindow mUnknowPop;
     private ReciteFinishTaskFragment mFinishTaskFragment;
 
-    public static class MyHandler extends Handler{
-        private  WeakReference<ReciteWordActivity> rwAct;
+    public static class MyHandler extends Handler {
+        private WeakReference<ReciteWordActivity> rwAct;
         private int progress;
 
         public MyHandler(ReciteWordActivity reciteWordActivity) {
-            rwAct=new WeakReference<ReciteWordActivity>(reciteWordActivity);
+            rwAct = new WeakReference<ReciteWordActivity>(reciteWordActivity);
         }
 
         @Override
@@ -66,7 +66,7 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                     case RECITE_ALL_WORDS:
                         //获取P层回调的数据 --> 主线程
                         List<Words> BookWords = (List<Words>) msg.obj;
-                        this.progress=reciteWordActivity.mCurrentProgress;
+                        this.progress = reciteWordActivity.mCurrentProgress;
 
 
                         //显示第一个
@@ -76,13 +76,13 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
 
 
                         //第一个单词的模糊
-                        reciteWordActivity.mList.add("n: "+words.getTran());
+                        reciteWordActivity.mList.add("n: " + words.getTran());
                         reciteWordActivity.mList.add(words.getContent());
                         reciteWordActivity.mList.add(words.getCnContent());
                         reciteWordActivity.mList.add(words.getTranOther());
                         reciteWordActivity.mVerScroll.setTextList(reciteWordActivity.mList);
 
-                        reciteWordActivity.mUnknowPop.getData(BookWords,progress);
+                        reciteWordActivity.mUnknowPop.getData(BookWords, progress);
 
 
                         //点击了斩 则全部更新当前页面
@@ -90,7 +90,7 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                             @Override
                             public void onZhanClick() {
                                 reciteWordActivity.mList.clear();
-                                if (progress < Integer.parseInt(reciteWordActivity.mRange)){
+                                if (progress < Integer.parseInt(reciteWordActivity.mRange)) {
                                     progress++;
 
                                     //
@@ -98,25 +98,24 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                                     reciteWordActivity.mTvEnglish.setText(words.getHeadWord());
                                     reciteWordActivity.mTvFayin.setText(words.getUkphone());
                                     reciteWordActivity.mCurrentProgress++;
-                                    reciteWordActivity.mTvCurrentProgress.setText(progress+"/");
+                                    reciteWordActivity.mTvCurrentProgress.setText(progress + "/");
 
 
                                     reciteWordActivity.mScrollLayout.setVisibility(View.GONE);
-                                    reciteWordActivity.mList.add("n: "+words.getTran());
+                                    reciteWordActivity.mList.add("n: " + words.getTran());
                                     reciteWordActivity.mList.add(words.getContent());
                                     reciteWordActivity.mList.add(words.getCnContent());
                                     reciteWordActivity.mList.add(words.getTranOther());
                                     reciteWordActivity.mVerScroll.setTextList(reciteWordActivity.mList);
 
 
-
                                     reciteWordActivity.mUnknowPop.setAnimationStyle(R.style.CustonUnknowPopLeft);
                                     reciteWordActivity.mUnknowPop.updateProgress(progress);
-                                }else{
+                                } else {
                                     //显示成功界面
                                     reciteWordActivity.getSupportFragmentManager()
                                             .beginTransaction()
-                                            .add(R.id.recite_word_finish_task,reciteWordActivity.mFinishTaskFragment)
+                                            .add(R.id.recite_word_finish_task, reciteWordActivity.mFinishTaskFragment)
                                             .commit();
                                     Toast.makeText(reciteWordActivity, "恭喜挑战成功", Toast.LENGTH_SHORT).show();
                                 }
@@ -132,29 +131,29 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                             public void onClick(View v) {
 
                                 reciteWordActivity.mList.clear();
-                                if (progress < Integer.parseInt(reciteWordActivity.mRange)){
+                                if (progress < Integer.parseInt(reciteWordActivity.mRange)) {
                                     Words words = BookWords.get(++progress);
                                     reciteWordActivity.mTvEnglish.setText(words.getHeadWord());
                                     reciteWordActivity.mTvFayin.setText(words.getUkphone());
                                     reciteWordActivity.mCurrentProgress++;
-                                    reciteWordActivity.mTvCurrentProgress.setText(progress+"/");
+                                    reciteWordActivity.mTvCurrentProgress.setText(progress + "/");
 
                                     //下一个数据 --> 更新unKnow中的progress
                                     reciteWordActivity.mUnknowPop.updateProgress(progress);
 
                                     //加载新的模糊
                                     reciteWordActivity.mScrollLayout.setVisibility(View.GONE);
-                                    reciteWordActivity.mList.add("n: "+words.getTran());
+                                    reciteWordActivity.mList.add("n: " + words.getTran());
                                     reciteWordActivity.mList.add(words.getContent());
                                     reciteWordActivity.mList.add(words.getCnContent());
                                     reciteWordActivity.mList.add(words.getTranOther());
                                     reciteWordActivity.mVerScroll.setTextList(reciteWordActivity.mList);
 
-                                }else{
+                                } else {
                                     //显示成功界面
                                     reciteWordActivity.getSupportFragmentManager()
                                             .beginTransaction()
-                                            .add(R.id.recite_word_finish_task,reciteWordActivity.mFinishTaskFragment)
+                                            .add(R.id.recite_word_finish_task, reciteWordActivity.mFinishTaskFragment)
                                             .commit();
                                     Toast.makeText(reciteWordActivity, "恭喜挑战成功", Toast.LENGTH_SHORT).show();
                                 }
@@ -162,7 +161,7 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                         });
 
 
-                        LogUtil.d(TAG,"当前进度 --> "+progress);
+                        LogUtil.d(TAG, "当前进度 --> " + progress);
                         //当为模糊的时候 ——> 垂直可控制的走马灯
                         reciteWordActivity.mTvMohu.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -179,7 +178,7 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                             @Override
                             public void onClick(View v) {
                                 //点击后整个屏幕被pop占满
-                                reciteWordActivity.mUnknowPop.showAtLocation(v, Gravity.CENTER,Gravity.FILL_HORIZONTAL,Gravity.FILL_VERTICAL);
+                                reciteWordActivity.mUnknowPop.showAtLocation(v, Gravity.CENTER, Gravity.FILL_HORIZONTAL, Gravity.FILL_VERTICAL);
                                 System.out.println(reciteWordActivity.mUnknowPop.isShowing());
                             }
                         });
@@ -193,12 +192,12 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        if (mUnknowPop!=null && mUnknowPop.isShowing()){
+        if (mUnknowPop != null && mUnknowPop.isShowing()) {
             mUnknowPop.dismiss();
-        }else {
+        } else {
             finish();
         }
-        LogUtil.d(TAG,"onBackPressed");
+        LogUtil.d(TAG, "onBackPressed");
     }
 
     @Override
@@ -230,8 +229,8 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
         mRange = intent.getStringExtra("range");
         mTvFinalProgress.setText(mRange);
 
-        Bundle bundle=new Bundle();
-        bundle.putString("range",mRange);
+        Bundle bundle = new Bundle();
+        bundle.putString("range", mRange);
         mFinishTaskFragment.setArguments(bundle);
 
 
@@ -255,7 +254,7 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
 
         mScrollLayout = findViewById(R.id.ver_scroll_bg);
         mVerScroll = findViewById(R.id.ver_scroll_tv);
-        mVerScroll.setTextStyle(16,1, Color.BLACK);
+        mVerScroll.setTextStyle(16, 1, Color.BLACK);
         mVerScroll.setMaxLines(3);
         mVerScroll.setTextStillTime(2000);
         mVerScroll.setAnimTime(500);
@@ -270,13 +269,23 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
     public void showAllWordsList(List<Words> BookWords) {
         if (BookWords != null) {
             //回调给主线程
-            Message msg=Message.obtain();
-            msg.what=RECITE_ALL_WORDS;
-            msg.obj=BookWords;
+            Message msg = Message.obtain();
+            msg.what = RECITE_ALL_WORDS;
+            msg.obj = BookWords;
             mMyHandler.sendMessage(msg);
 
-            LogUtil.d(TAG,"mwords size -->"+BookWords.size());
+            LogUtil.d(TAG, "mwords size -->" + BookWords.size());
         }
+    }
+
+    @Override
+    public void showCurrentSize(int currentSize) {
+
+    }
+
+    @Override
+    public void showMaxSize(int maxSize) {
+
     }
 
     @Override

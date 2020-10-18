@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReciteWordActivity"></activity>
+        <activity android:name=".SpellWordActivity"></activity>
+        <activity android:name=".Listen2SelectorActivity" />
+        <activity android:name=".Chinese2EnglishActivity" />
+        <activity android:name=".ReciteWordActivity" />
         <activity android:name=".MakePlaneActivity" />
         <activity android:name=".CollectionManagerDetailActivity" />
         <activity android:name=".SearchActivity" />

@@ -29,8 +29,7 @@ public interface ReciteWordsDao {
     @Query("SELECT * FROM RECITEWORDS WHERE book_pos =:bookNum")
     List<ReciteWords> getAllRecite(int bookNum);
 
-    @Query("select last_insert_rowid() from RECITEWORDS " )
-    int getNewID();
 
-
+    @Query("SELECT finish_date FROM RECITEWORDS WHERE book_pos=:bookNum AND id=:reId")
+    String getNewDate(int bookNum,int reId);
 }

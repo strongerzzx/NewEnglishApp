@@ -23,18 +23,42 @@ public class ReciteWords {
     @ColumnInfo(name = "finish_date")
     private String finishDate;//任务完成时间
 
+    @ColumnInfo(name = "finish_time")
+    private int finishTime;//完成次数
+
+    @ColumnInfo(name = "finish_most_times")
+    private int finishMostTimes;//完成上限
+
     @ColumnInfo(name = "is_finish")
     private boolean finish;//是否完成任务
 
     @ColumnInfo(name = "finish_input")
     private String finishInput;//完成感想
 
-    public ReciteWords(int bookPos,int finishNum ,String finishDate, boolean finish, String finishInput) {
+    public ReciteWords(int bookPos,int finishNum ,String finishDate,int finishTime,int finishMostTimes, boolean finish, String finishInput) {
         this.bookPos = bookPos;
         this.finishNum=finishNum;
         this.finishDate = finishDate;
+        this.finishTime=finishTime;
+        this.finishMostTimes=finishMostTimes;
         this.finish = finish;
         this.finishInput = finishInput;
+    }
+
+    public int getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(int finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public int getFinishMostTimes() {
+        return finishMostTimes;
+    }
+
+    public void setFinishMostTimes(int finishMostTimes) {
+        this.finishMostTimes = finishMostTimes;
     }
 
     public int getFinishNum() {

@@ -17,4 +17,9 @@ public interface IReciteWordCallback {
     void showAllWordsList(List<Words> mWords);
 
 
+    //显示背单词的次数
+    void showCurrentSize(int currentSize);
+
+    //显示背单词的最大上限
+    void showMaxSize(int maxSize);
 }

@@ -17,4 +17,7 @@ public interface ICollectionDialogCallback {
 
     //获取每个单词夹的名字
     void getAllClipsTitle(String title);
+
+    //返回单词夹数量
+    void showClipsNum(int size);
 }

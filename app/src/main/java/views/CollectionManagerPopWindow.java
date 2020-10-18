@@ -91,6 +91,11 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
 
     }
 
+    @Override
+    public void showClipsNum(int size) {
+
+    }
+
 
     //获取Rv中点击的哪个
     public void getManageInfoPos(int pos) {

@@ -21,4 +21,7 @@ public interface IHomePresent {
 
     //获取size
     void getBookSize(int size);
+
+    //判断是否完成每日任务
+    void canClickRecite(ICanClickRecite isCan);
 }

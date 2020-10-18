@@ -1,13 +1,18 @@
 package presenters;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import dao.AllTaskDao;
+import dao.ReciteWordsDao;
 import dao.WordsDao;
 import entirys.Words;
+import interfaces.ICanClickRecite;
 import interfaces.IHomeCallback;
 import interfaces.IHomePresent;
+import rooms.AllTaskDB;
 import rooms.WordsDB;
 import utils.LogUtil;
 
@@ -25,11 +30,17 @@ public class HomePresent implements IHomePresent {
     private boolean isRandom=true;
     private String mCurrentBookTitle;
     private int mCurrentBookSize;
+    private final AllTaskDao mLearnTaskDao;
+    private final ReciteWordsDao mReciteWordsDao;
 
 
     private HomePresent() {
         WordsDB db =WordsDB.getWordsDB();
         mWordsDao = db.getWordsDao();
+
+        AllTaskDB allTaskDB = AllTaskDB.getAllTaskDB();
+        mLearnTaskDao = allTaskDB.getLearnTaskDao();
+        mReciteWordsDao = allTaskDB.getReciteWordsDao();
     }
 
     private volatile static HomePresent sPresent;
@@ -71,6 +82,8 @@ public class HomePresent implements IHomePresent {
 
     }
 
+
+
     @Override
     public void getBookNum(int position) {
         this.currentBookNum=position;
@@ -107,6 +120,36 @@ public class HomePresent implements IHomePresent {
     @Override
     public void getBookSize(int size) {
         this.mCurrentBookSize=size;
+    }
+
+    @Override
+    public void canClickRecite(ICanClickRecite iscan) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+                String currentDate = format.format(System.currentTimeMillis());
+
+                int maxID;
+                maxID =mLearnTaskDao.getReMaxID(currentBookNum);
+                LogUtil.d(TAG,"maxID -->"+(maxID));
+
+
+                //根据任务ID --> 获取完成的时间
+                String newDate = mReciteWordsDao.getNewDate(currentBookNum, maxID);
+                LogUtil.d(TAG,"newDate -->"+newDate);
+                if (!currentDate.equals(newDate)){
+                    //可以跳
+                    iscan.isClickRecite(true);
+                    LogUtil.d(TAG,"true --> ");
+                }else{
+                    iscan.isClickRecite(false);
+                    LogUtil.d(TAG,"false");
+                }
+            }
+
+        }).start();
+
     }
 
     public String getCurrentBookTitle() {

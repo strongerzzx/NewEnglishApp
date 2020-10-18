@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,7 +18,6 @@ import java.util.List;
 import java.util.Locale;
 
 import entirys.Words;
-import utils.LogUtil;
 
 /**
  * 作者：zzx on 2020/10/11 14:16
@@ -50,6 +50,7 @@ public class UnKnowPopwindow extends PopupWindow implements TextToSpeech.OnInitL
     private final TextToSpeech mTts;
     private onZhanClickListener mOnZhanClickListener;
     private String mCurrentRange;
+    private ScrollView mScroll;
 
     public UnKnowPopwindow(Context context, int width, int height) {
         super(context);
@@ -79,6 +80,7 @@ public class UnKnowPopwindow extends PopupWindow implements TextToSpeech.OnInitL
 
 
     private void initView() {
+        mScroll = mInflate.findViewById(R.id.un_konw_scroll_view);
         mEnglish = mInflate.findViewById(R.id.unknow_head_word);
         mFayinUk = mInflate.findViewById(R.id.unknow_fa_yin_uk);
         mFayinUS = mInflate.findViewById(R.id.unknow_fa_yin_us);
@@ -191,9 +193,6 @@ public class UnKnowPopwindow extends PopupWindow implements TextToSpeech.OnInitL
                 }
             });
         }
-
-        LogUtil.d(TAG,"当前进度 -->"+currentProgress);
-        LogUtil.d(TAG,"总进度 --> "+mCurrentRange);
     }
 
     @Override

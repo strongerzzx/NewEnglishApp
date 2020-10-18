@@ -191,6 +191,21 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
     }
 
     @Override
+    public void queryAllCollectionClipsNum() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<WordClips> sameNumWords = mClipsDao.getSameNumWords(mCurrentBookPos);
+                int size = sameNumWords.size();
+                LogUtil.d(TAG,"coll size --> "+size);
+                for (ICollectionDialogCallback callback : mCallbacks) {
+                    callback.showClipsNum(size);
+                }
+            }
+        });
+    }
+
+    @Override
     public void regesiterView(ICollectionDialogCallback callbak) {
         if (mCallbacks != null && !mCallbacks.contains(callbak)) {
             mCallbacks.add(callbak);

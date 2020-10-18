@@ -1,11 +1,16 @@
 package presenters;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import dao.AllTaskDao;
+import dao.Chinese2EnglishDao;
+import dao.ListenerDao;
 import dao.ReciteWordsDao;
 import dao.WordsDao;
+import entirys.Chinese2English;
 import entirys.LearnTasks;
 import entirys.ReciteWords;
 import entirys.Words;
@@ -31,6 +36,12 @@ public class ReciteWordPresent implements IReciteWordPresent {
     private String mCurrentInput;
     private String mCurrentTime;
     private String mCurrentRange;
+    private int mFinishMostTime;
+    private int mFinishTime;
+    private boolean isRandom=false;//是否要重置随技数
+    private final Chinese2EnglishDao mChinese2EnglishDao;
+    private final ListenerDao mListenerDao;
+
 
     private ReciteWordPresent(){
         WordsDB db = WordsDB.getWordsDB();
@@ -40,6 +51,8 @@ public class ReciteWordPresent implements IReciteWordPresent {
         AllTaskDB tasksDB=AllTaskDB.getAllTaskDB();
         mLearnTaskDao = tasksDB.getLearnTaskDao();
         mReciteWordsDao = tasksDB.getReciteWordsDao();
+        mChinese2EnglishDao = tasksDB.getChinese2EnglishDao();
+        mListenerDao = tasksDB.getListenerDao();
     };
 
     private volatile  static ReciteWordPresent sPresent;
@@ -83,8 +96,18 @@ public class ReciteWordPresent implements IReciteWordPresent {
         new Thread(new Runnable() {
             @Override
             public void run() {
+
+                //插入 --> 查询刚插入的任务ID --> 插入到关系表
                 int range = Integer.parseInt(mCurrentRange);
-                ReciteWords reciteWords=new ReciteWords(mCurrentBookNum,range,mCurrentTime,true,mCurrentInput);
+                mFinishTime+=1;
+                ReciteWords reciteWords=new ReciteWords(mCurrentBookNum,range,mCurrentTime,mFinishTime,mFinishMostTime,true,mCurrentInput);
+                LogUtil.d(TAG,"mFinishTime --> "+mFinishTime);
+                LogUtil.d(TAG,"isert finishmostTime -->"+mFinishMostTime);
+
+                for (IReciteWordCallback iReciteWordCallback : mCallbackList) {
+                    iReciteWordCallback.showCurrentSize(mFinishTime);
+                }
+
                 //写入到单独的任务表
                 mReciteWordsDao.insertRecite(reciteWords);
                 List<ReciteWords> allRecite = mReciteWordsDao.getAllRecite(mCurrentBookNum);
@@ -93,7 +116,12 @@ public class ReciteWordPresent implements IReciteWordPresent {
                 int id = allRecite.get(allRecite.size() - 1).getId();
                 LogUtil.d(TAG,"reciteWordsID -->"+id);
                 //插入关系表
-                LearnTasks learnTasks=new LearnTasks(id,mCurrentBookNum,true);
+
+                //虚假的数据
+                Chinese2English c2e=new Chinese2English(1,"1",true,1);
+                mChinese2EnglishDao.insertChinese(c2e);
+
+                LearnTasks learnTasks=new LearnTasks(id,1,mCurrentBookNum,true);
                 mLearnTaskDao.insertReciteTask(learnTasks);
             }
         }).start();
@@ -105,6 +133,57 @@ public class ReciteWordPresent implements IReciteWordPresent {
 
         this.mCurrentTime=compltetTime;
         this.mCurrentInput=input;
+
+    }
+
+    //在还没插入数据的时候 --> 设置最大点击次数
+    private Runnable maxUpperTask=new Runnable() {
+        @Override
+        public void run() {
+            //获取最新的背单词任务ID
+            int maxID;
+            maxID =mLearnTaskDao.getReMaxID(mCurrentBookNum);
+            LogUtil.d(TAG,"maxID -->"+(maxID));
+
+
+            //根据任务ID --> 获取完成的时间
+            String newDate = mReciteWordsDao.getNewDate(mCurrentBookNum, maxID);
+            LogUtil.d(TAG,"newDate -->"+newDate);
+            SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+            String currentDate = format.format(System.currentTimeMillis());
+
+
+            int newRandom=0;
+
+            //如果是同一天的话 --> 不更新random
+            if (!currentDate.equals(newDate)){
+                //更新
+                isRandom=true;
+            }else{
+                //不更新
+                isRandom=false;
+            }
+
+            LogUtil.d(TAG,"isRandom --> "+isRandom);
+            if (isRandom){
+                Random random=new Random();
+                newRandom=random.nextInt(6);
+                if (newRandom==0)
+                    newRandom=1;
+                mFinishMostTime=newRandom;
+            }
+
+            for (IReciteWordCallback iReciteWordCallback : mCallbackList) {
+                iReciteWordCallback.showMaxSize(mFinishMostTime);
+            }
+            LogUtil.d(TAG,"mFinishMostTime -->"+mFinishMostTime);
+        }
+    };
+
+    @Override
+    public void isRandomMaxUpper() {
+        //TODO: 查询是否为同一天  如果是同一天 则不更新随技数 --> 并且设置最大完成次数
+        new Thread(maxUpperTask).start();
     }
 
     @Override

@@ -160,6 +160,11 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
 
     }
 
+    @Override
+    public void showClipsNum(int size) {
+
+    }
+
 
     @Override
     public void onDetachedFromWindow() {

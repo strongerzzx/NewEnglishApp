@@ -60,7 +60,7 @@ public class ReciteFinishTaskFragment extends Fragment {
         String range = bundle.getString("range");
         mFinishNum.setText(range);
 
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         Date date=new Date(System.currentTimeMillis());
         String compltetTime = format.format(date);
         mFinishDate.setText(compltetTime);
@@ -82,8 +82,13 @@ public class ReciteFinishTaskFragment extends Fragment {
         //传递任务完成的信息
         mReciteP.getFinishInfo(range,compltetTime,input);
 
-        //TODO:完成任务
+        //TODO: 插入前 --> 判断上限是否要更新
+      //  mReciteP.isRandomMaxUpper();
+
+        //到了通过界面 --> 完成任务
         mReciteP.doFinishTask();
+
+
     }
 
     private void initView() {

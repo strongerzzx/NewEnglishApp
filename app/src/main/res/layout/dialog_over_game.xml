@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+    <TextView
+        android:id="@+id/over_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="恭喜你完成了挑战"
+        android:layout_marginTop="20dp"
+        android:textColor="#525868"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/over_btn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="知道了"
+        android:textColor="#000"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/selector_chin2eng_normal"/>
+
+    </LinearLayout>
+</RelativeLayout>

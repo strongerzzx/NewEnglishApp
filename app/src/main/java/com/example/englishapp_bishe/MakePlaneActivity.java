@@ -16,9 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import presenters.HomePresent;
 import presenters.ReciteWordPresent;
+import utils.LogUtil;
 
 public class MakePlaneActivity extends AppCompatActivity {
 
+    private static final String TAG = "MakePlaneActivity";
     private ImageView mFinishIv;
     private ImageView mStartIv;
     private EditText mInputRange;
@@ -29,6 +31,10 @@ public class MakePlaneActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_plane);
+
+        Intent intent = getIntent();
+        int chinese = intent.getIntExtra("chinese", 0);
+        LogUtil.d(TAG,"num --> "+chinese);
 
         initView();
 
