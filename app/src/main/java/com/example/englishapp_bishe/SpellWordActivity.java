@@ -241,7 +241,6 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
                 });
             }
         });
-
     }
 
     private void onCorrect() {

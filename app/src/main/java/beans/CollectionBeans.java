@@ -8,6 +8,7 @@ public class CollectionBeans {
      * data : null
      */
 
+
     private boolean flag;
     private String msg;
     private Object data;

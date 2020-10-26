@@ -39,7 +39,6 @@ public class SelectorBookAdapter extends RecyclerView.Adapter<SelectorBookAdapte
     @Override
     public void onBindViewHolder(@NonNull InnerViewHolder holder, int position) {
         SelectBookBeans.CatesBean.BookListBean bookListBean = mList.get(position);
-
         String originName = bookListBean.getBookOrigin().getOriginName();//来源
         String title = bookListBean.getTitle();//书名
         String cover = bookListBean.getCover();//图片

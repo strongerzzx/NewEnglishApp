@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class com.baidu.ocr.sdk.**{*;}
+-dontwarn com.baidu.ocr.**
+-keep class com.iflytek.**{*;}
+-keepattributes Signature

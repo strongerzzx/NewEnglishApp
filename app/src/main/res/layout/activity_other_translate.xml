@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OtherTranslateActivity"
+    android:background="#FAFAFA">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/translate_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:src="@mipmap/ic_left_arrow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="翻译"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/translate_show"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:background="@drawable/shape_coll_mangager_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline30" />
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline29"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <LinearLayout
+            android:id="@+id/translate_select"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/translate_src"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="英文"
+                android:padding="10dp"/>
+
+            <ImageView
+                android:id="@+id/translate_conver"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/selector_translate_conver"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/translate_dest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="中文"
+                android:padding="10dp"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_below="@id/translate_select"
+            android:id="@+id/translate_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_coll_mangager_bg"
+            android:gravity="top"
+            android:hint="想要输入的待翻译的句子"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/translate_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="翻译"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_margin="8dp"
+        android:background="@drawable/selector_translate_btn"
+        app:layout_constraintBottom_toTopOf="@+id/guideline30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline29" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

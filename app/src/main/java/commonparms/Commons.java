@@ -14,4 +14,21 @@ public class Commons {
 
     //收藏dialog的数据库名
     public static final String DB_TYPE_WORDSCLIPS="words_clips_db";
+
+    //百度OCR请求网址
+    public static final String OCR_BAI_DU="https://aip.baidubce.com/";
+
+    //获取到的AccessToken
+    public static  String accessToken="";
+
+    //百度文字识别
+    public static final String COMPLETE_URL="https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";
+
+    //百度翻译识别
+    public static final String BAI_DU_TRANSLATE="http://api.fanyi.baidu.com/";
+
+
+    public static final String appid = "20200911000563747";
+    public static final String sercet = "Mq8ioNowJM83qXx6rCWU";
+    public static final String salt = "1435660288";
 }

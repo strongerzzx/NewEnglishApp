@@ -1,8 +1,13 @@
 package apis;
 
+import java.util.Map;
+
+import beans.BaiduTokenBeans;
+import beans.BaiduTranslateBeas;
 import beans.CollectionBeans;
 import beans.GetCollectionBeans;
 import beans.LoginBeans;
+import beans.OcrBeans;
 import beans.RegBeans;
 import beans.SelectBookBeans;
 import commonparms.Commons;
@@ -10,10 +15,13 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 
 /**
  * 作者：zzx on 2020/9/29 13:27
@@ -60,4 +68,21 @@ public interface ApiService {
     @Headers({"Content-Type:application/json;charset=UTF-8","User-Agent:Retrofit-your-App","urlname:text2"})
     @POST("findall")
     Call<GetCollectionBeans>getCollection(@Body RequestBody body);
+
+    //百度OCR
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST("rest/2.0/ocr/v1/general_basic")
+    Call<OcrBeans>getOcrData(@Field("access_token") String accessToken, @Field("image")String image);
+    //Call<HandWriteBeans>getOcrData(@Field("access_token") String accessToken, @Field("image")String image);
+
+
+    //获取百度的Token
+    @GET("oauth/2.0/token")
+    Call<BaiduTokenBeans> getAccessToken(@QueryMap Map<String,String> map );
+
+
+    //百度翻译API
+    @GET("api/trans/vip/translate")
+    Call<BaiduTranslateBeas> getTranslateChinese(@QueryMap Map<String,String> map);
 }

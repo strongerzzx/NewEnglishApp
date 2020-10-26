@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="中 --> 英" android:id="@+id/pop_chinese_2_english" />
+    <item android:title="英 --> 中"  android:id="@+id/pop_english_2_chinese"/>
+</menu>

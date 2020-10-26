@@ -186,6 +186,8 @@ public class SelectorPresenter implements ISelectBookPresent {
         Chinese2EnglishPresenter.getPresenter().getBookNum(pos);
         Listener2SelectorPresenter.getPresenter().getBookNum(pos);
         SpellWordPresenter.getPresenter().getBookNum(pos);
+        GamePresenter.getPresenter().getBookNum(pos);
+
         //下载zip
         downloadZip(zipUrl);
 
