@@ -102,6 +102,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
                     }
                 }
 
+                queryAllClips();
             }
         }).start();
     }
@@ -142,6 +143,8 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
                 words.setCollectionpos(mCollectionID);//插入收藏的位置
                 mWordsDao.updateWords(words);
                 System.out.println(words.getHeadWord());
+
+
             }
         }).start();
 
@@ -172,7 +175,6 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
                 WordClips clips = wordClips.get(pos);
                 LogUtil.d(TAG,"pos --> "+pos);
                 mClipsDao.deleteWords(clips);
-
             }
         }).start();
     }
@@ -203,6 +205,25 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
                 }
             }
         });
+    }
+
+    @Override
+    public void getClipsWords() {
+
+    }
+
+    //获取单词夹中的单词
+    public void getClipsWords(int pos) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<Words> sameNumWords = mWordsDao.getSameNumWords(mCurrentBookPos);
+                int collectionpos = sameNumWords.get(0).getCollectionpos();//获取单词的收藏夹ID
+
+                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
+                int id = wordClips.get(pos).getId();//收藏夹ID
+            }
+        }).start();
     }
 
     @Override

@@ -350,6 +350,9 @@ public class Listen2SelectorActivity extends AppCompatActivity implements TextTo
         if (mPop != null) {
             mPop.dismiss();
         }
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
     }
 
     @Override
@@ -388,7 +391,7 @@ public class Listen2SelectorActivity extends AppCompatActivity implements TextTo
             @Override
             public void run() {
                 mCurrentIndex=index;
-                tvCurrentProgress.setText(index+"/");
+                tvCurrentProgress.setText(index+" /  ");
             }
         });
     }

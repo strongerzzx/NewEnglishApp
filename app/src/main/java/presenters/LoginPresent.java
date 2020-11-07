@@ -27,7 +27,6 @@ import utils.LogUtil;
 
 public class LoginPresent implements ILoginPresent {
 
-    private static final String BASE_LOGIN="http://47.100.170.185:8081/";
     private static final String TAG = "LoginPresent";
     private List<ILoginCallback>mCallbackList=new ArrayList<>();
     private String mCurrentPswd;

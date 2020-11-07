@@ -69,6 +69,13 @@ public class Chinese2EnglishActivity extends AppCompatActivity implements IChine
     public void onInit(int status) {
         if (status==TextToSpeech.SUCCESS){
             mTts.setLanguage(Locale.ENGLISH);
+
+            mTts.speak(mCurrentCorrect,TextToSpeech.QUEUE_FLUSH,null,"123");
+
+        }else{
+            if (status==TextToSpeech.ERROR){
+                LogUtil.d(TAG,"语音播报初始化失败");
+            }
         }
     }
 
@@ -120,7 +127,7 @@ public class Chinese2EnglishActivity extends AppCompatActivity implements IChine
                     case CASE_SHOW_CURRENT_PROGRESS:
                         int progress = msg.arg1;
                         activity.mCurrentActProgress=progress;
-                        activity.mCurrentProgress.setText(progress+" /");
+                        activity.mCurrentProgress.setText(progress+" /  ");
                         break;
                 }
             }
@@ -141,10 +148,10 @@ public class Chinese2EnglishActivity extends AppCompatActivity implements IChine
         mChinesePresenter.requestData();//获取数据
         mChinesePresenter.doFinalProgress();//获取最终进度
 
-        mPop=new UnKnowPopwindow(this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        mPop=new UnKnowPopwindow(Chinese2EnglishActivity.this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         mDialog = new OverDialog(this);
 
-        mTts = new TextToSpeech(this,this);
+        mTts = new TextToSpeech(Chinese2EnglishActivity.this,this);
 
 
 
@@ -152,6 +159,8 @@ public class Chinese2EnglishActivity extends AppCompatActivity implements IChine
         this.mCurrentActProgress=0;
         initEvent();
     }
+
+
 
     private void initEvent() {
 
@@ -264,7 +273,8 @@ public class Chinese2EnglishActivity extends AppCompatActivity implements IChine
         view.setBackground(mDrawableSuccess);
         iv.setImageResource(R.mipmap.ic_chinese_correct);
 
-        mTts.speak(view.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
+
+        mTts.speak(view.getText().toString(),TextToSpeech.QUEUE_FLUSH,null,"123");
 
 
         if (mCurrentActProgress >= mRangeProgress ){
@@ -423,7 +433,8 @@ public class Chinese2EnglishActivity extends AppCompatActivity implements IChine
         if (mChinesePresenter != null) {
             mChinesePresenter.unRegesiterView(this);
         }
-        if (mTts != null && mTts.isSpeaking()) {
+        if (mTts != null) {
+            mTts.stop();
             mTts.shutdown();
         }
         LogUtil.d(TAG,"onDestroy");

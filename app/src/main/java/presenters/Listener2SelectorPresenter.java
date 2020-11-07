@@ -114,6 +114,7 @@ public class Listener2SelectorPresenter implements IListener2SelectorPresenter {
                 SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
                 Date date=new Date(System.currentTimeMillis());
                 String time = format.format(date);
+//                Listeners listener=new Listeners(mCurrentBookPos,"2020-10-31",true);
                 Listeners listener=new Listeners(mCurrentBookPos,time,true);
                 mListenerDao.insertListener(listener);
 

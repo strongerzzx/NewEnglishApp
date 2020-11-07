@@ -118,6 +118,7 @@ public class SpellWordPresenter implements ISpellWordPresenter {
                 SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
                 Date date=new Date(System.currentTimeMillis());
                 String time = format.format(date);
+//                Spells spells=new Spells(mCurrentBookPos,"2020-10-31",true);
                 Spells spells=new Spells(mCurrentBookPos,time,true);
                 mSpellDao.insertSpell(spells);
 

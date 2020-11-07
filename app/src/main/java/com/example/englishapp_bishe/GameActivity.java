@@ -1,9 +1,9 @@
 package com.example.englishapp_bishe;
 
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -62,8 +62,13 @@ public class GameActivity extends AppCompatActivity implements IGameCallback {
     private GameHandler mGHandler;
     private CountDownTimer mDownTimer;
     private String mCurrentCorrect;
-    private int rabbitSpeed =3;
-    private int tortoiseSpeed =5;
+    private int rabbitSpeed =5;
+    private int tortoiseSpeed =3;
+    private int mDesX;
+    private Drawable mDrawableError;
+    private Drawable mDrawableNormal;
+    private Drawable mDrawableSuccess;
+
 
     public class GameHandler extends Handler{
         private WeakReference<GameActivity> mGameActivity;
@@ -104,7 +109,10 @@ public class GameActivity extends AppCompatActivity implements IGameCallback {
             }
         }
     }
-    
+
+    private int[] des=new int[2];
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,82 +128,93 @@ public class GameActivity extends AppCompatActivity implements IGameCallback {
         mGamePresenter.regesiterView(this);
         mGamePresenter.doQueryData();//获取数据
 
+
+        mDrawableError = getResources().getDrawable(R.drawable.shape_text);
+        mDrawableNormal = getResources().getDrawable(R.drawable.shape_chien2eng_normal);
+        mDrawableSuccess = getResources().getDrawable(R.drawable.shape_chinese_correct);
+
         initEvent();
     }
 
     private int rabbitTemp =0;
+    private int rabbitSum;
+
+    private int[] mLocal=new int[2];
     private Runnable rabbitRun =new Runnable() {
         @Override
         public void run() {
-            rabbitTemp +=10;
+            rabbitTemp +=5;
 
-            ObjectAnimator animator=ObjectAnimator.ofFloat(mGameRabbit,"translationX", rabbitSpeed *10+ rabbitTemp);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float animatedValue = (float) animation.getAnimatedValue();
-                    mGamePath.setSecondaryProgress((int) animatedValue);
-                }
-            });
-            animator.setDuration(200);
+            rabbitSum=rabbitSpeed *10+ rabbitTemp;
+
+            //兔子的坐标
+            mGameRabbit.getLocationOnScreen(mLocal);
+            int x = mLocal[0];
+            int y = mLocal[1];
+
+            ObjectAnimator animator=ObjectAnimator.ofFloat(mGameRabbit,"translationX", rabbitSum);
+            animator.setDuration(0);
             animator.start();
 
-            mGHandler.postDelayed(this,300);
 
-            int secondProgress = mGamePath.getSecondaryProgress();
+            mGHandler.postDelayed(this,200);
 
-            if (secondProgress==mGamePath.getMax()){
-                LogUtil.d(TAG,"恭喜兔子获得冠军");
-
+            if (Math.abs((x-mDesX))<200) {
                 mDownTimer.cancel();
                 mGHandler.removeCallbacksAndMessages(null);
-
                 Intent intent=new Intent(GameActivity.this,GameWinActivity.class);
                 intent.putExtra("win","恭喜兔子获得冠军");
                 startActivity(intent);
                 finish();
+                LogUtil.d(TAG,"恭喜兔子获得冠军");
             }
-
-            LogUtil.d(TAG,"secondProgress --> "+secondProgress);
         }
     };
 
+    private int tortiseSum;
     private int tortiseTemp=0;
+    private int[] mTorLocal=new int[2];
     private Runnable tortoiseRun =new Runnable() {
         @Override
         public void run() {
-            tortiseTemp+=10;
-            ObjectAnimator animator=ObjectAnimator.ofFloat(mGametortoise,"translationX", tortoiseSpeed *10+ tortiseTemp);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float animatedValue = (float) animation.getAnimatedValue();
-                    mGamePath.setProgress((int) animatedValue);
-                }
-            });
+
+            tortiseSum=tortoiseSpeed *10+ tortiseTemp;
+            mGametortoise.getLocationOnScreen(mTorLocal);
+            int x = mTorLocal[0];
+
+            tortiseTemp+=5;
+            ObjectAnimator animator=ObjectAnimator.ofFloat(mGametortoise,"translationX", tortiseSum);
+
 
             animator.setDuration(200);
             animator.start();
             mGHandler.postDelayed(this,300);
 
-            int progress = mGamePath.getProgress();
-            if (progress>=mGamePath.getMax()){
-                LogUtil.d(TAG,"恭喜乌龟获得冠军");
-
+            if (Math.abs((x-mDesX))<200) {
                 mDownTimer.cancel();
                 mGHandler.removeCallbacksAndMessages(null);
-
                 Intent intent=new Intent(GameActivity.this,GameWinActivity.class);
                 intent.putExtra("win","恭喜乌龟获得冠军");
                 startActivity(intent);
                 finish();
+                LogUtil.d(TAG,"恭喜乌龟获得冠军");
             }
 
-            LogUtil.d(TAG,"progress --> "+progress);
         }
     };
 
     private void initEvent() {
+
+        mGHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                //目的地
+                mGameDestion.getLocationOnScreen(des);
+                mDesX = des[0];
+
+                LogUtil.d(TAG,"mDesX -->"+mDesX);
+            }
+        });
 
         mGamePath.setMax(1000);
 
@@ -246,7 +265,7 @@ public class GameActivity extends AppCompatActivity implements IGameCallback {
         String currentChoose = btn.getText().toString();
         if (currentChoose.equals(mCurrentCorrect)){
             mGamePresenter.doQueryData();
-
+            mDownTimer.start();
             //加快乌龟的速度
             tortoiseSpeed+=1;
 

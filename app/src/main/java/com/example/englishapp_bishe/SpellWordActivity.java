@@ -133,7 +133,9 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
 
         ButterKnife.bind(this);
         mDialog = new OverDialog(this);
+
         mPop = new UnKnowPopwindow(this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        mPop.setClippingEnabled(false);
 
         mSpellPresenter = SpellWordPresenter.getPresenter();
         mSpellPresenter.regesiterView(this);
@@ -148,6 +150,7 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
         initEvent();
     }
 
+
     private Runnable replaceTask =new Runnable() {
         @Override
         public void run() {
@@ -158,6 +161,13 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
     };
 
     private void initEvent() {
+
+        finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         first.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -330,7 +340,7 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tvCurrentProg.setText(currentIndex+"/");
+                tvCurrentProg.setText(currentIndex+" / ");
                 mCurrentIndex=currentIndex;
             }
         });

@@ -3,7 +3,10 @@ package dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.Query;
 import androidx.room.Update;
+
+import java.util.List;
 
 import entirys.Spells;
 
@@ -22,4 +25,13 @@ public interface SpellDao {
 
     @Delete
     void deleteSpell(Spells... spells);
+
+    @Query("SELECT * FROM Spells WHERE is_finish=:isFinish AND finish_date=:date AND book_pos=:bookNum")
+    List<Spells> queryFinishByDate(boolean isFinish, String date, int bookNum);
+
+
+    //获取一段范围内的数据 --> 今天之前的数据
+    @Query("SELECT * FROM Spells WHERE is_finish=:isFinish AND book_pos=:bookPos  AND finish_date BETWEEN:fromDate and :toDate")
+    List<Spells> queryFinishByDate(boolean isFinish, String fromDate, String toDate, int bookPos);
+
 }

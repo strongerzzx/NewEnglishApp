@@ -1,5 +1,6 @@
 package adapters;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class DialogCollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                 WordClips clips = mClipsList.get(position - 1);
                 ((NormalViewHolder) holder).normalTitle.setText(clips.getTitle());
                 ((NormalViewHolder) holder).normalSongNum.setText(clips.getWordsNum()+"");
-                if (clips.getPic()==null){
+                if (clips.getPic()==null && TextUtils.isEmpty(clips.getPic())){
                     Glide.with(holder.itemView.getContext()).load(R.mipmap.ic_glide_error).into(((NormalViewHolder) holder).normalIv);
                 }else{
                     Glide.with(holder.itemView.getContext()).load(clips.getPic()).into(((NormalViewHolder) holder).normalIv);

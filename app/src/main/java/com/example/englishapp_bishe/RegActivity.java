@@ -25,6 +25,8 @@ public class RegActivity extends AppCompatActivity implements IRegCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg);
 
+
+        getWindow().setStatusBarColor(getResources().getColor(R.color.loginWindow));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 

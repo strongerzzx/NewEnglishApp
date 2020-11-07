@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,10 +10,7 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/speech_finish"
@@ -33,39 +30,91 @@
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/speech_text"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="开始识别"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout3"
+        android:layout_marginTop="10dp">
 
+<!--        <TextView-->
+<!--            android:id="@+id/speech_current_progress"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="0 /"-->
+<!--            android:textSize="14sp"-->
+<!--            android:gravity="right"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/speech_max_progress"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:textSize="14sp"-->
+<!--            android:text="20"/>-->
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/speech_recongize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="_ _ _ _ _ _ _ _ "
+        android:layout_below="@id/linearLayout3"
+        android:gravity="center"
+        android:layout_marginTop="60dp"/>
+
+    <TextView
+        android:id="@+id/speech_chinese"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/speech_recongize"
+        android:text="n:点火"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"/>
     <TextView
         android:id="@+id/speech_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="light"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/speech_fayin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/light/"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/speech_content"
+        android:layout_marginTop="5dp"/>
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
 
         <utils.SpeechView
             android:id="@+id/speech_view"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"/>
 
+        <ImageView
+            android:id="@+id/speech_tishi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/selector_tishi"
+            android:layout_gravity="center" />
 
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

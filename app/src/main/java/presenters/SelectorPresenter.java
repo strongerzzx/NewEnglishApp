@@ -169,9 +169,6 @@ public class SelectorPresenter implements ISelectBookPresent {
         if (mCallbackList != null) {
             mCallbackList.remove(callback);
         }
-        if (singleExector != null) {
-            singleExector.shutdown();
-        }
     }
 
     @Override
@@ -187,6 +184,8 @@ public class SelectorPresenter implements ISelectBookPresent {
         Listener2SelectorPresenter.getPresenter().getBookNum(pos);
         SpellWordPresenter.getPresenter().getBookNum(pos);
         GamePresenter.getPresenter().getBookNum(pos);
+        SpeechPresent.getPresent().getBookNum(pos);
+        StudyProgressPresenter.getPresenter().getBookNum(pos);
 
         //下载zip
         downloadZip(zipUrl);

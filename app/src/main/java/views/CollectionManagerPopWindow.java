@@ -56,9 +56,6 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
 
         initEvent();
 
-
-
-
     }
 
     private void initEvent() {
@@ -117,6 +114,15 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
             public void onClick(View v) {
                 mDialogPresent.deleCollectionData(pos);
                 dismiss();
+            }
+        });
+
+
+        mPopDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //先获取单词夹中的单词
+               // mDialogPresent.getClipsWords(pos);
             }
         });
     }

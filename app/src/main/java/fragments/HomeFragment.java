@@ -19,6 +19,7 @@ import com.example.englishapp_bishe.CikuActivity;
 import com.example.englishapp_bishe.MakePlaneActivity;
 import com.example.englishapp_bishe.R;
 import com.example.englishapp_bishe.SearchActivity;
+import com.example.englishapp_bishe.StudyProgressActivity;
 
 import interfaces.ICanClickRecite;
 import interfaces.IHomeCallback;
@@ -41,6 +42,7 @@ public class HomeFragment extends Fragment implements IHomeCallback {
     private String currentEnglish;
     private String currentChinese;
     private TextView mBookName;
+    private ImageView mIvUser;
 
     public HomeFragment() {
     }
@@ -53,7 +55,7 @@ public class HomeFragment extends Fragment implements IHomeCallback {
 
         mHomePresent = HomePresent.getPresent();
         mHomePresent.regesiterHomeView(this);
-
+        mHomePresent.queryWords();
 
         initView(inflate);
 
@@ -62,9 +64,15 @@ public class HomeFragment extends Fragment implements IHomeCallback {
     }
 
     private void initEvent() {
-        //显示进入的书名
-        //mBookName.setText();
 
+        //跳转到学习进度页面
+        mIvUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), StudyProgressActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //单个单词出现
         mSingleIv.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +154,7 @@ public class HomeFragment extends Fragment implements IHomeCallback {
         mBtnStart = inflate.findViewById(R.id.home_btn_start_bei);
         mTvEnglish = inflate.findViewById(R.id.home_tv_english);
         mTvChinese = inflate.findViewById(R.id.home_tv_chinese);
+        mIvUser = inflate.findViewById(R.id.home_user_iv);
     }
 
     @Override

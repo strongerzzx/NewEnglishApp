@@ -2,12 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#727072">
+
 
     <ImageView
-        android:id="@+id/item_speech_iv"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        app:srcCompat="@drawable/other_game_bg" />
+        android:id="@+id/speech_dialog_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/recorder"
+        android:layout_centerInParent="true"/>
+    <ImageView
+        android:id="@+id/speech_dialog_recodr_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/v1"
+        android:layout_toRightOf="@id/speech_dialog_record"
+        android:layout_centerInParent="true"/>
+
+
 </RelativeLayout>

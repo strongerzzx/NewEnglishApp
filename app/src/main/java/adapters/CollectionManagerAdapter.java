@@ -1,5 +1,6 @@
 package adapters;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,12 @@ public class CollectionManagerAdapter extends RecyclerView.Adapter<CollectionMan
         holder.managerTitle.setText(clips.getTitle());
         holder.managerNum.setText("单词量:"+clips.getWordsNum()+"");
 
-        Glide.with(holder.itemView.getContext()).load(clips.getPic()).into(holder.managerIv);
+        String pic = clips.getPic();
+        if (pic!=null && !TextUtils.isEmpty(pic)){
+            Glide.with(holder.itemView.getContext()).load(pic).into(holder.managerIv);
+        }else{
+            Glide.with(holder.itemView.getContext()).load(R.mipmap.ic_glide_error).into(holder.managerIv);
+        }
 
         if (mIvOnCollectionManagerClickListener != null) {
             LogUtil.d(TAG,"pos --> "+position);
@@ -76,8 +82,8 @@ public class CollectionManagerAdapter extends RecyclerView.Adapter<CollectionMan
         mClips.clear();
         if (wordClips != null) {
             mClips.addAll(wordClips);
-            notifyDataSetChanged();
         }
+        notifyDataSetChanged();
     }
 
     public class InnerViewHolder extends RecyclerView.ViewHolder {

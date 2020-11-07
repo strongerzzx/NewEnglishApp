@@ -299,9 +299,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_below="@id/unknow_jinyici_word_1">
 
                     <TextView
                         android:id="@+id/unknow_zhan"
@@ -328,7 +327,9 @@
 
 
                 </LinearLayout>
+
             </RelativeLayout>
+
         </ScrollView>
 
     </RelativeLayout>

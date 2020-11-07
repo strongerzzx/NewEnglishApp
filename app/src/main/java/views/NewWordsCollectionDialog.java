@@ -93,7 +93,7 @@ public class NewWordsCollectionDialog extends Dialog{
         },500);
 
 
-        //TODO:填写数据源  -->  插入数据库  --> 并且直接收藏在点击新创的单词夹
+        //填写数据源  -->  插入数据库  --> 并且直接收藏在点击新创的单词夹
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +104,8 @@ public class NewWordsCollectionDialog extends Dialog{
                 //获取标题
                 mPresent.getViewData(title);
                 mPresent.submitData();
+
+                //TODO:刷新整个界面
 
                 Toast.makeText(getContext(), "添加"+title+"成功", Toast.LENGTH_SHORT).show();
                 dismiss();

@@ -1,5 +1,6 @@
 package com.example.englishapp_bishe;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
@@ -9,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
-import com.example.englishapp_bishe.databinding.ActivityCikuDetailBinding;
+import com.example.englishapp_bishe.databinding.DetailWordTextLayoutBinding;
 
 import java.util.Locale;
 
@@ -22,7 +23,8 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
 
     private static final String TAG = "CikuDetailActivity";
     private DetailPresent mDetailPresent;
-    private ActivityCikuDetailBinding mBinding;
+  //  private ActivityCikuDetailBinding mBinding;
+    private DetailWordTextLayoutBinding mBinding;
     private TextToSpeech mTts;
     private String mHeadWord;
     private String mContent;
@@ -30,7 +32,7 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_ciku_detail);
+        mBinding = DataBindingUtil.setContentView(this,R.layout.detail_word_text_layout);
 
         mTts = new TextToSpeech(this,this);
         mDetailPresent = DetailPresent.getPresent();
@@ -38,7 +40,9 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
 
         mDetailPresent.getData();
 
-
+        //设置toolBar
+        setSupportActionBar(mBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initEvent();
     }
@@ -58,21 +62,27 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
     }
 
     private void initEvent() {
+
+        mBinding.collToolLayout.setExpandedTitleColor(Color.WHITE);
+        mBinding.collToolLayout.setCollapsedTitleTextColor(Color.BLACK);
+
         //结束
-        mBinding.detailFinishIv.setOnClickListener(new View.OnClickListener() {
+        mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-        //TODO:收藏 --> 默认
-//        mBinding.detailCollectionIv.setOnClickListener(new View.OnClickListener() {
+
+        //结束
+//        mBinding.detailFinishIv.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//
+//                finish();
 //            }
 //        });
+
 
         //语音播报  -->单词
         mBinding.detailFaYinLound.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +108,7 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
         if (words != null) {
             mHeadWord = words.getHeadWord();
             mContent = words.getContent();
+            mBinding.collToolLayout.setTitle(mHeadWord);
             mBinding.detailHeadWord.setText(mHeadWord);
             mBinding.detailAdjWord.setText(words.getSimpleTran());
             mBinding.detailAdvWords.setText(words.getTran());
@@ -111,8 +122,10 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
             mBinding.detailPhresesEnglish.setText(words.getPcn());
             if (TextUtils.isEmpty(words.getPicture())){
                 Glide.with(this).load(R.mipmap.ic_glide_error).into(mBinding.detailLiJuPic);
+                Glide.with(this).load(R.mipmap.ic_glide_error).into(mBinding.appBarImage);
             }else{
                 Glide.with(this).load(words.getPicture()).into(mBinding.detailLiJuPic);
+                Glide.with(this).load(words.getPicture()).into(mBinding.appBarImage);
             }
         }
     }

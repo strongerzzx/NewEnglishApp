@@ -98,7 +98,7 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                                     reciteWordActivity.mTvEnglish.setText(words.getHeadWord());
                                     reciteWordActivity.mTvFayin.setText(words.getUkphone());
                                     reciteWordActivity.mCurrentProgress++;
-                                    reciteWordActivity.mTvCurrentProgress.setText(progress + "/");
+                                    reciteWordActivity.mTvCurrentProgress.setText(progress + " / ");
 
 
                                     reciteWordActivity.mScrollLayout.setVisibility(View.GONE);
@@ -136,7 +136,7 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                                     reciteWordActivity.mTvEnglish.setText(words.getHeadWord());
                                     reciteWordActivity.mTvFayin.setText(words.getUkphone());
                                     reciteWordActivity.mCurrentProgress++;
-                                    reciteWordActivity.mTvCurrentProgress.setText(progress + "/");
+                                    reciteWordActivity.mTvCurrentProgress.setText(progress + " / ");
 
                                     //下一个数据 --> 更新unKnow中的progress
                                     reciteWordActivity.mUnknowPop.updateProgress(progress);

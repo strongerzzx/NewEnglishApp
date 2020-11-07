@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_height="250dp"
+            android:layout_width="match_parent"
+            android:fitsSystemWindows="true">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/coll_tool_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
+                app:contentScrim="#EEEEEE"
+                app:expandedTitleMarginStart="48dp">
+
+                <ImageView
+                    android:id="@+id/app_bar_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.7"
+                    android:src="@android:drawable/sym_def_app_icon"
+                    android:scaleType="centerCrop" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_width="match_parent"
+                    app:layout_collapseMode="pin"/>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:overScrollMode="never">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/detail_head_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="so"
+                    android:visibility="gone"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp" />
+
+
+                <TextView
+                    android:id="@+id/detail_fa_yin_uk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_head_word"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:text="/sou/"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/detail_fa_yin_us"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_head_word"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/detail_fa_yin_uk"
+                    android:textSize="16sp"
+                    android:text="/sou/"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/detail_fa_yin_lound"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/ic_sounds_press"
+                    android:layout_toRightOf="@id/detail_fa_yin_us"
+                    android:layout_below="@id/detail_head_word"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/detail_adv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="adv."
+                    android:layout_below="@id/detail_fa_yin_uk"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/detail_adv_words"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="如此,这么确实"
+                    android:layout_below="@id/detail_fa_yin_uk"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/detail_adv"
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/detail_adj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="n."
+                    android:layout_below="@id/detail_adv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/detail_adj_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="真的,事实如此,整齐的"
+                    android:layout_below="@id/detail_adv"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/detail_adj"
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/detail_head_word_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#4d4d4d4d"
+                    android:layout_below="@id/detail_adj_word"
+                    android:layout_marginTop="30dp" />
+
+                <TextView
+                    android:id="@+id/detail_liju_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="图文例句"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_below="@id/detail_head_word_line"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/detail_li_ju_english"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I am so latel"
+                    android:layout_below="@id/detail_liju_head"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:id="@+id/detail_li_ju_lound"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/ic_sounds_press"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/detail_head_word_line"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp" />
+
+                <TextView
+                    android:id="@+id/detail_li_ju_chinese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我太吃到了"
+                    android:layout_below="@id/detail_li_ju_english"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/detail_li_ju_pic"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="#000"
+                    android:layout_below="@id/detail_li_ju_chinese"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"/>
+
+                <View
+                    android:id="@+id/detail_li_ju_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#4d4d4d4d"
+                    android:layout_below="@id/detail_li_ju_pic"
+                    android:layout_marginTop="30dp" />
+
+
+                <TextView
+                    android:id="@+id/detail_trans_other_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="英文释义"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_below="@id/detail_li_ju_line"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/detail_trans_other_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1."
+                    android:layout_below="@id/detail_trans_other_head"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/detail_trans_other_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="to suach a great degreee"
+                    android:layout_below="@id/detail_trans_other_head"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/detail_trans_other_num"
+                    android:layout_marginLeft="5dp" />
+
+
+                <View
+                    android:id="@+id/detail_phrases_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#4d4d4d4d"
+                    android:layout_below="@id/detail_trans_other_word"
+                    android:layout_marginTop="30dp" />
+
+                <TextView
+                    android:id="@+id/detail_phreses_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="短语"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/detail_phrases_line" />
+
+                <TextView
+                    android:id="@+id/detail_phreses_english"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="so as to do something"
+                    android:layout_below="@id/detail_phreses_title"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#6F93F0" />
+
+                <TextView
+                    android:id="@+id/detail_phrases_chinese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="方便...以便"
+                    android:layout_below="@id/detail_phreses_english"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:id="@+id/detail_jinyici_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#4d4d4d4d"
+                    android:layout_below="@id/detail_phrases_chinese"
+                    android:layout_marginTop="30dp" />
+
+                <TextView
+                    android:id="@+id/detail_jinyici_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="近义词"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/detail_jinyici_line" />
+
+                <TextView
+                    android:id="@+id/detail_jinyici_word_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="stipulan"
+                    android:textColor="#6F93F0"
+                    android:layout_below="@id/detail_jinyici_title"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp" />
+
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

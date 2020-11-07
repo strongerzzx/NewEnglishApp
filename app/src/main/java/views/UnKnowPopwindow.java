@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 import entirys.Words;
+import utils.LogUtil;
 
 /**
  * 作者：zzx on 2020/10/11 14:16
@@ -68,7 +69,6 @@ public class UnKnowPopwindow extends PopupWindow implements TextToSpeech.OnInitL
         this.setFocusable(true);
         this.setBackgroundDrawable(new BitmapDrawable());
 
-
         mTts = new TextToSpeech(context,this);
 
         initView();
@@ -80,7 +80,7 @@ public class UnKnowPopwindow extends PopupWindow implements TextToSpeech.OnInitL
 
 
     private void initView() {
-        mScroll = mInflate.findViewById(R.id.un_konw_scroll_view);
+       // mScroll = mInflate.findViewById(R.id.un_konw_scroll_view);
         mEnglish = mInflate.findViewById(R.id.unknow_head_word);
         mFayinUk = mInflate.findViewById(R.id.unknow_fa_yin_uk);
         mFayinUS = mInflate.findViewById(R.id.unknow_fa_yin_us);
@@ -110,9 +110,7 @@ public class UnKnowPopwindow extends PopupWindow implements TextToSpeech.OnInitL
             }
         });
 
-
         //斩 --> 则下一个
-
         mZhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,17 +197,22 @@ public class UnKnowPopwindow extends PopupWindow implements TextToSpeech.OnInitL
     public void onInit(int status) {
         if (status==TextToSpeech.SUCCESS){
             mTts.setLanguage(Locale.ENGLISH);
+            mTts.setPitch(1.0f);
+            mTts.setSpeechRate(0.3f);
+
+        }else{
+            LogUtil.d(TAG,"初始化失败");
         }
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        if (mTts != null && mTts.isSpeaking()) {
-            mTts.shutdown();
-        }
-    }
-
+//    @Override
+//    public void dismiss() {
+//        super.dismiss();
+//        if (mTts != null) {
+//            mTts.stop();
+//            mTts.shutdown();
+//        }
+//    }
 
 
     public void setOnZhanClickListener(onZhanClickListener onZhanClickListener) {

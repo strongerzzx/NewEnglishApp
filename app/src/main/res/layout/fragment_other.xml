@@ -35,17 +35,6 @@
         android:textStyle="bold"
         android:layout_below="@id/other_rv"/>
 
-<!--    <TextView-->
-<!--        android:id="@+id/other_take_photo"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center"-->
-<!--        android:padding="8dp"-->
-<!--        android:text="文字识别"-->
-<!--        android:textColor="#000"-->
-<!--        android:textSize="18dp" />-->
-
-
     <RelativeLayout
         android:id="@+id/other_helper_layout"
         android:layout_width="match_parent"
@@ -66,7 +55,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/other_sub_content"
+                android:background="@drawable/selector_chin2eng_normal"
                 app:layout_constraintBottom_toTopOf="@+id/guideline27"
                 app:layout_constraintEnd_toStartOf="@+id/guideline26"
                 app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +65,7 @@
                     android:id="@+id/other_take_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
+                    android:padding="5dp"
                     android:text="文字识别"
                     android:textColor="#000"
                     android:textSize="18sp" />
@@ -85,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/other_take_photo"
-                    android:padding="12dp"
+                    android:padding="5dp"
                     android:text="及时复习" />
 
                 <ImageView
@@ -93,8 +82,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
                     android:background="@mipmap/ic_take_photo_get_word" />
 
             </RelativeLayout>
@@ -116,7 +103,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/other_sub_content"
+                android:background="@drawable/selector_chin2eng_normal"
                 app:layout_constraintBottom_toTopOf="@+id/guideline28"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline26"
@@ -126,7 +113,7 @@
                     android:id="@+id/other_helper_translate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:text="单词翻译"
                     android:textColor="#000"
                     android:textSize="18sp" />
@@ -135,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/other_helper_translate"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:text="随身用" />
 
                 <ImageView
@@ -143,8 +130,6 @@
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="20dp"
                     android:src="@mipmap/ic_other_translate" />
 
             </RelativeLayout>
@@ -165,7 +150,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/other_sub_content"
+                android:background="@drawable/selector_chin2eng_normal"
                 app:layout_constraintBottom_toTopOf="@+id/guideline27"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline26"
@@ -175,8 +160,8 @@
                     android:id="@+id/other_helper_yuyin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:text="语音识别"
+                    android:padding="6dp"
+                    android:text="单词背诵"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
@@ -184,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/other_helper_yuyin"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:text="方便用" />
 
                 <ImageView
@@ -192,8 +177,6 @@
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="20dp"
                     android:src="@mipmap/ic_other_yu_yin" />
             </RelativeLayout>
 
@@ -224,7 +207,7 @@
                     android:layout_height="80dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:src="@mipmap/ic_police_take_theif" />
+                    android:src="@mipmap/t" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -232,7 +215,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="40dp"
-                    android:text="警察与小偷"
+                    android:text="龟兔赛跑"
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -242,6 +225,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
-
 
 </RelativeLayout>

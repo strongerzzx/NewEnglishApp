@@ -19,10 +19,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import bases.BaseAppciation;
+import dao.WordsDao;
+import entirys.Words;
 import interfaces.ISpeechCallback;
 import interfaces.ISpeechPresent;
+import rooms.WordsDB;
 import utils.JsonParser;
 import utils.LogUtil;
 
@@ -38,10 +42,14 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
     private final SpeechRecognizer mIat;
     private Map<String,String> mMap=new HashMap<>();//用来存储识别的句子
 
-    private final int SAMPLE_RATE_IN_HZ=8000;
-    private final int BUFFER_SIZE= AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_DEFAULT,AudioFormat.ENCODING_PCM_16BIT);
+    private final int SAMPLE_RATE_IN_HZ=44100;//采样率
+    private final int BUFFER_SIZE= AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ
+            , AudioFormat.CHANNEL_IN_DEFAULT,AudioFormat.ENCODING_PCM_16BIT);//缓存池大小 --> 不知道则通过getMinBuffer获取
+
     private AudioRecord mAudioRecord;
     private boolean isGetVolic;
+    private int mCurrentBookNum;
+    private final WordsDao mWordsDao;
 
     private SpeechPresent() {
 
@@ -50,10 +58,13 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
         mIat = SpeechRecognizer.createRecognizer(BaseAppciation.getContext(), this);
 
         if (mAudioRecord == null) {
+            //音频源 采样率 声道 编码 缓存池大小 --> 数据存储在缓存池中 可以从里面获取
             mAudioRecord=new AudioRecord(MediaRecorder.AudioSource.MIC,SAMPLE_RATE_IN_HZ,AudioFormat.CHANNEL_IN_DEFAULT,AudioFormat.ENCODING_PCM_16BIT,BUFFER_SIZE);
             isGetVolic=true;
         }
 
+        WordsDB wordsDB = WordsDB.getWordsDB();
+        mWordsDao = wordsDB.getWordsDao();
     }
 
     private static volatile SpeechPresent sPresent;
@@ -74,7 +85,7 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
 
         //设置参数
         mIat.setParameter(SpeechConstant.PARAMS, "iat");      //应用领域
-        mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn"); //语音
+        mIat.setParameter(SpeechConstant.LANGUAGE, "en_us"); //语音
         mIat.setParameter(SpeechConstant.ACCENT, "mandarin"); //普通话 //mandarin
         mIat.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);//引擎
         mIat.setParameter(SpeechConstant.RESULT_TYPE, "json");//返回结果格式
@@ -88,7 +99,6 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
         //开始识别，并设置监听器
         mIat.startListening(this);
 
-
     }
 
     //计算声音分贝
@@ -97,7 +107,7 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mAudioRecord.startRecording();
+                mAudioRecord.startRecording();//开始录制
                 short[] buffer=new short[BUFFER_SIZE];
                 while (isGetVolic){
                     //实际读取的长度
@@ -110,11 +120,47 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
                     //平方和除以数据总长 --> 音量大小
                     double mean = v / (double)len;
                     //音量大小 --> 分贝
-                    double fb = 10 * Math.log10(mean);
-                    LogUtil.d(TAG,"分贝值 --> "+fb);
+                    double fb  = 10 * Math.log10(mean);
+
+                    for (ISpeechCallback callback : mCallbacks) {
+                        callback.showFenBei(fb);
+                    }
                 }
             }
         }).start();
+    }
+
+    private int mIndex=0;
+    @Override
+    public void doQueryData() {
+        Random random=new Random();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //TODO:获取数据
+                List<Words> wordsList = mWordsDao.getSameNumWords(mCurrentBookNum);
+                int anInt = random.nextInt(wordsList.size() - 10);
+                String headWord = wordsList.get(anInt).getHeadWord();
+                String ukphone = wordsList.get(anInt).getUkphone();
+                String tran = wordsList.get(anInt).getTran();
+
+
+                for (ISpeechCallback callback : mCallbacks) {
+                    callback.showCorrectWord(headWord,ukphone);
+                    callback.showAllData(wordsList,anInt);
+                    callback.showWordChinese(tran);
+                    callback.showTimes(++mIndex,1);
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public void onDestrioyRecord() {
+        mIat.cancel();
+        mIat.destroy();
+
+        isGetVolic=false;
     }
 
     @Override
@@ -129,18 +175,11 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
         if (mCallbacks != null && !mCallbacks.isEmpty()) {
             mCallbacks.remove(callback);
         }
-
-        mIat.cancel();
-        mIat.destroy();
-
-        isGetVolic=false;
-        mAudioRecord.stop();
-        mAudioRecord.release();
     }
 
     @Override
     public void getBookNum(int currentBookNum) {
-
+        this.mCurrentBookNum=currentBookNum;
     }
 
     @Override
@@ -194,6 +233,7 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
         for (String s : mMap.keySet()) {
             sb.append(mMap.get(s));
         }
+        LogUtil.d(TAG,"解析中 --> "+sb.toString());
         return sb.toString();
     }
 

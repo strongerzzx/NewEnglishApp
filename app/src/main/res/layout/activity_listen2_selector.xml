@@ -212,7 +212,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline16"
         app:layout_constraintTop_toTopOf="@+id/guideline15"
-        android:translationZ="2dp" />
+        android:translationZ="2dp"
+        android:layout_marginRight="16dp" />
 
     <ImageView
         android:id="@+id/listener_third_iv"
@@ -238,7 +239,7 @@
         android:id="@+id/listener_current_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0/"
+        android:text="0 /"
         android:layout_marginRight="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toEndOf="parent"
@@ -249,7 +250,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="15"
-        android:layout_marginLeft="18dp"
+        android:layout_marginLeft="23dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

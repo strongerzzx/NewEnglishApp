@@ -32,4 +32,11 @@ public interface ReciteWordsDao {
 
     @Query("SELECT finish_date FROM RECITEWORDS WHERE book_pos=:bookNum AND id=:reId")
     String getNewDate(int bookNum,int reId);
+
+    @Query("SELECT * FROM ReciteWords WHERE is_finish=:isFinish AND finish_date=:date AND book_pos=:bookNum")
+    List<ReciteWords> queryFinishByDate(boolean isFinish,String date,int bookNum);
+
+    //获取一段范围内的数据 --> 今天之前的数据
+    @Query("SELECT * FROM ReciteWords WHERE is_finish=:isFinish AND book_pos=:bookPos  AND finish_date BETWEEN:fromDate and :toDate")
+    List<ReciteWords> queryFinishByDate(boolean isFinish, String fromDate, String toDate, int bookPos);
 }

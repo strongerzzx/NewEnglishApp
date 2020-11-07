@@ -8,7 +8,7 @@
         android:id="@+id/collection_pop_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="歌单:无人之岛"
+        android:text="单词表:A"
         android:textSize="20sp"
         android:padding="10dp"
         android:layout_marginLeft="5dp"
@@ -55,6 +55,7 @@
         android:src="@mipmap/ic_pop_download"
         android:layout_below="@id/collection_pop_dele_line"
         android:layout_marginLeft="5dp"
+        android:visibility="gone"
         android:layout_marginTop="15dp"/>
 
     <TextView
@@ -68,5 +69,6 @@
         android:layout_toRightOf="@id/collection_pop_dele_iv"
         android:background="?attr/selectableItemBackground"
         android:text="下载"
+        android:visibility="gone"
         android:textSize="14sp" />
 </RelativeLayout>

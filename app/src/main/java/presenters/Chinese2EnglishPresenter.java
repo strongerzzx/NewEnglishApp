@@ -121,6 +121,7 @@ public class Chinese2EnglishPresenter implements IChinese2EnglishPresenter {
 
             //完成任务 --> 插入数据库
             Chinese2English c2e=new Chinese2English(mCurrentBookNum,finishDate,true,mFinalProgress);
+         //   Chinese2English c2e=new Chinese2English(mCurrentBookNum,"2020-10-31",true,mFinalProgress);
             mC2eDao.insertChinese(c2e);
         }
     };

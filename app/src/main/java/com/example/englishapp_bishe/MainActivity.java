@@ -3,6 +3,7 @@ package com.example.englishapp_bishe;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -44,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements ILoginCallback {
 
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(getResources().getColor(R.color.loginWindow));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.loginWindow));
+        }
 
         //小键盘管理
         mIm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

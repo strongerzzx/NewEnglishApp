@@ -48,6 +48,7 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
     private RecyclerView mManagerRv;
     private CollectionManagerPopWindow mManagerPop;
     private CollectionManagerPopWindow mPop;
+    private NewWordsCollectionDialog mNewDialog;
 
     public CollectionFragment() {
         // Required empty public constructor
@@ -66,7 +67,6 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
         mCollectionPresent = CollectionDialogPresent.getPresent();
         mCollectionPresent.regesiterView(this);
         mCollectionPresent.queryAllClips();
-        mCollectionPresent.queryAllCollectionClipsNum();//获取收藏夹数量
 
         mPop = new CollectionManagerPopWindow(getContext());
         initView();
@@ -77,6 +77,7 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
 
 
     private void initView() {
+        mNewDialog = new NewWordsCollectionDialog(getContext());
         mManagerPop = new CollectionManagerPopWindow(getContext());
         mCollectionSum = mInflate.findViewById(R.id.collection_manager_sum);
         mCollectionAdd = mInflate.findViewById(R.id.collection_manager_add);
@@ -109,8 +110,10 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
         mCollectionAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewWordsCollectionDialog newDialog=new NewWordsCollectionDialog(getContext());
-                newDialog.show();
+
+                mNewDialog.show();
+                mCollectionPresent.queryAllClips();
+                mManagerAdapter.notifyDataSetChanged();
             }
         });
 
@@ -138,6 +141,7 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
                 updateBgAlpha(1.0f);
                 //消失的时候在查一次 --> 更新UI
                 mCollectionPresent.queryAllClips();
+                mManagerAdapter.notifyDataSetChanged();
             }
         });
 
@@ -154,6 +158,10 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
                 LogUtil.d(TAG,"收藏管理者的收藏夹ID -->"+clipsID);
             }
         });
+    }
+
+    public CollectionManagerAdapter getManagerAdapter() {
+        return mManagerAdapter;
     }
 
     private void updateBgAlpha(float alpha) {

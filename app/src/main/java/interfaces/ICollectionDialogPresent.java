@@ -33,4 +33,8 @@ public interface ICollectionDialogPresent extends BaseInterface<ICollectionDialo
 
     //查询所有收藏夹数量
     void queryAllCollectionClipsNum();
+
+    //获取单词夹中的单词
+    void getClipsWords();
+
 }
