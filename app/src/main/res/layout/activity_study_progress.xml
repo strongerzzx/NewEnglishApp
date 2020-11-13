@@ -133,12 +133,21 @@
 
 
 
-
-    <im.dacer.androidcharts.LineView
-        android:id="@+id/line_view"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="im.dacer.androidcharts.LineView"
         android:layout_below="@id/study_progress_header_layout"
-        android:layout_margin="50dp"/>
+        android:layout_margin="50dp"
+        android:overScrollMode="never">
+
+
+        <im.dacer.androidcharts.LineView
+            android:id="@+id/line_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="im.dacer.androidcharts.LineView" />
+
+    </HorizontalScrollView>
+
+
 </RelativeLayout>

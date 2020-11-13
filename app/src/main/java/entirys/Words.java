@@ -5,13 +5,17 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 /**
  * 作者：zzx on 2020/10/2 11:10
  * <p>
  * 作用： xxxx
  */
 @Entity(indices = {@Index(value = {"head_word"},unique = true)})  //单词设置为唯一 防止重复插入
-public class Words {
+public class Words  implements Serializable {
+
+    private static final long serialVersionUID = -272342921953568678L;
     @PrimaryKey(autoGenerate = true)
     private int id;
 

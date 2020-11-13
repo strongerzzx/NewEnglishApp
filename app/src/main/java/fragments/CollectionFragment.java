@@ -26,6 +26,7 @@ import java.util.List;
 
 import adapters.CollectionManagerAdapter;
 import entirys.WordClips;
+import entirys.Words;
 import interfaces.ICollectionDialogCallback;
 import presenters.CollectionDialogPresent;
 import presenters.ManagerDetailPresent;
@@ -219,5 +220,10 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
                 LogUtil.d(TAG,"coll size --> "+size);
             }
         });
+    }
+
+    @Override
+    public void getWordInCollection(List<Words> mCollectionWords) {
+
     }
 }

@@ -25,6 +25,7 @@ import java.util.List;
 
 import adapters.DialogCollectionAdapter;
 import entirys.WordClips;
+import entirys.Words;
 import interfaces.ICollectionDialogCallback;
 import presenters.CollectionDialogPresent;
 
@@ -162,6 +163,11 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
 
     @Override
     public void showClipsNum(int size) {
+
+    }
+
+    @Override
+    public void getWordInCollection(List<Words> mCollectionWords) {
 
     }
 

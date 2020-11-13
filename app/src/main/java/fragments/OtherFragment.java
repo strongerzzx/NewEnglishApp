@@ -346,7 +346,7 @@ public class OtherFragment extends Fragment {
             }
         });
 
-        //TODO:语音识取
+       //语音识别
         yuyinLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -355,7 +355,7 @@ public class OtherFragment extends Fragment {
             }
         });
 
-        //TODO:警察捉小偷
+        //龟兔赛跑
         gameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

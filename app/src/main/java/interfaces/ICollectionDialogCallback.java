@@ -3,6 +3,7 @@ package interfaces;
 import java.util.List;
 
 import entirys.WordClips;
+import entirys.Words;
 
 /**
  * 作者：zzx on 2020/10/5 16:32
@@ -20,4 +21,7 @@ public interface ICollectionDialogCallback {
 
     //返回单词夹数量
     void showClipsNum(int size);
+
+    //获取收藏夹内的单词
+    void getWordInCollection(List<Words> mCollectionWords);
 }

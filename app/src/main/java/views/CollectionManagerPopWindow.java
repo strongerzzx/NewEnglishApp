@@ -1,8 +1,10 @@
 package views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,9 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entirys.WordClips;
+import entirys.Words;
 import interfaces.ICollectionDialogCallback;
 import interfaces.IManagerTitle;
 import presenters.CollectionDialogPresent;
+import services.CollectionDownloadService;
 import utils.LogUtil;
 
 /**
@@ -34,8 +38,8 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
     private TextView mPopDele;
     private TextView mPopDownload;
     private final CollectionDialogPresent mDialogPresent;
-    private List<WordClips> mCurrentClips =new ArrayList<>();
-
+    private List<Words> mWordsInClips =new ArrayList<>();
+    private Handler mHandler = new Handler();
 
     public CollectionManagerPopWindow(Context context) {
         super(context);
@@ -53,16 +57,7 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
         mDialogPresent.regesiterView(this);
 
         initView();
-
-        initEvent();
-
     }
-
-    private void initEvent() {
-
-
-    }
-
 
     private void initView() {
         mPopTitle = mInflate.findViewById(R.id.collection_pop_title);
@@ -75,6 +70,9 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
         super.dismiss();
         if (mDialogPresent != null) {
             mDialogPresent.unRegesiterView(this);
+        }
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
         }
     }
 
@@ -91,6 +89,20 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
     @Override
     public void showClipsNum(int size) {
 
+    }
+
+    @Override
+    public void getWordInCollection(List<Words> mCollectionWords) {
+        mWordsInClips.clear();
+        if (mCollectionWords != null) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWordsInClips.addAll(mCollectionWords);
+                        LogUtil.d(TAG,"收藏夹大小 --> "+mCollectionWords.size());
+                    }
+                });
+        }
     }
 
 
@@ -117,12 +129,31 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
             }
         });
 
-
+        //下载收藏夹中的单词 --> 前台服务显示
         mPopDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //先获取单词夹中的单词
-               // mDialogPresent.getClipsWords(pos);
+                mDialogPresent.getClipsTitle(pos, new IManagerTitle() {
+                    @Override
+                    public void GetManagerTitle(String title) {
+                        mDialogPresent.doQueryTrueWord(pos);
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Intent downIntent = new Intent(v.getContext(), CollectionDownloadService.class);
+                        downIntent.putExtra("name",title);
+                        v.getContext().startService(downIntent);
+
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismiss();
+                            }
+                        });
+                    }
+                });
             }
         });
     }

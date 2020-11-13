@@ -107,6 +107,8 @@ public class HomeActivity extends AppCompatActivity implements IHomeCallback {
             }
         });
 
+
+
         //点击bottomNav 改变pager
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

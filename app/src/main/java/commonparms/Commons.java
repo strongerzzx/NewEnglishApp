@@ -1,5 +1,10 @@
 package commonparms;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import entirys.Words;
+
 /**
  * 作者：zzx on 2020/9/29 13:28
  * <p>
@@ -31,4 +36,14 @@ public class Commons {
     public static final String appid = "20200911000563747";
     public static final String sercet = "Mq8ioNowJM83qXx6rCWU";
     public static final String salt = "1435660288";
+
+    private static List<Words> mWordsList = new ArrayList<>();
+
+    public static void setWordsList(List<Words> wordsList) {
+        mWordsList = wordsList;
+    }
+
+    public static List<Words> getWordsList() {
+        return mWordsList;
+    }
 }

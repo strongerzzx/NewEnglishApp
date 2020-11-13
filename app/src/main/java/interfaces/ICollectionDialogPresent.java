@@ -23,7 +23,7 @@ public interface ICollectionDialogPresent extends BaseInterface<ICollectionDialo
     void doCollection2ExistFavorites();
 
     //查询并显示为true的单词
-    void doQueryTrueWord();
+    void doQueryTrueWord(int pos);
 
     //删除收藏夹列表数据
     void deleCollectionData(int pos);

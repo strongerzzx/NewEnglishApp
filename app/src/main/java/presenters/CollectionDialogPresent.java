@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bases.BaseAppciation;
+import commonparms.Commons;
 import dao.WordClipDao;
 import dao.WordsDao;
 import entirys.WordClips;
@@ -37,6 +38,9 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
     private int mCurrentPos;//词库中点击的pos
     private List<Words> mCurrentWords=new ArrayList<>();//词库中的List
     private List<Words> mCiKuWords=new ArrayList<>();//词库中的List
+
+    private List<Words> mCollectionWords = new ArrayList<>();    //存储收藏夹中的单词List
+
 
     private String mHeadWord;
     private String mPicture;
@@ -113,8 +117,6 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
         new Thread(() -> {
 
             List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
-
-
             //遍历全部收藏夹 --> 显示
             for (WordClips wordClip : wordClips) {
                // LogUtil.d(TAG,"收藏id:"+wordClip.getId());
@@ -130,6 +132,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
         }).start();
     }
 
+    //修改单词表中的单词属性
     @Override
     public void doCollection2ExistFavorites() {
         new Thread(new Runnable() {
@@ -142,26 +145,31 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
                 words.setIscollection(true);
                 words.setCollectionpos(mCollectionID);//插入收藏的位置
                 mWordsDao.updateWords(words);
-                System.out.println(words.getHeadWord());
-
-
             }
         }).start();
-
     }
 
+    //获取收藏夹中的单词
     @Override
-    public void doQueryTrueWord() {
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                //查询true的个数 --> 根据是否为true 和 收藏夹的ID
-//                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
-//                for (ICollectionDialogCallback callback : mCallbacks) {
-//                    callback.showAllClips(wordClips);
-//                }
-//            }
-//        }).start();
+    public void doQueryTrueWord(int pos) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //获取收藏夹的ID
+                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
+                WordClips clips = wordClips.get(pos);
+                int clipsID = clips.getId();
+                LogUtil.d(TAG, clipsID +":"+ clips.getTitle());
+
+                //根据收藏夹的ID --> 找出单词
+                List<Words> wordsByCollectionID = mWordsDao.getWordsByCollectionID(mCurrentBookPos, clipsID);
+                for (ICollectionDialogCallback callback : mCallbacks) {
+                    callback.getWordInCollection(wordsByCollectionID);
+                }
+
+                Commons.setWordsList(wordsByCollectionID);
+            }
+        }).start();
     }
 
     //通过pop --> 删除收藏夹选中数据
@@ -173,6 +181,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
             public void run() {
                 List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
                 WordClips clips = wordClips.get(pos);
+
                 LogUtil.d(TAG,"pos --> "+pos);
                 mClipsDao.deleteWords(clips);
             }
@@ -212,19 +221,19 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
 
     }
 
-    //获取单词夹中的单词
-    public void getClipsWords(int pos) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<Words> sameNumWords = mWordsDao.getSameNumWords(mCurrentBookPos);
-                int collectionpos = sameNumWords.get(0).getCollectionpos();//获取单词的收藏夹ID
-
-                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
-                int id = wordClips.get(pos).getId();//收藏夹ID
-            }
-        }).start();
-    }
+//    //获取单词夹中的单词
+//    public void getClipsWords(int pos) {
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                List<Words> sameNumWords = mWordsDao.getSameNumWords(mCurrentBookPos);
+//                int collectionpos = sameNumWords.get(0).getCollectionpos();//获取单词的收藏夹ID
+//
+//                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
+//                int id = wordClips.get(pos).getId();//收藏夹ID
+//            }
+//        }).start();
+//    }
 
     @Override
     public void regesiterView(ICollectionDialogCallback callbak) {
