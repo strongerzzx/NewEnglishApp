@@ -9,7 +9,7 @@ public
  */
 interface IStudyProgressCallback {
     //返回完成的次数 + 日期
-    void showFinishTimes(int c2eCount,int listenerCount,int reciteCount,int spellCount,String date);
+    //void showFinishTimes(int c2eCount,int listenerCount,int reciteCount,int spellCount,String date);
 
     //返回所有日期
     void showAllFinsihTimes(ArrayList<String> mTimes);
@@ -26,5 +26,6 @@ interface IStudyProgressCallback {
     //返回ReciteWord任务数目
     void showReciteWordTask(int finishNum);
 
+    void showAllData(boolean b);
 }
 

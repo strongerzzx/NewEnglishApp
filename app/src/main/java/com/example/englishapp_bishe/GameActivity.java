@@ -205,6 +205,13 @@ public class GameActivity extends AppCompatActivity implements IGameCallback {
 
     private void initEvent() {
 
+        mGameFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         mGHandler.post(new Runnable() {
             @Override
             public void run() {

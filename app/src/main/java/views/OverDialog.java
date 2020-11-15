@@ -1,5 +1,6 @@
 package views;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +20,6 @@ import com.example.englishapp_bishe.HomeActivity;
 import com.example.englishapp_bishe.R;
 
 
-
 /**
  * 作者：zzx on 2020/10/17 21:30
  * <p>
@@ -31,6 +31,8 @@ public class OverDialog extends Dialog {
     private View mInflate;
     private TextView mTitle;
     private Button mKnow;
+    private Activity mActivity;
+
 
     public OverDialog(@NonNull Context context) {
         this(context,0);
@@ -76,6 +78,10 @@ public class OverDialog extends Dialog {
             public void onClick(View v) {
                 Intent intent=new Intent(getContext(), HomeActivity.class);
                 getContext().startActivity(intent);
+
+                if (mActivity != null) {
+                    mActivity.finish();
+                }
             }
         });
     }
@@ -85,5 +91,9 @@ public class OverDialog extends Dialog {
         mKnow = findViewById(R.id.over_btn);
 
 
+    }
+
+    public void setActivity(Activity activity) {
+        mActivity = activity;
     }
 }

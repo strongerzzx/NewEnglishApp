@@ -23,7 +23,6 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
 
     private static final String TAG = "CikuDetailActivity";
     private DetailPresent mDetailPresent;
-  //  private ActivityCikuDetailBinding mBinding;
     private DetailWordTextLayoutBinding mBinding;
     private TextToSpeech mTts;
     private String mHeadWord;
@@ -75,15 +74,6 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
         });
 
 
-        //结束
-//        mBinding.detailFinishIv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-
-
         //语音播报  -->单词
         mBinding.detailFaYinLound.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +91,7 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
                 mTts.speak(mContent,TextToSpeech.QUEUE_FLUSH,null);
             }
         });
+
     }
 
     @Override
@@ -127,6 +118,16 @@ public class CikuDetailActivity extends AppCompatActivity implements IDeatilCall
                 Glide.with(this).load(words.getPicture()).into(mBinding.detailLiJuPic);
                 Glide.with(this).load(words.getPicture()).into(mBinding.appBarImage);
             }
+
+
+            //TODO:点击图片 会有一个缩略的动画 并且只显示此图片
+            mBinding.appBarImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.detail_thumb_pic_layout,new ThumbPicFragment()).commit();
+                }
+            });
+
         }
     }
 

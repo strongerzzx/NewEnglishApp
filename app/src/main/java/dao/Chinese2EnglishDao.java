@@ -35,8 +35,14 @@ public interface Chinese2EnglishDao {
     @Query("SELECT * FROM Chinese2English WHERE is_finish=:isFinish AND finish_date=:date AND book_num=:bookPos")
     List<Chinese2English> queryFinishByDate(boolean isFinish, String date, int bookPos);
 
+    @Query("SELECT * FROM Chinese2English WHERE is_finish=:isFinish AND finish_date=:date AND book_num=:bookPos AND account=:account")
+    List<Chinese2English> queryFinishByDate(boolean isFinish, String date, int bookPos,String account);
 
     //获取一段范围内的数据 --> 今天之前的数据
     @Query("SELECT * FROM Chinese2English WHERE is_finish=:isFinish AND book_num=:bookPos  AND finish_date BETWEEN:fromDate and :toDate")
     List<Chinese2English> queryFinishByDate(boolean isFinish, String fromDate, String toDate,int bookPos);
+
+    //获取一段范围内的数据 --> 今天之前的数据
+    @Query("SELECT * FROM Chinese2English WHERE is_finish=:isFinish AND book_num=:bookPos AND account=:account AND finish_date BETWEEN:fromDate and :toDate")
+    List<Chinese2English> queryFinishByDate(boolean isFinish, String fromDate, String toDate,int bookPos,String account);
 }

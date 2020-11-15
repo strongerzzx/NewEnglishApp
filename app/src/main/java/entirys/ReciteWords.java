@@ -23,6 +23,9 @@ public class ReciteWords {
     @ColumnInfo(name = "finish_date")
     private String finishDate;//任务完成时间
 
+    @ColumnInfo(name = "account")
+    private String account; //用户
+
     @ColumnInfo(name = "finish_time")
     private int finishTime;//完成次数
 
@@ -35,14 +38,25 @@ public class ReciteWords {
     @ColumnInfo(name = "finish_input")
     private String finishInput;//完成感想
 
-    public ReciteWords(int bookPos,int finishNum ,String finishDate,int finishTime,int finishMostTimes, boolean finish, String finishInput) {
+
+
+    public ReciteWords(int bookPos,int finishNum ,String finishDate,String account,int finishTime,int finishMostTimes, boolean finish, String finishInput) {
         this.bookPos = bookPos;
         this.finishNum=finishNum;
         this.finishDate = finishDate;
+        this.account = account;
         this.finishTime=finishTime;
         this.finishMostTimes=finishMostTimes;
         this.finish = finish;
         this.finishInput = finishInput;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public int getFinishTime() {

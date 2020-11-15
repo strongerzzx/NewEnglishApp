@@ -47,7 +47,6 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
     private CollectionManagerAdapter mManagerAdapter;
     private CollectionDialogPresent mCollectionPresent;
     private RecyclerView mManagerRv;
-    private CollectionManagerPopWindow mManagerPop;
     private CollectionManagerPopWindow mPop;
     private NewWordsCollectionDialog mNewDialog;
 
@@ -79,7 +78,6 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
 
     private void initView() {
         mNewDialog = new NewWordsCollectionDialog(getContext());
-        mManagerPop = new CollectionManagerPopWindow(getContext());
         mCollectionSum = mInflate.findViewById(R.id.collection_manager_sum);
         mCollectionAdd = mInflate.findViewById(R.id.collection_manager_add);
         mManagerRv = mInflate.findViewById(R.id.collection_manager_rv);
@@ -130,7 +128,6 @@ public class CollectionFragment extends Fragment implements ICollectionDialogCal
                     mPop.getManageInfoPos(pos);
                     mPop.showAtLocation(view, Gravity.BOTTOM,0,0);
                 }
-
                 updateBgAlpha(0.7f);
             }
         });

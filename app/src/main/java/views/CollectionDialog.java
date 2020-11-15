@@ -28,6 +28,7 @@ import entirys.WordClips;
 import entirys.Words;
 import interfaces.ICollectionDialogCallback;
 import presenters.CollectionDialogPresent;
+import utils.ToastUtil;
 
 /**
  * 作者：zzx on 2020/10/4 18:51
@@ -83,7 +84,6 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
         mDialogPresent = CollectionDialogPresent.getPresent();
         mDialogPresent.regesiterView(this);
         mDialogPresent.queryAllClips();//查询所有收藏夹
-        //mDialogPresent.doQueryTrueWord();//查询所有为true的单词
 
         initChildView();
 
@@ -110,7 +110,14 @@ public class CollectionDialog extends Dialog implements ICollectionDialogCallbac
 
                 //获取收藏夹的ID
                 mDialogPresent.getCollectionPos(collectionID);
-                mDialogPresent.doCollection2ExistFavorites();
+                mDialogPresent.doCollection2ExistFavorites(new CollectionDialogPresent.showCollectedInfo() {
+                    @Override
+                    public void onShowCollectedInfo(boolean isSucceed) {
+                        if (isSucceed){
+                            ToastUtil.showToast("收藏成功");
+                        }
+                    }
+                });
 
                 dismiss();
 

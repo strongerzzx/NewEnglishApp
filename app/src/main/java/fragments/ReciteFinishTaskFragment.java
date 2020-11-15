@@ -82,12 +82,8 @@ public class ReciteFinishTaskFragment extends Fragment {
         //传递任务完成的信息
         mReciteP.getFinishInfo(range,compltetTime,input);
 
-        //TODO: 插入前 --> 判断上限是否要更新
-      //  mReciteP.isRandomMaxUpper();
-
         //到了通过界面 --> 完成任务
         mReciteP.doFinishTask();
-
 
     }
 

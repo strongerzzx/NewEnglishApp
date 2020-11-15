@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 
 import com.example.englishapp_bishe.R;
 
+import bases.BaseAppciation;
 import presenters.CollectionDialogPresent;
 import utils.LogUtil;
 
@@ -82,6 +83,15 @@ public class NewWordsCollectionDialog extends Dialog{
         initEvent();
     }
 
+    public void ToastShow(String content){
+        BaseAppciation.getHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), content, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void initEvent() {
         //设置键盘弹出
         mInput.postDelayed(new Runnable() {
@@ -101,13 +111,22 @@ public class NewWordsCollectionDialog extends Dialog{
                 String title = mInput.getText().toString();
 
                 mPresent = CollectionDialogPresent.getPresent();
+
+                //先查询 要添加的收藏夹 --> 是否已经存在
+                 mPresent.doExistTitle(new CollectionDialogPresent.JudegetTitleIsExist() {
+                    @Override
+                    public void onJudgeTitleExist(boolean isExist) {
+                        if (isExist) {
+                            ToastShow("该收藏夹已存在...");
+                        }else{
+                            ToastShow("添加"+title+"成功...");
+                        }
+                    }
+                });
+
                 //获取标题
                 mPresent.getViewData(title);
                 mPresent.submitData();
-
-                //TODO:刷新整个界面
-
-                Toast.makeText(getContext(), "添加"+title+"成功", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

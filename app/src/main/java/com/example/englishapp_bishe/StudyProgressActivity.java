@@ -24,6 +24,18 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
     public ImageView mFinish;
     @BindView(R.id.line_view)
     public LineView mLineView;
+
+
+    private ArrayList<String> mCurrentDateList =new ArrayList<>();
+
+    private ArrayList<ArrayList<Integer>> mAllData=new ArrayList<>();
+
+    private ArrayList<Integer> mC2eList=new ArrayList<>();
+    private ArrayList<Integer> mReciteList=new ArrayList<>();
+    private ArrayList<Integer> mSpellList=new ArrayList<>();
+    private ArrayList<Integer> mListenerList=new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +67,6 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
                 finish();
             }
         });
-
     }
 
     @Override
@@ -64,33 +75,6 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
         if (mStudyProgresspresenter != null) {
             mStudyProgresspresenter.unRegesiterView(this);
         }
-    }
-
-    private ArrayList<String> mCurrentDateList =new ArrayList<>();
-
-    private ArrayList<ArrayList<Integer>> mAllData=new ArrayList<>();
-
-    private ArrayList<Integer> mC2eList=new ArrayList<>();
-    private ArrayList<Integer> mReciteList=new ArrayList<>();
-    private ArrayList<Integer> mSpellList=new ArrayList<>();
-    private ArrayList<Integer> mListenerList=new ArrayList<>();
-
-
-
-    @Override
-    public void showFinishTimes(int c2eCount, int listenerCount, int reciteCount, int spellCount,String date) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAllData.clear();
-
-                mAllData.add(mC2eList);
-                mAllData.add(mListenerList);
-                mAllData.add(mReciteList);
-                mAllData.add(mSpellList);
-                mLineView.setDataList(mAllData);
-            }
-        });
     }
 
     @Override
@@ -105,23 +89,59 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
 
     @Override
     public void showC2eTask(int finishNum) {
-        mC2eList.add(finishNum);
+        if (finishNum>0) {
+            mC2eList.add(finishNum);
+        }else{
+            mC2eList.add(0);
+        }
+        mAllData.add(mC2eList);
     }
 
     @Override
     public void showSpellTask(int finishNum) {
-        mSpellList.add(finishNum);
+        if (finishNum>0) {
+            mSpellList.add(finishNum);
+        }else{
+            mSpellList.add(0);
+        }
+        mAllData.add(mSpellList);
     }
 
     @Override
     public void showListenersTask(int finishNum) {
-        mListenerList.add(finishNum);
+        if (finishNum>0) {
+            mListenerList.add(finishNum);
+        }else{
+            mListenerList.add(0);
+        }
+        mAllData.add(mListenerList);
     }
 
     @Override
     public void showReciteWordTask(int finishNum) {
-        mReciteList.add(finishNum);
+        if (finishNum>0) {
+            mReciteList.add(finishNum);
+        }else{
+            mReciteList.add(0);
+        }
+        mAllData.add(mReciteList);
     }
 
+    @Override
+    public void showAllData(boolean b) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (b){
+                    try {
+                        mLineView.setDataList(mAllData);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
+
+                }
+            }
+        });
+    }
 }

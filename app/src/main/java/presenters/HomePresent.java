@@ -135,16 +135,22 @@ public class HomePresent implements IHomePresent {
                 LogUtil.d(TAG,"maxID -->"+(maxID));
 
 
+//                //TODO:获取上一个登陆的account
+//                List<String> allAccount = mReciteWordsDao.getAllAccount(currentBookNum);
+//                String frontAccount ="";
+//                LogUtil.d(TAG,"allAcount size --> "+allAccount.size());
+//                if (allAccount.size()>0){
+//                    frontAccount = allAccount.get(allAccount.size()-1);
+//                }
+
                 //根据任务ID --> 获取完成的时间
                 String newDate = mReciteWordsDao.getNewDate(currentBookNum, maxID);
                 LogUtil.d(TAG,"newDate -->"+newDate);
-                if (!currentDate.equals(newDate)){
+                if (!currentDate.equals(newDate) ){
                     //可以跳
                     iscan.isClickRecite(true);
-                    LogUtil.d(TAG,"true --> ");
                 }else{
                     iscan.isClickRecite(false);
-                    LogUtil.d(TAG,"false");
                 }
             }
 

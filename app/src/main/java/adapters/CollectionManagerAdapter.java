@@ -54,9 +54,6 @@ public class CollectionManagerAdapter extends RecyclerView.Adapter<CollectionMan
             holder.managerMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    CollectionManagerPopWindow pop=new CollectionManagerPopWindow(holder.itemView.getContext());
-//                    pop.showAtLocation(v, Gravity.BOTTOM,0,0);
-
                     mIvOnCollectionManagerClickListener.onCollectionManagerClick(position,holder.itemView);
                 }
             });

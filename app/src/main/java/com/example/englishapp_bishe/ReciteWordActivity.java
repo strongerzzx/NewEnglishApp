@@ -211,7 +211,7 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
         mMyHandler = new MyHandler(this);
 
         mUnknowPop = new UnKnowPopwindow(this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        mUnknowPop.dismiss();
+       // mUnknowPop.dismiss();
 
 
         initView();
@@ -261,11 +261,6 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
     }
 
     @Override
-    public void showRange(String range) {
-
-    }
-
-    @Override
     public void showAllWordsList(List<Words> BookWords) {
         if (BookWords != null) {
             //回调给主线程
@@ -276,16 +271,6 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
 
             LogUtil.d(TAG, "mwords size -->" + BookWords.size());
         }
-    }
-
-    @Override
-    public void showCurrentSize(int currentSize) {
-
-    }
-
-    @Override
-    public void showMaxSize(int maxSize) {
-
     }
 
     @Override

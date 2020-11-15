@@ -228,7 +228,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="0dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -237,7 +238,7 @@
             android:id="@+id/chieses_pass"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="pass"
             android:layout_gravity="center"
             android:background="@drawable/selector_pass"
@@ -247,7 +248,7 @@
         <ImageView
             android:id="@+id/chinese_tishi"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/selector_tishi" />
         <ImageView

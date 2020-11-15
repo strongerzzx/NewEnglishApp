@@ -23,10 +23,22 @@ public class Listeners {
     @ColumnInfo(name = "is_finish")
     private boolean finish;
 
-    public Listeners(int bookPos, String finishDate, boolean finish) {
+    @ColumnInfo(name = "account")
+    private String account; //用户
+
+    public Listeners(int bookPos, String finishDate,String account, boolean finish) {
         this.bookPos = bookPos;
         this.finishDate = finishDate;
+        this.account= account;
         this.finish = finish;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public int getId() {

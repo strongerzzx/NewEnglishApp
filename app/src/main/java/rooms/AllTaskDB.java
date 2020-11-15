@@ -25,7 +25,7 @@ import entirys.Spells;
  * <p>
  * 作用： xxxx
  */
-@Database(entities = {ReciteWords.class, Chinese2English.class, Listeners.class, Spells.class,LearnTasks.class},version = 6,exportSchema = false)
+@Database(entities = {ReciteWords.class, Chinese2English.class, Listeners.class, Spells.class,LearnTasks.class},version = 7,exportSchema = false)
 public abstract class AllTaskDB extends RoomDatabase {
 
     public abstract AllTaskDao getLearnTaskDao();

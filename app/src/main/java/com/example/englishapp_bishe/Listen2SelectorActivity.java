@@ -177,6 +177,8 @@ public class Listen2SelectorActivity extends AppCompatActivity implements TextTo
 
         ButterKnife.bind(this);
         mDialog = new OverDialog(this);
+        mDialog.setActivity(this);
+
         mPop = new UnKnowPopwindow(this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         mListenerHandler = new ListenerHandler(this);
@@ -342,6 +344,7 @@ public class Listen2SelectorActivity extends AppCompatActivity implements TextTo
     protected void onDestroy() {
         super.onDestroy();
         if (mTts != null) {
+            mTts.stop();
             mTts.shutdown();
         }
         if (mListener2SelectorPresenterresenter != null) {

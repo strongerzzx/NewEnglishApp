@@ -38,6 +38,8 @@ public class Commons {
     public static final String salt = "1435660288";
 
     private static List<Words> mWordsList = new ArrayList<>();
+    private static String mCurrentDownloadTitle;
+    private static String mCurrentLoginAccount;
 
     public static void setWordsList(List<Words> wordsList) {
         mWordsList = wordsList;
@@ -45,5 +47,21 @@ public class Commons {
 
     public static List<Words> getWordsList() {
         return mWordsList;
+    }
+
+    public static void setTitleTemp(String title) {
+        mCurrentDownloadTitle=title;
+    }
+
+    public static String getmCurrentDownloadTitle() {
+        return mCurrentDownloadTitle;
+    }
+
+    public static void setAccount(String username) {
+        mCurrentLoginAccount = username;
+    }
+
+    public static String getmCurrentLoginAccount() {
+        return mCurrentLoginAccount;
     }
 }

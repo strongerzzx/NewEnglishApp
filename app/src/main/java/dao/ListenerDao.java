@@ -32,7 +32,13 @@ public interface ListenerDao {
     @Query("SELECT * FROM Listeners WHERE is_finish=:isFinish AND finish_date=:date AND book_pos=:bookPos")
     List<Listeners> queryFinishByDate(boolean isFinish,String date,int bookPos);
 
+    @Query("SELECT * FROM Listeners WHERE is_finish=:isFinish AND finish_date=:date AND book_pos=:bookPos AND account=:account")
+    List<Listeners> queryFinishByDate(boolean isFinish,String date,int bookPos,String account);
+
     //获取一段范围内的数据 --> 今天之前的数据
     @Query("SELECT * FROM Listeners WHERE is_finish=:isFinish AND book_pos=:bookPos  AND finish_date BETWEEN:fromDate and :toDate")
     List<Listeners> queryFinishByDate(boolean isFinish, String fromDate, String toDate, int bookPos);
+
+    @Query("SELECT * FROM Listeners WHERE is_finish=:isFinish AND book_pos=:bookPos AND account=:account AND finish_date BETWEEN:fromDate and :toDate")
+    List<Listeners> queryFinishByDate(boolean isFinish, String fromDate, String toDate, int bookPos,String account);
 }

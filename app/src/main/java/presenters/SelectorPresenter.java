@@ -91,9 +91,7 @@ public class SelectorPresenter implements ISelectBookPresent {
 
     @Override
     public void requestBook() {
-
-        requestLoading();
-
+        requestLoading(); //每次请求都会显示加载中
         Retrofit mannager = new Retrofit.Builder().baseUrl(Commons.BASE_YOU_DAO).addConverterFactory(GsonConverterFactory.create()).build();
         ApiService api = mannager.create(ApiService.class);
         Call<SelectBookBeans> task = api.getSelectJson();

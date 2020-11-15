@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import commonparms.Commons;
 import dao.AllTaskDao;
 import dao.ListenerDao;
 import dao.WordsDao;
@@ -63,6 +64,14 @@ public class Listener2SelectorPresenter implements IListener2SelectorPresenter {
             public void run() {
                 List<Words> wordsList = mWordsDao.getSameNumWords(mCurrentBookPos);
                 int index = random.nextInt(wordsList.size() - 10);
+                while (true){
+                    if (index<10){
+                        index = random.nextInt(wordsList.size() - 10);
+                    }else{
+                        break;
+                    }
+                }
+
                 Words words = wordsList.get(index);
                 mCurrentIndex++;
                 for (IListener2SelectorCallback callback : mCallbacks) {
@@ -115,7 +124,7 @@ public class Listener2SelectorPresenter implements IListener2SelectorPresenter {
                 Date date=new Date(System.currentTimeMillis());
                 String time = format.format(date);
 //                Listeners listener=new Listeners(mCurrentBookPos,"2020-10-31",true);
-                Listeners listener=new Listeners(mCurrentBookPos,time,true);
+                Listeners listener=new Listeners(mCurrentBookPos,time, Commons.getmCurrentLoginAccount(),true);
                 mListenerDao.insertListener(listener);
 
                 //查询表中最新的ID
@@ -124,7 +133,6 @@ public class Listener2SelectorPresenter implements IListener2SelectorPresenter {
 
                 LogUtil.d(TAG,"listenrs id --> "+id);
 
-                //TODO:插入到关系表
             }
         }).start();
     }

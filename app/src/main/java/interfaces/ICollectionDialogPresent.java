@@ -1,6 +1,7 @@
 package interfaces;
 
 import bases.BaseInterface;
+import presenters.CollectionDialogPresent;
 
 /**
  * 作者：zzx on 2020/10/5 16:32
@@ -20,7 +21,7 @@ public interface ICollectionDialogPresent extends BaseInterface<ICollectionDialo
     void queryAllClips();
 
     //点击单词 --> 插入到已存在的收藏夹中
-    void doCollection2ExistFavorites();
+    void doCollection2ExistFavorites(CollectionDialogPresent.showCollectedInfo onShowCollectedInfo);
 
     //查询并显示为true的单词
     void doQueryTrueWord(int pos);

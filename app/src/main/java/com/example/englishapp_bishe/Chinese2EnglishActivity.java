@@ -150,6 +150,7 @@ public class Chinese2EnglishActivity extends AppCompatActivity implements IChine
 
         mPop=new UnKnowPopwindow(Chinese2EnglishActivity.this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         mDialog = new OverDialog(this);
+        mDialog.setActivity(this);
 
         mTts = new TextToSpeech(Chinese2EnglishActivity.this,this);
 
@@ -436,6 +437,9 @@ public class Chinese2EnglishActivity extends AppCompatActivity implements IChine
         if (mTts != null) {
             mTts.stop();
             mTts.shutdown();
+        }
+        if (mDialog != null) {
+            mDialog.dismiss();
         }
         LogUtil.d(TAG,"onDestroy");
     }

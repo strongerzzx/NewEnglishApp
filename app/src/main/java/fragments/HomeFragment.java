@@ -1,9 +1,11 @@
 package fragments;
 
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.englishapp_bishe.CikuActivity;
@@ -43,6 +46,7 @@ public class HomeFragment extends Fragment implements IHomeCallback {
     private String currentChinese;
     private TextView mBookName;
     private ImageView mIvUser;
+    private NotificationManager mManager;
 
     public HomeFragment() {
     }
@@ -59,9 +63,9 @@ public class HomeFragment extends Fragment implements IHomeCallback {
 
         initView(inflate);
 
-
         return inflate;
     }
+
 
     private void initEvent() {
 
@@ -76,6 +80,7 @@ public class HomeFragment extends Fragment implements IHomeCallback {
 
         //单个单词出现
         mSingleIv.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 mHomePresent.queryWords();
@@ -104,7 +109,6 @@ public class HomeFragment extends Fragment implements IHomeCallback {
 
 
         //每天完成任务后 --> 在点击背单词 没效果
-
         mHomePresent.canClickRecite(new ICanClickRecite() {
             @Override
             public void isClickRecite(boolean isCan) {
@@ -112,7 +116,6 @@ public class HomeFragment extends Fragment implements IHomeCallback {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println(Thread.currentThread().getName());
                         if (isCan){
                             mBtnStart.setOnClickListener(new View.OnClickListener() {
                                 @Override

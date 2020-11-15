@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import commonparms.Commons;
 import dao.Chinese2EnglishDao;
 import dao.WordsDao;
 import entirys.Chinese2English;
@@ -67,10 +68,15 @@ public class Chinese2EnglishPresenter implements IChinese2EnglishPresenter {
                 //随机返回任意的单词
                 Random random=new Random();
                 int randomIndex = random.nextInt(sameNumWords.size() - 10);
+                while (true){
+                    if (randomIndex<10){
+                        randomIndex = random.nextInt(sameNumWords.size() - 10);
+                    }else{
+                        break;
+                    }
+                }
                 Words words = sameNumWords.get(randomIndex);
                 mCurrentIndex++;//当前做过的题
-
-
 
                 for (IChineses2EnglishCallback iChineses2EnglishCallback : mCallbackList) {
                     iChineses2EnglishCallback.showContent(words.getTran());//content
@@ -120,7 +126,7 @@ public class Chinese2EnglishPresenter implements IChinese2EnglishPresenter {
             String finishDate = format.format(date);
 
             //完成任务 --> 插入数据库
-            Chinese2English c2e=new Chinese2English(mCurrentBookNum,finishDate,true,mFinalProgress);
+            Chinese2English c2e=new Chinese2English(mCurrentBookNum,finishDate, Commons.getmCurrentLoginAccount(),true,mFinalProgress);
          //   Chinese2English c2e=new Chinese2English(mCurrentBookNum,"2020-10-31",true,mFinalProgress);
             mC2eDao.insertChinese(c2e);
         }

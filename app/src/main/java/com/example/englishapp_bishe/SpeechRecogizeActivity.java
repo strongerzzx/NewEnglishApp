@@ -51,6 +51,8 @@ public class SpeechRecogizeActivity extends AppCompatActivity implements ISpeech
     public TextView mTvRecongize;
     @BindView(R.id.speech_tishi)
     public ImageView mIvTishi;
+    @BindView(R.id.speech_you_say)
+    public TextView mTvSay;
 
     private SpeechPresent mSpeechPresent;
     private SpeechHandler mSpeechHandler;
@@ -89,6 +91,9 @@ public class SpeechRecogizeActivity extends AppCompatActivity implements ISpeech
                     case TYPE_CORRECT_RECONGIZE:
                         Bundle bundle = msg.getData();
                         String recongize = bundle.getString("result");
+                        //显示你说的
+                        speechAct.mTvSay.setText("识别出您说的话: "+recongize);
+
                         LogUtil.d(TAG,"mCorrectWord -->"+mCorrectWord);
                         LogUtil.d(TAG,"recongize -->"+recongize);
                         if (recongize.trim().equals(mCorrectWord)){
@@ -143,6 +148,7 @@ public class SpeechRecogizeActivity extends AppCompatActivity implements ISpeech
     }
 
     private void initEvent() {
+
         mIvFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -272,6 +278,9 @@ public class SpeechRecogizeActivity extends AppCompatActivity implements ISpeech
         }
         if (mSpeechHandler != null) {
             mSpeechHandler.removeCallbacksAndMessages(null);
+        }
+        if (mDialog != null) {
+            mDialog.dismiss();
         }
     }
 }

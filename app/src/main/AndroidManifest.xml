@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.englishapp_bishe">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -24,11 +24,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name="services.CollectionDownloadService"
-            android:enabled="true"
-            android:exported="true"></service>
 
+        <activity android:name=".DownloadWordShowActivity" />
         <activity android:name=".StudyProgressActivity" />
         <activity android:name=".WinnerWordfsActivity" />
         <activity android:name=".GameWinActivity" />
@@ -65,6 +62,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <service android:name="services.CollectionDownloadService"
+            android:enabled="true"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

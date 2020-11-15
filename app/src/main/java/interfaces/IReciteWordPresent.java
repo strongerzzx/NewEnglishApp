@@ -21,6 +21,4 @@ public interface IReciteWordPresent extends BaseInterface<IReciteWordCallback> {
     //获取完成的内容
     void getFinishInfo(String range, String compltetTime, String input);
 
-    //是否要更新当天的上限
-    void isRandomMaxUpper();
 }

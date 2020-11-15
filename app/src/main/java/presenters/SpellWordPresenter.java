@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import commonparms.Commons;
 import dao.SpellDao;
 import dao.WordsDao;
 import entirys.Spells;
@@ -118,8 +119,8 @@ public class SpellWordPresenter implements ISpellWordPresenter {
                 SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
                 Date date=new Date(System.currentTimeMillis());
                 String time = format.format(date);
-//                Spells spells=new Spells(mCurrentBookPos,"2020-10-31",true);
-                Spells spells=new Spells(mCurrentBookPos,time,true);
+              //  Spells spells=new Spells(mCurrentBookPos,"2020-11-1",Commons.getmCurrentLoginAccount(),true);
+                Spells spells=new Spells(mCurrentBookPos,time, Commons.getmCurrentLoginAccount(),true);
                 mSpellDao.insertSpell(spells);
 
             }

@@ -30,6 +30,9 @@ public interface WordClipDao {
     @Query("SELECT * FROM WordClips WHERE words_pos =:bookNum")
     List<WordClips> getSameNumWords(int bookNum);
 
+    @Query("SELECT * FROM WordClips WHERE words_pos =:bookNum AND account =:account")
+    List<WordClips> getSameNumWords(int bookNum,String account);
+
     @Query("SELECT * FROM WordClips ORDER BY words_pos DESC")
     List<WordClips> getAllWords();
 
@@ -38,7 +41,9 @@ public interface WordClipDao {
     @Query("SELECT * FROM WORDCLIPS WHERE words_pos =:bookNum AND collection =:iscollection")
     List<WordClips> getSameNumWords(int bookNum,boolean iscollection);
 
-    //收藏ID对应的收藏夹
 
+    //查询单词夹是否已经存在
+    @Query("SELECT title FROM WORDCLIPS WHERE  words_pos =:bookNum AND collection =:iscollection AND account=:username")
+    List<String> judgeTitleExists(int bookNum,boolean iscollection,String username);
 
 }

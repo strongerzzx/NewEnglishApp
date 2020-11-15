@@ -54,7 +54,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             holder.cikuCollection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemSearchResultCollectionClick.onSearchResultCollectionClick(position);
+                    mOnItemSearchResultCollectionClick.onSearchResultCollectionClick(position,mWords);
                 }
             });
         }
@@ -99,6 +99,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     }
 
     public interface onItemSearchResultCollectionClick{
-        void onSearchResultCollectionClick(int position);
+        void onSearchResultCollectionClick(int position, List<Words> words);
     }
 }

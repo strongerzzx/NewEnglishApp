@@ -16,6 +16,9 @@ public class WordClips {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "account" )
+    private String account;//哪个用户收藏了
+
     @ColumnInfo(name = "words_pos")
     private int wordsPos;//点击的哪个单词表
 
@@ -34,13 +37,22 @@ public class WordClips {
     @ColumnInfo(name = "collection")
     private boolean collection;//是否收藏这个列表
 
-    public WordClips(int wordsPos, String title, String pic, String wordsNum,String wordsCollection, boolean collection) {
+    public WordClips(int wordsPos, String title, String pic, String account,String wordsNum,String wordsCollection, boolean collection) {
         this.wordsPos = wordsPos;
         this.title = title;
         this.pic = pic;
+        this.account=account;
         this.wordsNum = wordsNum;
         this.wordsCollection=wordsCollection;
         this.collection = collection;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getWordsCollection() {

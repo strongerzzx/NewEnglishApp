@@ -64,7 +64,6 @@ public class LoginPresent implements ILoginPresent {
         Map<String,String> map=new HashMap<>();
         map.put("username",mCurrentUser.trim());
         map.put("password",mCurrentPswd.trim());
-
         String s = new Gson().toJson(map);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), s);
         Call<LoginBeans> login = api.doLogin(requestBody);
@@ -74,20 +73,17 @@ public class LoginPresent implements ILoginPresent {
                 LogUtil.d(TAG,"code --> "+response.code());
                 if (response.code()== HttpURLConnection.HTTP_OK){
                     if (response.body().isFlag()) {
-                        //dialog.dismiss();
                         String username = response.body().getData().getUsername();
                         String password = response.body().getData().getPassword();
                         Headers headers = response.headers();
                         long progress = headers.byteCount();
+                        Commons.setAccount(username);
                         LogUtil.d(TAG,"login count --> "+progress);
                         for (ILoginCallback iLoginCallback : mCallbackList) {
                             iLoginCallback.getLoadingLength(progress);
                         }
                         int id = response.body().getData().getId();
 
-                        //TODO:收藏要获取我登陆的ID
-
-                        //CollectionPresent.getPresent().commitID(id);
                         LogUtil.d(TAG,id+":"+username+":"+password);
                         LogUtil.d(TAG,"response --> "+response);
                     }else {

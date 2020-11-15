@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Listen2SelectorActivity">
+    tools:context=".Listen2SelectorActivity"
+    android:background="#fff">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -148,6 +149,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -155,7 +157,7 @@
         <TextView
             android:id="@+id/listener_pass"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/selector_pass"
@@ -166,13 +168,13 @@
         <ImageView
             android:id="@+id/listener_tishi"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/selector_tishi" />
 
         <ImageView
             android:id="@+id/listener_shengyin"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/selector_lounds" />

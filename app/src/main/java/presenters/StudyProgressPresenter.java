@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import commonparms.Commons;
 import dao.Chinese2EnglishDao;
 import dao.ListenerDao;
 import dao.ReciteWordsDao;
@@ -84,12 +85,6 @@ class StudyProgressPresenter implements IStudyProgressPresenter {
             public void run() {
                 LogUtil.d(TAG,"currentDate --> "+currentDate);
 
-                //获取当天日期的每个任务集合
-                List<Spells> spellCount = mSpellDao.queryFinishByDate(true, currentDate, mCurrentBookPos);
-                List<Listeners> listenerCount = mListenerDao.queryFinishByDate(true, currentDate, mCurrentBookPos);
-                List<Chinese2English> c2eCount = mC2eDao.queryFinishByDate(true, currentDate, mCurrentBookPos);
-                List<ReciteWords> reciteCount = mReciteWordsDao.queryFinishByDate(true, currentDate, mCurrentBookPos);
-
                 //C2e的数据
                 getC2eData(currentDate);
 
@@ -104,7 +99,7 @@ class StudyProgressPresenter implements IStudyProgressPresenter {
 
                 for (IStudyProgressCallback callback : mCallbacks) {
                     callback.showAllFinsihTimes(mTimes);
-                    callback.showFinishTimes(c2eCount.size(),listenerCount.size(),reciteCount.size(),spellCount.size(),currentDate);
+                    callback.showAllData(true);
                 }
             }
         }).start();
@@ -114,72 +109,89 @@ class StudyProgressPresenter implements IStudyProgressPresenter {
     private void getReciteData(String currentDate) {
         mReciteSet.clear();
         mReciteList.clear();
-        List<ReciteWords> reciteWords = mReciteWordsDao.queryFinishByDate(true, "2020-10-31", currentDate, mCurrentBookPos);
-        for (ReciteWords reciteWord : reciteWords) {
-            mReciteSet.add(reciteWord.getFinishDate());
-        }
-        mReciteList.addAll(mReciteSet);
-        for (int i = 0; i < mReciteList.size(); i++) {
-            List<ReciteWords> reciteWords1 = mReciteWordsDao.queryFinishByDate(true, mReciteList.get(i), mCurrentBookPos);
-            for (IStudyProgressCallback callback : mCallbacks) {
-                callback.showReciteWordTask(reciteWords1.size());
+        List<ReciteWords> reciteWords = mReciteWordsDao.queryFinishByDate(true, "2020-10-31", currentDate, mCurrentBookPos,Commons.getmCurrentLoginAccount());
+
+        if (reciteWords != null && reciteWords.size()>0) {
+            for (ReciteWords reciteWord : reciteWords) {  //放日期
+                mReciteSet.add(reciteWord.getFinishDate());
+            }
+            mReciteList.addAll(mReciteSet);
+            for (int i = 0; i < mReciteList.size(); i++) { //查询完成的次数
+                List<ReciteWords> reciteWords1 = mReciteWordsDao.queryFinishByDate(true, mReciteList.get(i), mCurrentBookPos,Commons.getmCurrentLoginAccount());
+                for (IStudyProgressCallback callback : mCallbacks) {
+                    callback.showReciteWordTask(reciteWords1.size());
+                }
             }
         }
+
+
     }
 
     private void getListenerData(String currentDate) {
         //Listener的数据
         mListenersSet.clear();
         mListenersList.clear();
-        List<Listeners> listeners = mListenerDao.queryFinishByDate(true, "2020-10-31", currentDate, mCurrentBookPos);
-        for (Listeners listener : listeners) {
-            mListenersSet.add(listener.getFinishDate());
-        }
-        mListenersList.addAll(mListenersSet);
-        for (int i = 0; i < mListenersList.size(); i++) {
-            List<Listeners> lisnten = mListenerDao.queryFinishByDate(true, mListenersList.get(i), mCurrentBookPos);
-            for (IStudyProgressCallback callback : mCallbacks) {
-                callback.showListenersTask(lisnten.size());
+        List<Listeners> listeners = mListenerDao.queryFinishByDate(true, "2020-10-31", currentDate, mCurrentBookPos,Commons.getmCurrentLoginAccount());
+
+        if (listeners != null && listeners.size()>0) {
+            for (Listeners listener : listeners) {
+                mListenersSet.add(listener.getFinishDate());
+            }
+            mListenersList.addAll(mListenersSet);
+            for (int i = 0; i < mListenersList.size(); i++) {
+                List<Listeners> lisnten = mListenerDao.queryFinishByDate(true, mListenersList.get(i), mCurrentBookPos,Commons.getmCurrentLoginAccount());
+                for (IStudyProgressCallback callback : mCallbacks) {
+                    callback.showListenersTask(lisnten.size());
+                }
             }
         }
+
     }
 
     private void getSpellData(String currentDate) {
         spellSet.clear();
         mSpells.clear();
-        List<Spells> spells = mSpellDao.queryFinishByDate(true, "2020-10-31", currentDate, mCurrentBookPos);
-        for (Spells spell : spells) {
-            spellSet.add(spell.getFinishDate());
-        }
-        mSpells.addAll(spellSet);
-        for (int i = 0; i < mSpells.size(); i++) {
-            List<Spells> spells1 = mSpellDao.queryFinishByDate(true, mSpells.get(i), mCurrentBookPos);
-            for (IStudyProgressCallback callback : mCallbacks) {
-                callback.showSpellTask(spells1.size());
+        List<Spells> spells = mSpellDao.queryFinishByDate(true, "2020-10-31", currentDate, mCurrentBookPos,Commons.getmCurrentLoginAccount());
+
+        if (spells != null && spells.size()>0) {
+            for (Spells spell : spells) {
+                spellSet.add(spell.getFinishDate());
+            }
+            mSpells.addAll(spellSet);
+            for (int i = 0; i < mSpells.size(); i++) {
+                List<Spells> spells1 = mSpellDao.queryFinishByDate(true, mSpells.get(i), mCurrentBookPos,Commons.getmCurrentLoginAccount());
+                for (IStudyProgressCallback callback : mCallbacks) {
+                    callback.showSpellTask(spells1.size());
+                }
             }
         }
+
     }
 
     private void getC2eData(String currentDate) {
         mDateSet.clear();
         mTimes.clear();
         //范围 --> c2e任务 完成日期
-        List<Chinese2English> rangeC2e = mC2eDao.queryFinishByDate(true, "2020-10-31", currentDate, mCurrentBookPos);
-        for (Chinese2English chinese2English : rangeC2e) {//日期去重
-            mDateSet.add(chinese2English.getFinishDate());
-            LogUtil.d(TAG,"range finish --> "+chinese2English.getFinishDate());
-        }
-        //Set --> List  --> 日期数据
-        mTimes.addAll(mDateSet);
+        List<Chinese2English> rangeC2e = mC2eDao.queryFinishByDate(true, "2020-10-31", currentDate, mCurrentBookPos,Commons.getmCurrentLoginAccount());
 
-        //获取日期中 对应的数据
-        for (int i = 0; i < mTimes.size(); i++) {
-            List<Chinese2English> chinese2Englishes = mC2eDao.queryFinishByDate(true, mTimes.get(i), mCurrentBookPos);
-            for (IStudyProgressCallback callback : mCallbacks) {
-                callback.showC2eTask(chinese2Englishes.size());
+        if (rangeC2e != null && rangeC2e.size()>0) {
+            for (Chinese2English chinese2English : rangeC2e) {//日期去重
+                mDateSet.add(chinese2English.getFinishDate());
+                LogUtil.d(TAG,"range finish --> "+chinese2English.getFinishDate());
             }
-            LogUtil.d(TAG,"c2e分日期数据 --> "+chinese2Englishes.size());
+            //Set --> List  --> 日期数据
+            mTimes.addAll(mDateSet);
+
+            //获取日期中 对应的数据
+            for (int i = 0; i < mTimes.size(); i++) {
+                List<Chinese2English> chinese2Englishes = mC2eDao.queryFinishByDate(true, mTimes.get(i), mCurrentBookPos, Commons.getmCurrentLoginAccount());
+                for (IStudyProgressCallback callback : mCallbacks) {
+                    callback.showC2eTask(chinese2Englishes.size());
+                }
+                LogUtil.d(TAG,"c2e分日期数据 --> "+chinese2Englishes.size());
+            }
         }
+
     }
 
     @Override

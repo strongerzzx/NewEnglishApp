@@ -7,14 +7,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ServiceInfo;
-import android.os.Build;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.IBinder;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.englishapp_bishe.HomeActivity;
+import com.example.englishapp_bishe.DownloadWordShowActivity;
 import com.example.englishapp_bishe.R;
 
 import java.io.BufferedWriter;
@@ -29,7 +28,7 @@ import utils.LogUtil;
 
 public class CollectionDownloadService extends Service {
     private static final String TAG = "CollectionDownloadService";
-    private static final String CHANNE_ID = "My Collection Download Channe ID";
+    private static final String CHANNE_ID = "My Channe ID";
     private String mCurrentTitle;
     private NotificationManager mNotificationManager;
 
@@ -40,56 +39,57 @@ public class CollectionDownloadService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+       // createChanneID();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        LogUtil.d(TAG,"开始服务");
         //获取收藏夹的名称
         String name = intent.getStringExtra("name");
         this.mCurrentTitle= name ;
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 doDownWordInCollection();
             }
         }).start();
 
         createChanneID();
-
         createNotify();
+
         return super.onStartCommand(intent, flags, startId);
     }
 
     private void createChanneID() {
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        int importance = NotificationManager.IMPORTANCE_HIGH;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNE_ID, "收藏夹下载服务", importance);
             notificationChannel.setDescription("下载各自的收藏夹中的单词");
             if (mNotificationManager != null) {
                 mNotificationManager.createNotificationChannel(notificationChannel);
+                LogUtil.d(TAG,"显示通知");
             }
         }
     }
 
     private void createNotify() {
-        Intent intent = new Intent(this, HomeActivity.class);
+
+        Intent intent = new Intent(this, DownloadWordShowActivity.class);
         PendingIntent pdIntent = PendingIntent.getActivity(this,0,intent,0);
         Notification notify = new NotificationCompat.Builder(this, CHANNE_ID)
                 .setContentText("下载已完成")
-                .setContentTitle(mCurrentTitle)
+                .setContentTitle("收藏夹: "+mCurrentTitle)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-              //  .setContentIntent(pdIntent)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_arrow))
+                .setContentIntent(pdIntent)
+                .setWhen(System.currentTimeMillis())
                 .build();
         mNotificationManager.notify(1,notify);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            startForeground(0,notify, ServiceInfo.FOREGROUND_SERVICE_TYPE_NONE);
-        }else {
-            startForeground(0,notify);
-        }
+        startForeground(1,notify);
     }
 
     private void doDownWordInCollection() {
@@ -131,6 +131,13 @@ public class CollectionDownloadService extends Service {
         long end = System.currentTimeMillis();
         int i = (int) (end - start);
         LogUtil.d(TAG,"during --> "+i);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopSelf();
     }
 
     @Override

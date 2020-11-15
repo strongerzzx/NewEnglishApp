@@ -37,21 +37,6 @@
         android:layout_below="@id/linearLayout3"
         android:layout_marginTop="10dp">
 
-<!--        <TextView-->
-<!--            android:id="@+id/speech_current_progress"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:text="0 /"-->
-<!--            android:textSize="14sp"-->
-<!--            android:gravity="right"/>-->
-<!--        <TextView-->
-<!--            android:id="@+id/speech_max_progress"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:textSize="14sp"-->
-<!--            android:text="20"/>-->
 
     </LinearLayout>
 
@@ -92,7 +77,19 @@
         android:layout_marginTop="5dp"/>
 
 
+    <TextView
+        android:id="@+id/speech_you_say"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/speech_put_layout"
+        android:padding="10dp"
+        android:text=""
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
+
     <LinearLayout
+        android:id="@+id/speech_put_layout"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="50dp"
@@ -100,7 +97,6 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
-
 
         <utils.SpeechView
             android:id="@+id/speech_view"

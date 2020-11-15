@@ -20,17 +20,25 @@ public class Chinese2English {
     @ColumnInfo(name = "finish_date")
     private String finishDate;//任务完成时间
 
+    @ColumnInfo(name = "account")
+    private String account; //用户
+
     @ColumnInfo(name = "is_finish")
     private boolean finish;//是否完成任务
 
     @ColumnInfo(name = "finish_num")
     private int finishNum;//完成的数量
 
-    public Chinese2English(int bookNum, String finishDate, boolean finish, int finishNum) {
+    public Chinese2English(int bookNum, String finishDate, String account,boolean finish, int finishNum) {
         this.bookNum = bookNum;
         this.finishDate = finishDate;
+        this.account= account;
         this.finish = finish;
         this.finishNum = finishNum;
+    }
+
+    public String getAccount() {
+        return account;
     }
 
     public int getId() {

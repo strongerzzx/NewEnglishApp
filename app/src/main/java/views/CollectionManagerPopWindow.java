@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ import com.example.englishapp_bishe.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import bases.BaseAppciation;
+import commonparms.Commons;
 import entirys.WordClips;
 import entirys.Words;
 import interfaces.ICollectionDialogCallback;
@@ -33,13 +36,12 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
 
     private static final String TAG = "CollectionManagerPopWindow";
     private final View mInflate;
-    private TextView mDeleTv;
     private TextView mPopTitle;
-    private TextView mPopDele;
-    private TextView mPopDownload;
     private final CollectionDialogPresent mDialogPresent;
     private List<Words> mWordsInClips =new ArrayList<>();
     private Handler mHandler = new Handler();
+    private LinearLayout mDeleteLayout;
+    private LinearLayout mDownloadLayout;
 
     public CollectionManagerPopWindow(Context context) {
         super(context);
@@ -61,8 +63,8 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
 
     private void initView() {
         mPopTitle = mInflate.findViewById(R.id.collection_pop_title);
-        mPopDele = mInflate.findViewById(R.id.collection_pop_dele_tv);
-        mPopDownload = mInflate.findViewById(R.id.collection_pop_download_tv);
+        mDeleteLayout = mInflate.findViewById(R.id.collection_delte_layout);
+        mDownloadLayout = mInflate.findViewById(R.id.collection_download_layout);
     }
 
     @Override
@@ -114,6 +116,7 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
             @Override
             public void GetManagerTitle(String title) {
                 mPopTitle.setText("单词夹: "+title);
+                Commons.setTitleTemp(title);
             }
         });
 
@@ -121,7 +124,7 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
 
 
         //点击删除整个单词夹
-        mPopDele.setOnClickListener(new View.OnClickListener() {
+        mDeleteLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDialogPresent.deleCollectionData(pos);
@@ -130,21 +133,17 @@ public class CollectionManagerPopWindow extends PopupWindow implements ICollecti
         });
 
         //下载收藏夹中的单词 --> 前台服务显示
-        mPopDownload.setOnClickListener(new View.OnClickListener() {
+        mDownloadLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDialogPresent.getClipsTitle(pos, new IManagerTitle() {
                     @Override
                     public void GetManagerTitle(String title) {
                         mDialogPresent.doQueryTrueWord(pos);
-                        try {
-                            Thread.sleep(300);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        Intent downIntent = new Intent(v.getContext(), CollectionDownloadService.class);
+                        Intent downIntent = new Intent(BaseAppciation.getContext(), CollectionDownloadService.class);
+//                        Intent downIntent = new Intent(v.getContext(), MyService.class);
                         downIntent.putExtra("name",title);
-                        v.getContext().startService(downIntent);
+                        BaseAppciation.getContext().startService(downIntent);
 
                         mHandler.post(new Runnable() {
                             @Override

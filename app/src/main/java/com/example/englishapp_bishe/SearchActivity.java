@@ -22,16 +22,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import adapters.SearchResultAdapter;
+import entirys.WordClips;
 import entirys.Words;
 import fragments.EmptyFragment;
+import interfaces.ICollectionDialogCallback;
 import interfaces.ISearchCallback;
+import presenters.CollectionDialogPresent;
 import presenters.DetailPresent;
 import presenters.SearchPresent;
 import utils.LogUtil;
 import views.CollectionDialog;
 import views.SuggestPopWindow;
 
-public class SearchActivity extends AppCompatActivity implements ISearchCallback {
+public class SearchActivity extends AppCompatActivity implements ISearchCallback, ICollectionDialogCallback {
 
     private static final String TAG = "SearchActivity";
     private RecyclerView mResultRv;
@@ -45,6 +48,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchCallback
     private SuggestPopWindow mSuggestPop;
     private FrameLayout mEmptyLayout;
     private EmptyFragment mEmptyFragment;
+    private CollectionDialogPresent mCollectionDialogPresent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,9 @@ public class SearchActivity extends AppCompatActivity implements ISearchCallback
 
         mIm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         mSearchPresent = SearchPresent.getPresent();
+        mCollectionDialogPresent = CollectionDialogPresent.getPresent();
         mSearchPresent.regesiterView(this);
-
+        mCollectionDialogPresent.regesiterView(this);
 
 
         initView();
@@ -147,11 +152,15 @@ public class SearchActivity extends AppCompatActivity implements ISearchCallback
             }
         });
 
-        //TODO:弹出Dialog并收藏
+        //弹出Dialog并收藏
         mResultAdapter.setOnItemSearchResultCollectionClick(new SearchResultAdapter.onItemSearchResultCollectionClick() {
             @Override
-            public void onSearchResultCollectionClick(int position) {
+            public void onSearchResultCollectionClick(int position, List<Words> words) {
                 CollectionDialog dialog=new CollectionDialog(SearchActivity.this);
+
+                mCollectionDialogPresent.setRestDate();
+                mCollectionDialogPresent.getPicText(words,(position+1));
+
                 dialog.show();
             }
         });
@@ -229,5 +238,29 @@ public class SearchActivity extends AppCompatActivity implements ISearchCallback
         if (mSearchPresent != null) {
             mSearchPresent.unRegesiterView(this);
         }
+
+        if (mCollectionDialogPresent != null) {
+            mCollectionDialogPresent.unRegesiterView(this);
+        }
+    }
+
+    @Override
+    public void showAllClips(List<WordClips> clipsList) {
+
+    }
+
+    @Override
+    public void getAllClipsTitle(String title) {
+
+    }
+
+    @Override
+    public void showClipsNum(int size) {
+
+    }
+
+    @Override
+    public void getWordInCollection(List<Words> mCollectionWords) {
+
     }
 }

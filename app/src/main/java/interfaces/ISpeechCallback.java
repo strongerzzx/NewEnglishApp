@@ -26,5 +26,7 @@ public interface ISpeechCallback {
     void showWordChinese(String translate);
 
     void showTimes(int currentTime,int maxTime);
+
+
 }
 

@@ -17,15 +17,17 @@ import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import java.util.List;
 
 import adapters.CikuAdapter;
+import entirys.WordClips;
 import entirys.Words;
 import interfaces.ICikuCallback;
+import interfaces.ICollectionDialogCallback;
 import presenters.CIkuPresent;
 import presenters.CollectionDialogPresent;
 import presenters.DetailPresent;
 import utils.LogUtil;
 import views.CollectionDialog;
 
-public class CikuActivity extends AppCompatActivity implements ICikuCallback {
+public class CikuActivity extends AppCompatActivity implements ICikuCallback, ICollectionDialogCallback {
 
     private static final String TAG = "CikuActivity";
     private RecyclerView mCikuRv;
@@ -33,6 +35,7 @@ public class CikuActivity extends AppCompatActivity implements ICikuCallback {
     private CikuAdapter mAdapter;
     private CIkuPresent mCIkuPresent;
     private CollectionDialog mCollectionDialog;
+    private CollectionDialogPresent mCollectionDialogPresent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +43,11 @@ public class CikuActivity extends AppCompatActivity implements ICikuCallback {
         setContentView(R.layout.activity_ciku);
 
         mCIkuPresent = CIkuPresent.getPresent();
+        mCollectionDialogPresent = CollectionDialogPresent.getPresent();
         mCIkuPresent.regesiterView(this);
+        mCollectionDialogPresent.regesiterView(this);
         mCIkuPresent.queryAllWords();
+
 
         initView();
 
@@ -79,9 +85,9 @@ public class CikuActivity extends AppCompatActivity implements ICikuCallback {
                 mCollectionDialog = new CollectionDialog(CikuActivity.this);
 
                 //把点击的单词 --> 传给Dialog
-                CollectionDialogPresent.getPresent().getPicText(wordsList,pos);
+                mCollectionDialogPresent.setRestDate();
+                mCollectionDialogPresent.getPicText(wordsList,pos);
 
-//                CollectionDialogPresent.getPresent().doCollection2ExistFavorites();
                 mCollectionDialog.show();
             }
         });
@@ -146,5 +152,33 @@ public class CikuActivity extends AppCompatActivity implements ICikuCallback {
         if (mCollectionDialog != null) {
             mCollectionDialog.dismiss();
         }
+
+        if (mCollectionDialogPresent != null) {
+            mCollectionDialogPresent.unRegesiterView(this);
+        }
+
+    }
+
+    /*
+      没用的 但是注册了 所以必须要有回调
+     */
+    @Override
+    public void showAllClips(List<WordClips> clipsList) {
+
+    }
+
+    @Override
+    public void getAllClipsTitle(String title) {
+
+    }
+
+    @Override
+    public void showClipsNum(int size) {
+
+    }
+
+    @Override
+    public void getWordInCollection(List<Words> mCollectionWords) {
+
     }
 }

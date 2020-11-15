@@ -133,6 +133,7 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
 
         ButterKnife.bind(this);
         mDialog = new OverDialog(this);
+        mDialog.setActivity(this);
 
         mPop = new UnKnowPopwindow(this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         mPop.setClippingEnabled(false);
@@ -155,7 +156,6 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
         @Override
         public void run() {
             String newContent = mCurrentContent.replace("_", mCurrentSub);
-//            content.setTextColor(Color.RED);
             content.setText(newContent);
         }
     };
@@ -354,7 +354,11 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
             mSpellPresenter.unRegesiterView(this);
         }
         if (mTts != null) {
+            mTts.stop();
             mTts.shutdown();
+        }
+        if (mDialog != null) {
+            mDialog.dismiss();
         }
     }
 }

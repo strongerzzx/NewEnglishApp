@@ -1,14 +1,10 @@
 package presenters;
 
-import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
-
-import com.example.englishapp_bishe.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bases.BaseAppciation;
 import commonparms.Commons;
 import dao.WordClipDao;
 import dao.WordsDao;
@@ -19,8 +15,6 @@ import interfaces.ICollectionDialogPresent;
 import interfaces.IManagerTitle;
 import rooms.WordsDB;
 import utils.LogUtil;
-
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * 作者：zzx on 2020/10/5 16:34
@@ -36,7 +30,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
     private final WordClipDao mClipsDao;
     private int mCurrentBookPos;//点击哪本书 --> 显示哪个收藏夹
     private int mCurrentPos;//词库中点击的pos
-    private List<Words> mCurrentWords=new ArrayList<>();//词库中的List
+    private List<Words> mCurrentWords=new ArrayList<>();//词库中的List 当前点击的单词
     private List<Words> mCiKuWords=new ArrayList<>();//词库中的List
 
     private List<Words> mCollectionWords = new ArrayList<>();    //存储收藏夹中的单词List
@@ -54,6 +48,8 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
         mDb = WordsDB.getWordsDB();
         mClipsDao = mDb.getWordClipDao();
         mWordsDao = mDb.getWordsDao();
+
+        mCollectionWords.clear();
     }
 
     private static CollectionDialogPresent sPresent;
@@ -76,28 +72,26 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
     }
 
 
-    //点击后 --> 插入到数据库
+    //点击后 --> 插入到数据库 --> 分当前
     @Override
     public void submitData() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 if (mCurrentWords != null && mCurrentWords.size()>0) {
-                    WordClips clips=new WordClips(mCurrentBookPos, mCurrentTitle,mPicture,"","",true);
+                    WordClips clips=new WordClips(mCurrentBookPos, mCurrentTitle,mPicture,Commons.getmCurrentLoginAccount(),"","",true);
                     try {
                         //收藏夹插入到数据库
                         mClipsDao.insertWords(clips);
-                        //直接把点击的单词插入到新建的收藏夹
-
                     } catch (SQLiteConstraintException e) {
                         e.printStackTrace();
                         LogUtil.d(TAG,e.getMessage());
                     }
                 }else{
-                    WordClips clips=new WordClips(mCurrentBookPos, mCurrentTitle,"","","",true);
-                    Intent intent=new Intent(BaseAppciation.getContext(), HomeActivity.class);
-                    intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                    BaseAppciation.getContext().startActivity(intent);
+                    WordClips clips=new WordClips(mCurrentBookPos, mCurrentTitle,"",Commons.getmCurrentLoginAccount(),"","",true);
+//                    Intent intent=new Intent(BaseAppciation.getContext(), HomeActivity.class);
+//                    intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+//                    BaseAppciation.getContext().startActivity(intent);
                     try {
                         mClipsDao.insertWords(clips);
                     } catch (SQLiteConstraintException e) {
@@ -105,7 +99,6 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
                         LogUtil.d(TAG,e.getMessage());
                     }
                 }
-
                 queryAllClips();
             }
         }).start();
@@ -116,7 +109,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
     public void queryAllClips() {
         new Thread(() -> {
 
-            List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
+            List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos,Commons.getmCurrentLoginAccount());
             //遍历全部收藏夹 --> 显示
             for (WordClips wordClip : wordClips) {
                // LogUtil.d(TAG,"收藏id:"+wordClip.getId());
@@ -134,17 +127,17 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
 
     //修改单词表中的单词属性
     @Override
-    public void doCollection2ExistFavorites() {
+    public void doCollection2ExistFavorites(showCollectedInfo onShowCollectedInfo) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 //修改成true
                 Words words = mCurrentWords.get(mCurrentPos);
-                LogUtil.d(TAG,"mCurrentPos --> "+mCurrentPos);
-              //  Words words = mCiKuWords.get(mCurrentPos);
+                LogUtil.d(TAG, "mCurrentPos --> " + mCurrentPos);
                 words.setIscollection(true);
                 words.setCollectionpos(mCollectionID);//插入收藏的位置
                 mWordsDao.updateWords(words);
+                onShowCollectedInfo.onShowCollectedInfo(true);
             }
         }).start();
     }
@@ -156,7 +149,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
             @Override
             public void run() {
                 //获取收藏夹的ID
-                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
+                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos,Commons.getmCurrentLoginAccount());
                 WordClips clips = wordClips.get(pos);
                 int clipsID = clips.getId();
                 LogUtil.d(TAG, clipsID +":"+ clips.getTitle());
@@ -179,7 +172,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
+                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos,Commons.getmCurrentLoginAccount());
                 WordClips clips = wordClips.get(pos);
 
                 LogUtil.d(TAG,"pos --> "+pos);
@@ -193,7 +186,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
+                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos,Commons.getmCurrentLoginAccount());
                 WordClips clips = wordClips.get(pos);
                 String title = clips.getTitle();
                 IManager.GetManagerTitle(title);
@@ -206,7 +199,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<WordClips> sameNumWords = mClipsDao.getSameNumWords(mCurrentBookPos);
+                List<WordClips> sameNumWords = mClipsDao.getSameNumWords(mCurrentBookPos,Commons.getmCurrentLoginAccount());
                 int size = sameNumWords.size();
                 LogUtil.d(TAG,"coll size --> "+size);
                 for (ICollectionDialogCallback callback : mCallbacks) {
@@ -221,20 +214,6 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
 
     }
 
-//    //获取单词夹中的单词
-//    public void getClipsWords(int pos) {
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                List<Words> sameNumWords = mWordsDao.getSameNumWords(mCurrentBookPos);
-//                int collectionpos = sameNumWords.get(0).getCollectionpos();//获取单词的收藏夹ID
-//
-//                List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos);
-//                int id = wordClips.get(pos).getId();//收藏夹ID
-//            }
-//        }).start();
-//    }
-
     @Override
     public void regesiterView(ICollectionDialogCallback callbak) {
         if (mCallbacks != null && !mCallbacks.contains(callbak)) {
@@ -244,7 +223,7 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
 
     @Override
     public void unRegesiterView(ICollectionDialogCallback callback) {
-        if (mCallbacks != null && !mCallbacks.isEmpty()) {
+        if (mCallbacks != null) {
             mCallbacks.remove(callback);
         }
     }
@@ -255,17 +234,50 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
     }
 
 
-    //获取当前点击的图片
-    public void getPicText(List<Words> list, int position) {
+    //获取当前点击的图片 --> 传递数据
+    public  void  getPicText(List<Words> list, int position) {
+        mCollectionWords.clear();
+        mCurrentPos = 0;
         mHeadWord = list.get(position - 1).getHeadWord();
         mPicture = list.get(position - 1).getPicture();
-        LogUtil.d(TAG,"zhijie headword --> "+ mHeadWord);
+        LogUtil.d(TAG, "zhijie headword --> " + mHeadWord);
         mCurrentWords.addAll(list);
-        //mCiKuWords.addAll(list);
-        mCurrentPos=(position-1);
+        mCurrentPos = (position - 1);
     }
 
     public void getCollectionPos(int mCurrentCollectionID) {
         this.mCollectionID =mCurrentCollectionID;
+    }
+
+
+    //判断收藏夹是否存在
+    public void doExistTitle(JudegetTitleIsExist judegetTitleIsExist) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<String> titles = mClipsDao.judgeTitleExists(mCurrentBookPos, true,Commons.getmCurrentLoginAccount());
+                for (String title : titles) {
+                    LogUtil.d(TAG,"已经存在的收藏夹名称 -->"+title);
+                }
+                if (titles.contains(mCurrentTitle)){
+                    judegetTitleIsExist.onJudgeTitleExist(true);
+                }else{
+                    judegetTitleIsExist.onJudgeTitleExist(false);
+                }
+            }
+        }).start();
+    }
+
+    public void setRestDate() {
+        mCurrentWords.clear();
+    }
+
+    //P-->V 判断是否存在待添加的收藏夹名字
+    public interface  JudegetTitleIsExist{
+        void onJudgeTitleExist(boolean isExist);
+    }
+
+    public interface  showCollectedInfo{
+        void onShowCollectedInfo(boolean isSucceed);
     }
 }
