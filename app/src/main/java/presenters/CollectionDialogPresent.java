@@ -89,9 +89,6 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
                     }
                 }else{
                     WordClips clips=new WordClips(mCurrentBookPos, mCurrentTitle,"",Commons.getmCurrentLoginAccount(),"","",true);
-//                    Intent intent=new Intent(BaseAppciation.getContext(), HomeActivity.class);
-//                    intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-//                    BaseAppciation.getContext().startActivity(intent);
                     try {
                         mClipsDao.insertWords(clips);
                     } catch (SQLiteConstraintException e) {

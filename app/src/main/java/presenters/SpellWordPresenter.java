@@ -119,7 +119,7 @@ public class SpellWordPresenter implements ISpellWordPresenter {
                 SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
                 Date date=new Date(System.currentTimeMillis());
                 String time = format.format(date);
-              //  Spells spells=new Spells(mCurrentBookPos,"2020-11-1",Commons.getmCurrentLoginAccount(),true);
+//                Spells spells=new Spells(mCurrentBookPos,"2020-11-18",Commons.getmCurrentLoginAccount(),true);
                 Spells spells=new Spells(mCurrentBookPos,time, Commons.getmCurrentLoginAccount(),true);
                 mSpellDao.insertSpell(spells);
 
@@ -155,9 +155,11 @@ public class SpellWordPresenter implements ISpellWordPresenter {
         String s4 = randomStr(substring, error4);
 
         while (true){
-            if (!s1.equals(s2) && !s2.equals(s3) && !s3.equals(s4) && !s1.equals(s4) && !s2.equals(s4) && !s1.equals(s3))
+            if (!s1.equals(s2)  && !s1.equals(s3)  && !s1.equals(s4)  && !s2.equals(s3)  && !s2.equals(s4)  && !s3.equals(s4) )
+            {
+                LogUtil.d(TAG,"si --> "+s1+":"+s2+":"+s3+":"+s4);
                 break;
-            else{
+            } else{
                 s1 = randomStr(substring, error1);
                 s2 = randomStr(substring, error2);
                 s3 = randomStr(substring, error3);
