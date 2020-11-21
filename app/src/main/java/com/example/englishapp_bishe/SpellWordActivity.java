@@ -120,6 +120,10 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
                         activity.third.setText(third==index?correct:error3);
                         activity.fourth.setText(fourth==index?correct:error4);
 
+                        LogUtil.d(TAG,"第一个按钮 --> "+activity.first.getText());
+                        LogUtil.d(TAG,"第二个按钮 --> "+activity.second.getText());
+                        LogUtil.d(TAG,"第三个按钮 --> "+activity.third.getText());
+                        LogUtil.d(TAG,"第四个按钮 --> "+activity.fourth.getText());
                         break;
                 }
             }
@@ -136,7 +140,6 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
         mDialog.setActivity(this);
 
         mPop = new UnKnowPopwindow(this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        mPop.setClippingEnabled(false);
 
         mSpellPresenter = SpellWordPresenter.getPresenter();
         mSpellPresenter.regesiterView(this);
@@ -236,7 +239,7 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
         tishi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPop.showAtLocation(v, Gravity.CENTER,Gravity.FILL_HORIZONTAL,Gravity.FILL_VERTICAL);
+                mPop.showAtLocation(v, Gravity.CENTER, Gravity.FILL_HORIZONTAL, Gravity.FILL_VERTICAL);
                 mPop.setOnZhanClickListener(new UnKnowPopwindow.onZhanClickListener() {
                     @Override
                     public void onZhanClick() {
@@ -315,7 +318,8 @@ public class SpellWordActivity extends AppCompatActivity implements ISpellWordCa
         msg.setData(bundle);
         mSpellHandler.sendMessage(msg);
 
-        LogUtil.d(TAG,"correct :"+correct+":"+error1+":"+error2+error3+":"+error4);
+        //man:  man   :mna   anm:  nma
+        LogUtil.d(TAG,"correct :"+correct+":"+error1+":"+error2+":"+error3+":"+error4);
     }
 
     @Override

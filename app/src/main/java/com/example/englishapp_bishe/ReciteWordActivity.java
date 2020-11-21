@@ -129,7 +129,6 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                         reciteWordActivity.mTvKnow.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
                                 reciteWordActivity.mList.clear();
                                 if (progress < Integer.parseInt(reciteWordActivity.mRange)) {
                                     Words words = BookWords.get(++progress);
@@ -148,7 +147,6 @@ public class ReciteWordActivity extends AppCompatActivity implements IReciteWord
                                     reciteWordActivity.mList.add(words.getCnContent());
                                     reciteWordActivity.mList.add(words.getTranOther());
                                     reciteWordActivity.mVerScroll.setTextList(reciteWordActivity.mList);
-
                                 } else {
                                     //显示成功界面
                                     reciteWordActivity.getSupportFragmentManager()

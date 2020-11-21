@@ -44,22 +44,25 @@ public class GamePresenter implements IGamePresent {
 
     @Override
     public void doQueryData() {
-
         Random random=new Random();
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 List<Words> wordsList = mWordsDao.getSameNumWords(mCurrentBookNum);
                 int index = random.nextInt(wordsList.size() - 10);
+                while (true){
+                    if (index<10){
+                        index = random.nextInt(wordsList.size()- 10);
+                    }else{
+                        break;
+                    }
+                }
                 Words words = wordsList.get(index);
                 String headWord = words.getHeadWord();//当前Title
                 String tran = words.getTran();//当前正确的解释
 
-
                 //每一次都会缓存这些随机的单词
                 mRandomWords.add(words);
-
                 LogUtil.d(TAG,"randomWors size --> "+mRandomWords.size());
                 //全部回调给V
                 for (IGameCallback callback : mCallbacks) {

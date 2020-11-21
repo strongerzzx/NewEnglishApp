@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import interfaces.ILoginCallback;
 import presenters.LoginPresent;
+import utils.ToastUtil;
 
 public class MainActivity extends AppCompatActivity implements ILoginCallback {
 
@@ -116,7 +117,14 @@ public class MainActivity extends AppCompatActivity implements ILoginCallback {
 
                     mPresent.setUser(user);
                     mPresent.setPswd(pswd);
-                    mPresent.doLogin();
+
+                    mPresent.doLogin(new LoginPresent.LoginCallback() {
+                        @Override
+                        public void onLoginClickMessage(String message) {
+                            ToastUtil.showToast(message);
+                        }
+                    });
+
                     mEdit.commit();
 
                 }

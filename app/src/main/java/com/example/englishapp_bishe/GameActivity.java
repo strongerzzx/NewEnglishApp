@@ -138,27 +138,20 @@ public class GameActivity extends AppCompatActivity implements IGameCallback {
 
     private int rabbitTemp =0;
     private int rabbitSum;
-
     private int[] mLocal=new int[2];
     private Runnable rabbitRun =new Runnable() {
         @Override
         public void run() {
             rabbitTemp +=5;
-
             rabbitSum=rabbitSpeed *10+ rabbitTemp;
-
             //兔子的坐标
             mGameRabbit.getLocationOnScreen(mLocal);
             int x = mLocal[0];
             int y = mLocal[1];
-
             ObjectAnimator animator=ObjectAnimator.ofFloat(mGameRabbit,"translationX", rabbitSum);
             animator.setDuration(0);
             animator.start();
-
-
             mGHandler.postDelayed(this,200);
-
             if (Math.abs((x-mDesX))<200) {
                 mDownTimer.cancel();
                 mGHandler.removeCallbacksAndMessages(null);
@@ -181,15 +174,11 @@ public class GameActivity extends AppCompatActivity implements IGameCallback {
             tortiseSum=tortoiseSpeed *10+ tortiseTemp;
             mGametortoise.getLocationOnScreen(mTorLocal);
             int x = mTorLocal[0];
-
             tortiseTemp+=5;
             ObjectAnimator animator=ObjectAnimator.ofFloat(mGametortoise,"translationX", tortiseSum);
-
-
             animator.setDuration(200);
             animator.start();
             mGHandler.postDelayed(this,300);
-
             if (Math.abs((x-mDesX))<200) {
                 mDownTimer.cancel();
                 mGHandler.removeCallbacksAndMessages(null);
@@ -293,7 +282,6 @@ public class GameActivity extends AppCompatActivity implements IGameCallback {
             public void onFinish() {
                 //5s内没答出来 --> 就下一个
                 mGamePresenter.doQueryData();
-
                 //并且重新倒数
                 mDownTimer.start();
             }

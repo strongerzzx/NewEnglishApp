@@ -119,13 +119,10 @@ public class Listen2SelectorActivity extends AppCompatActivity implements TextTo
                     case CASE_SHOW_CORRECT_MSG:
                         // 获取正确的单词 --> 播放声音
                         String correctEnglish= (String) msg.obj;
-
                         listeneAct.mTts.speak(correctEnglish,TextToSpeech.QUEUE_FLUSH,null);
-
                         //设置帧动画
                         listeneAct.content.setBackgroundResource(R.drawable.lound_frame_anim);
                         AnimationDrawable drawable = (AnimationDrawable) listeneAct.content.getBackground();
-
                         //点击声音 --> 播放tts+动画
                         listeneAct.content.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -134,7 +131,6 @@ public class Listen2SelectorActivity extends AppCompatActivity implements TextTo
                                     listeneAct.content.setBackgroundResource(R.drawable.lound_frame_anim);
                                     drawable.start();
                                     listeneAct.mTts.speak(correctEnglish,TextToSpeech.QUEUE_FLUSH,null);
-
                                     listeneAct.mListenerHandler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
@@ -151,10 +147,8 @@ public class Listen2SelectorActivity extends AppCompatActivity implements TextTo
                             @Override
                             public void onClick(View v) {
                                 listeneAct.mTts.speak(correctEnglish,TextToSpeech.QUEUE_FLUSH,null);
-
                                 //并且让中间的图标开始动画
                                 drawable.start();
-
                                 postDelayed(new Runnable() {
                                     @Override
                                     public void run() {

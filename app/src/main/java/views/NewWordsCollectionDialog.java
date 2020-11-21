@@ -109,9 +109,7 @@ public class NewWordsCollectionDialog extends Dialog{
             public void onClick(View v) {
                 mIm.hideSoftInputFromWindow(mInput.getWindowToken(),InputMethodManager.HIDE_IMPLICIT_ONLY);
                 String title = mInput.getText().toString();
-
                 mPresent = CollectionDialogPresent.getPresent();
-
                 //先查询 要添加的收藏夹 --> 是否已经存在
                  mPresent.doExistTitle(new CollectionDialogPresent.JudegetTitleIsExist() {
                     @Override

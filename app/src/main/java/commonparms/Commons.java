@@ -20,6 +20,9 @@ public class Commons {
     //收藏dialog的数据库名
     public static final String DB_TYPE_WORDSCLIPS="words_clips_db";
 
+    //统计日期的数据库名
+    public static final String DB_TYPE_TjDates="tj_date_db";
+
     //百度OCR请求网址
     public static final String OCR_BAI_DU="https://aip.baidubce.com/";
 
@@ -38,6 +41,7 @@ public class Commons {
     public static final String salt = "1435660288";
 
     private static List<Words> mWordsList = new ArrayList<>();
+    private static List<String> mDateTempList = new ArrayList<>();
     private static String mCurrentDownloadTitle;
     private static String mCurrentLoginAccount;
 
@@ -64,4 +68,7 @@ public class Commons {
     public static String getmCurrentLoginAccount() {
         return mCurrentLoginAccount;
     }
+
+
+
 }

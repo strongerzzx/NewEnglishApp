@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import interfaces.IRegCallback;
 import presenters.RegPresent;
+import utils.ToastUtil;
 
 public class RegActivity extends AppCompatActivity implements IRegCallback {
 
@@ -53,7 +54,12 @@ public class RegActivity extends AppCompatActivity implements IRegCallback {
                 mPresent.getAccount(account);
                 mPresent.getPswd(pswd);
 
-                mPresent.requestReg();
+                mPresent.requestReg(new RegPresent.onRegClickCallback() {
+                    @Override
+                    public void onRegCallback(String message) {
+                        ToastUtil.showToast(message);
+                    }
+                });
 
                 Intent intent=new Intent(RegActivity.this,MainActivity.class);
                 startActivity(intent);

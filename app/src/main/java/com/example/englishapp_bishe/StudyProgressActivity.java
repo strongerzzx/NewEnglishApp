@@ -66,13 +66,6 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
     private LineDataSet mDataSet3;
     private LineDataSet mDataSet4;
 
-//    private LineDataSet dataSet1 = new LineDataSet(yValue1,"测试1");
-//    private LineDataSet dataSet2 = new LineDataSet(yValue2,"测试2");
-//    private LineDataSet dataSet3 = new LineDataSet(yValue3,"测试3");
-//    private LineDataSet dataSet4 = new LineDataSet(yValue4,"测试4");
-
-//    private LineData mLineData = new LineData(dataSet1,dataSet2,dataSet3,dataSet4);
-
 
     //每一个任务 在折线图中的相隔距离
     private int i=0;
@@ -95,13 +88,15 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
 
         initLineView();
 
+        initAxis();
+
         initEvent();
 
-        initAxis();
     }
 
     private void initAxis() {
-        mLineChart.setNoDataText("暂时没有完成任意一个学习计划...");
+
+       // mLineChart.setNoDataText("暂时没有完成任意一个学习计划...");
 
         //y轴
         mLineChart.getAxisRight().setEnabled(false);
@@ -136,8 +131,8 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
         Description description = new Description();
         description.setEnabled(false);
         mLineChart.setDescription(description);
-//
-//
+
+
 //        //模拟X轴标签
 //        // String[] week = new String[]{"昨天"};
 //        String[] week = new String[]{"昨天","今天","明天","后天","测","试"};
@@ -163,7 +158,6 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
     }
 
     private void initEvent() {
-
         mFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,9 +181,7 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
             public void run() {
                 //模拟X轴标签
                 //X轴
-
                 mXAxis.setLabelCount(mTimes.size());
-
                 LogUtil.d(TAG,"mTimse size --> "+mTimes.size());
                 //设备标签显示
                 mXAxis.setValueFormatter(new ValueFormatter() {
@@ -197,13 +189,11 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
                     public String getAxisLabel(float value, AxisBase axis) {
                         int IValue = (int) value;
                         CharSequence format = DateFormat.format("MM/dd",
-                                System.currentTimeMillis()-(long)((mTimes.size()-IValue-1))*24*60*60*1000);
+                                System.currentTimeMillis()-(long)((mTimes.size()-IValue))*24*60*60*1000);
                         Log.d(TAG,"week value --> "+value);
                         return format.toString();
                     }
                 });
-
-
                 mLineView.setBottomTextList(mTimes);
             }
         });
@@ -295,8 +285,9 @@ public class StudyProgressActivity extends AppCompatActivity implements IStudyPr
                     try {
                         LineData mLineData = new LineData(mDataSet1,mDataSet2,mDataSet3,mDataSet4);
                         mLineChart.setData(mLineData);
-                        mLineView.setDataList(mAllData);
                         mLineChart.invalidate();
+
+                        mLineView.setDataList(mAllData);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -185,12 +185,9 @@ public class OtherFragment extends Fragment {
                         mProgressDialog.show();
                         InputStream is = getContext().getContentResolver().openInputStream(imagUri);
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        //mShowPhoto.setImageBitmap(bitmap);
-                        //bitmap --> base64
                         String baseParms = bitmap2Base64(bitmap);
                         String encode = URLEncoder.encode(baseParms, "UTF-8");
                         //百度OCR
-
                         doLocalBaiDuOcr(mImgFile.getPath());
 
                         LogUtil.d(TAG,"encode -->"+encode);
@@ -211,15 +208,11 @@ public class OtherFragment extends Fragment {
     }
 
     private void doLocalBaiDuOcr(String picPath) {
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 long start = System.currentTimeMillis();
                 GeneralBasicParams params=new GeneralBasicParams();
-                //"/sdcard/Pictures/hello.png"
-                ///storage/emulated/0/Android/data/com.example.englishapp_bishe/files/Pictures/ocr.jpg
-//                params.setImageFile(new File(mImgFile.getPath()));
                 params.setImageFile(new File(picPath));
                 OCR.getInstance(getContext()).recognizeAccurateBasic(params, new OnResultListener<GeneralResult>() {
                     @Override
@@ -386,7 +379,6 @@ public class OtherFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         //根据版本来拍照 -->
         if (Build.VERSION.SDK_INT>=24){
             imagUri= FileProvider.getUriForFile(getContext(),"com.example.englishapp_bishe.fileprovider", mImgFile);

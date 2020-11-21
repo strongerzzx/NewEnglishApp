@@ -132,20 +132,11 @@ public class SpellWordPresenter implements ISpellWordPresenter {
         String headWord = word.getHeadWord();
         String substring = headWord.substring(2, headWord.length() - 3);//正确的截取
         String replace = headWord.replace(substring, "_");//返回content的单词
-
-
         for (ISpellWordCallback callback : mCallbacks) {
             callback.showStubContent(replace);
         }
-
-        //对sub单词进行随机排序
         doRandomSub(substring);
-
-
-        LogUtil.d(TAG,"replace --> "+replace);
-        LogUtil.d(TAG,"subString --> "+substring);
     }
-
     //对截取的进行随机排序
     private void doRandomSub(String substring) {
         String error1="",error2="",error4="",error3="";
@@ -153,10 +144,9 @@ public class SpellWordPresenter implements ISpellWordPresenter {
         String s2 = randomStr(substring, error2);
         String s3 = randomStr(substring, error3);
         String s4 = randomStr(substring, error4);
-
         while (true){
-            if (!s1.equals(s2)  && !s1.equals(s3)  && !s1.equals(s4)  && !s2.equals(s3)  && !s2.equals(s4)  && !s3.equals(s4) )
-            {
+            if (!s1.equals(s2)  && !s1.equals(s3)  && !s1.equals(s4)  && !s2.equals(s3)  && !s2.equals(s4)  && !s3.equals(s4)
+                     &&!s1.equals(substring) && !s2.equals(substring) && !s3.equals(substring) && !s4.equals(substring)) {
                 LogUtil.d(TAG,"si --> "+s1+":"+s2+":"+s3+":"+s4);
                 break;
             } else{
@@ -166,7 +156,6 @@ public class SpellWordPresenter implements ISpellWordPresenter {
                 s4 = randomStr(substring, error4);
             }
         }
-
         for (ISpellWordCallback callback : mCallbacks) {
             callback.showStubErrorWord(substring,s1,s2,s3,s4);
         }

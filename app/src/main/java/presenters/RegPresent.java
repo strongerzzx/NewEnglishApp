@@ -59,7 +59,7 @@ public class RegPresent implements IRegPresent {
     }
 
     @Override
-    public void requestReg() {
+    public void requestReg(onRegClickCallback regClickCallback) {
         Retrofit builder = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(Commons.BASE_LOGIN).build();
         ApiService api = builder.create(ApiService.class);
 
@@ -79,14 +79,17 @@ public class RegPresent implements IRegPresent {
                 if (code== HttpURLConnection.HTTP_OK){
                     String msg = response.body().getMsg();
                     boolean flag = response.body().isFlag();
-                    LogUtil.d(TAG,":"+msg+":"+flag);
+                    LogUtil.d(TAG,":"+msg+":"+flag);//msg
                     LogUtil.d(TAG,"body --> "+response.body());
+
+                    regClickCallback.onRegCallback(msg);
                 }
             }
 
             @Override
             public void onFailure(Call<RegBeans> call, Throwable t) {
                 LogUtil.d(TAG,"error --> "+t.toString());
+                regClickCallback.onRegCallback(t.toString());
             }
         });
     }
@@ -103,5 +106,9 @@ public class RegPresent implements IRegPresent {
         if (mCallbacks != null) {
             mCallbacks.remove(callback);
         }
+    }
+
+    public interface onRegClickCallback{
+        void onRegCallback(String message);
     }
 }

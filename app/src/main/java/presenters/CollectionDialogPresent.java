@@ -105,7 +105,6 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
     @Override
     public void queryAllClips() {
         new Thread(() -> {
-
             List<WordClips> wordClips = mClipsDao.getSameNumWords(mCurrentBookPos,Commons.getmCurrentLoginAccount());
             //遍历全部收藏夹 --> 显示
             for (WordClips wordClip : wordClips) {
@@ -114,7 +113,6 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
                 wordClip.setWordsNum(trueWords+"");
                 //LogUtil.d(TAG,"单词数量:"+trueWords);
             }
-
             //Dialog和Fragemnt中的数据 都来自这
             for (ICollectionDialogCallback callback : mCallbacks) {
                 callback.showAllClips(wordClips);
@@ -165,7 +163,6 @@ public class CollectionDialogPresent implements ICollectionDialogPresent {
     //通过pop --> 删除收藏夹选中数据
     @Override
     public void deleCollectionData(int pos) {
-
         new Thread(new Runnable() {
             @Override
             public void run() {

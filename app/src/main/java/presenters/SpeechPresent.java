@@ -121,7 +121,6 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
                     double mean = v / (double)len;
                     //音量大小 --> 分贝
                     double fb  = 10 * Math.log10(mean);
-
                     for (ISpeechCallback callback : mCallbacks) {
                         callback.showFenBei(fb);
                     }
@@ -137,7 +136,7 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //TODO:获取数据
+                //获取数据
                 List<Words> wordsList = mWordsDao.getSameNumWords(mCurrentBookNum);
                 int anInt = random.nextInt(wordsList.size() - 10);
                 String headWord = wordsList.get(anInt).getHeadWord();
@@ -206,30 +205,23 @@ public class SpeechPresent implements ISpeechPresent, InitListener, RecognizerLi
     public void onResult(RecognizerResult recognizerResult, boolean b) {
         //获取json内容
         String result = printResult(recognizerResult);
-
         for (ISpeechCallback callback : mCallbacks) {
             callback.showRecongize(result);
         }
-
         LogUtil.d(TAG,"result --> "+result);
     }
 
     private String printResult(RecognizerResult results) {
         String text = JsonParser.parseIatResult(results.getResultString());
-
         String sn=null;
-
         try {
             JSONObject resultJson = new JSONObject(results.getResultString());
             sn=resultJson.optString("sn");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         mMap.put(sn,text);
-
         StringBuffer sb=new StringBuffer();
-
         for (String s : mMap.keySet()) {
             sb.append(mMap.get(s));
         }

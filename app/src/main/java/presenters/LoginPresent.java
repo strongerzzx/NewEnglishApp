@@ -58,7 +58,7 @@ public class LoginPresent implements ILoginPresent {
     }
 
     @Override
-    public void doLogin() {
+    public void doLogin(LoginCallback loginCallback) {
         Retrofit builder = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(Commons.BASE_LOGIN).build();
         ApiService api = builder.create(ApiService.class);
         Map<String,String> map=new HashMap<>();
@@ -86,8 +86,11 @@ public class LoginPresent implements ILoginPresent {
 
                         LogUtil.d(TAG,id+":"+username+":"+password);
                         LogUtil.d(TAG,"response --> "+response);
+
+                        loginCallback.onLoginClickMessage("恭喜您登陆成功...");
                     }else {
                         Log.d(TAG, "onResponse: "+response.body().getMsg());
+                        loginCallback.onLoginClickMessage("账号或密码错误...");
                     }
                 }
             }
@@ -95,6 +98,7 @@ public class LoginPresent implements ILoginPresent {
             @Override
             public void onFailure(Call<LoginBeans> call, Throwable t) {
                 LogUtil.d(TAG,"error msg --> "+t.toString());
+                loginCallback.onLoginClickMessage(t.toString());
             }
         });
     }
@@ -111,5 +115,10 @@ public class LoginPresent implements ILoginPresent {
         if (mCallbackList != null) {
             mCallbackList.remove(callback);
         }
+    }
+
+    public interface LoginCallback{
+        void onLoginClickMessage(String message);
+
     }
 }

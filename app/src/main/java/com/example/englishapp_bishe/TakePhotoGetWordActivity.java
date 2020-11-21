@@ -17,8 +17,6 @@ public class TakePhotoGetWordActivity extends AppCompatActivity {
 
     private static final String TAG = "TakePhotoGetWordActivity";
 
-    @BindView(R.id.take_collection)
-    public ImageView takeCollection;
     @BindView(R.id.take_home)
     public ImageView takeHome;
     @BindView(R.id.take_content)
@@ -34,6 +32,8 @@ public class TakePhotoGetWordActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        takeContent.setText("");
+
         mCollectionDialog = new CollectionDialog(this);
 
         Intent intent = getIntent();
@@ -45,7 +45,7 @@ public class TakePhotoGetWordActivity extends AppCompatActivity {
 
     private void initEvent() {
 
-        takeContent.setText("");
+
         takeContent.setText(mPhotoStr);
 
         //返回Home
@@ -55,14 +55,6 @@ public class TakePhotoGetWordActivity extends AppCompatActivity {
                 Intent intent=new Intent(TakePhotoGetWordActivity.this,HomeActivity.class);
                 startActivity(intent);
                 finish();
-            }
-        });
-
-        //收藏扫描的单词
-        takeCollection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCollectionDialog.show();
             }
         });
     }

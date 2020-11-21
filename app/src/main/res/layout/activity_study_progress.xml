@@ -136,7 +136,6 @@
 
 
     <HorizontalScrollView
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/study_progress_header_layout"
@@ -153,10 +152,12 @@
     </HorizontalScrollView>
 
     <com.github.mikephil.charting.charts.LineChart
+        android:visibility="gone"
         android:id="@+id/line_chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/study_progress_header_layout"/>
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/study_progress_header_layout"
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>

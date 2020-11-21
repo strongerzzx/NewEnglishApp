@@ -64,7 +64,6 @@ public class Chinese2EnglishPresenter implements IChinese2EnglishPresenter {
             public void run() {
                 //获取全部Words
                 List<Words> sameNumWords = mWordsDao.getSameNumWords(mCurrentBookNum);
-
                 //随机返回任意的单词
                 Random random=new Random();
                 int randomIndex = random.nextInt(sameNumWords.size() - 10);
@@ -77,7 +76,6 @@ public class Chinese2EnglishPresenter implements IChinese2EnglishPresenter {
                 }
                 Words words = sameNumWords.get(randomIndex);
                 mCurrentIndex++;//当前做过的题
-
                 for (IChineses2EnglishCallback iChineses2EnglishCallback : mCallbackList) {
                     iChineses2EnglishCallback.showContent(words.getTran());//content
                     iChineses2EnglishCallback.showAllStr(words.getHeadWord(),sameNumWords.get(randomIndex+1).getHeadWord(),
@@ -88,7 +86,6 @@ public class Chinese2EnglishPresenter implements IChinese2EnglishPresenter {
                     iChineses2EnglishCallback.getData2Pop(sameNumWords,randomIndex,mFinalProgress,mCurrentIndex);
                 }
                 LogUtil.d(TAG,"words random --> "+randomIndex+":"+words.getHeadWord()+":"+words.getTran());
-
             }
         }).start();
     }
@@ -127,7 +124,6 @@ public class Chinese2EnglishPresenter implements IChinese2EnglishPresenter {
 
             //完成任务 --> 插入数据库
             Chinese2English c2e=new Chinese2English(mCurrentBookNum,finishDate, Commons.getmCurrentLoginAccount(),true,mFinalProgress);
-         //   Chinese2English c2e=new Chinese2English(mCurrentBookNum,"2020-10-31",true,mFinalProgress);
             mC2eDao.insertChinese(c2e);
         }
     };
